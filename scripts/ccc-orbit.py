@@ -44,6 +44,7 @@ def importantBinStrings(start, stop):
 
 printf = sys.stdout.write
 
+# Naive application, disregards semigroup stuff
 def ccc(n, m):
     # n > m
     def automata(s):
@@ -74,33 +75,6 @@ def orbit(f, s):
 def inOrbitBad(f, x, y):
     return y in orbit(f, x)
 
-# def simpleResidual(f, c):
-#     if f == 0 and c == "0": return 2
-#     if f == 0 and c == "1": return 1
-#     if f == 2: return 1
-#     if f == 1: return 0
-
-def residual(h, a):
-    (u, v) = h
-    if (u % 2 == 0): return (v-u, -u/2)
-    if a == "0": return (v-u-1, int((-3.0-u) / 2))
-    if a == "1": return (v-u+1, int((3.0-u) / 2))
-
-def residualsOverString(h, s):
-    result = []
-    for c in s:
-        result.append(c if not h[0] % 2 else str(1 - int(c)))
-        h = residual(h, c)
-        print h
-    print "".join(result)
-
-def inOrbit(x, y):
-    # assumes f is 0
-    (h1, h2) = (0, 0)
-    n = len(x) / 2
-    tBits = []
-    for r in xrange(n):
-        nextBit = h2
 
 def strXor(a, b):
     result = [0 for _ in xrange(len(a))]
@@ -110,15 +84,65 @@ def strXor(a, b):
         idx += 1
     return "".join([str(elt) for elt in result])
 
+############### Semigroup stuff ###############
+
+def residual(h, a):
+    (u, v) = h
+    if (u % 2 == 0): return (v-u, -u/2)
+    if a == "0": return (v-u-1, int((-3.0-u) / 2))
+    if a == "1": return (v-u+1, int((3.0-u) / 2))
+
+# Applies h to s
+def ap(h, s):
+    result = []
+    for c in s:
+        result.append(c if not h[0] % 2 else str(1 - int(c)))
+        h = residual(h, c)
+    return "".join(result)
+
+def orbitIndex(h, x, y):
+    (h1, h2) = h
+    n = len(x) / 2
+    tBits = []
+    stateTrace = [h]
+    for r in xrange(n):
+        nextBit = (h1 + int(x[2*r]) + int(y[2*r])) % 2
+        print "nextBit = ", nextBit, "=", h, int(x[2*r]), int(y[2*r])
+        h = (h1, h2) = residual(h, x[2*r])
+        stateTrace.append(h)
+        if (h1 + int(x[2*r+1]) + int(y[2*r + 1])) % 2 == 0:
+            h = (h1, h2) = residual(h, x[2*r + 1])
+            stateTrace.append(h)
+        else:
+            return False
+        tBits.append(nextBit)
+    stateTrace = stateTrace[:-1]
+    print stateTrace
+    return tBits
+
+def semigroupOrbit(h, s):
+    result = [s]
+    idxs = [0]
+    def f(s): return ap(h, s)
+    cur = f(s)
+    result.append(cur)
+    idxs.append(orbitIndex(h, s, cur))
+    while cur != s:
+        cur = f(cur)
+        result.append(cur)
+        idxs.append(orbitIndex(h, s, cur))
+    return (result, idxs)
+
 def main():
     f = ccc(3, 2)
-    s = "100000000"
+    s = "1000"
     idx = 0
     h = (1,0)
-    # print residual(h, "1")
-    # print residual(h, "0")
-    print residualsOverString(h, "1111")
-    # print residual((101, 0), "1")
+    f = lambda s : ap(h, s)
+    print s,
+    print f(s)
+    # print semigroupOrbit(h, "0111")
+    print orbitIndex(h, s, f(s))
 
 
 if __name__ == "__main__":
