@@ -1,20 +1,27 @@
 \documentclass{article}
 % \usepackage[margin=1in]{geometry}
 \usepackage{amsmath, amssymb, amsthm}
-\usepackage{parskip}
+% \usepackage{parskip}
 \usepackage{tikz}
+\usepackage{multicol}
 \usepackage{enumerate}
-\usepackage[T1]{fontenc}
+\usepackage{xltxtra}
+% \usepackage{charter}
+% \usepackage[T1]{fontenc}
+
+\setmainfont{Equity Text B}
+\renewcommand{\baselinestretch}{1.2}
 
 %%%%%%%%% Useful shorthand %%%%%%%%%%%%
 \newcommand{\0}{\underline{0}}
 \newcommand{\1}{\underline{1}}
 \newcommand{\2}{\underline{2}}
 \newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
 \renewcommand{\S}{\mathcal{S}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Notes on Transducer Orbit Checking}
+\title{Notes osdfn Transducer Orbit Checking}
 \author{Evan Bergeron}
 \begin{document}
 \maketitle
@@ -67,7 +74,7 @@ Let $p$ be a sequence where $p_i = c_i \mod{2}$ for all $i$. Then if $x \oplus y
 
 That being said, we necassarily don't know $c_0$.
 
-\subsection*{$A^3_2$ Orbit Checking is in NP}
+\subsection*{$\0$ Orbit Checking is in NP}
 Our verifier takes in two strings $x$, $y$, and an index $i$. This index is the position of $y$ in $x$'s orbit. WLOG, suppose $x_0 = 1$. We first set $c_0 = i$, $c_1 = 0$, and $c_2 = \lfloor c_0 / 2 \rfloor$. We then calculate $c_i$ and check that $c_i \mod 2 = x_i \oplus y_i$ for all $i$.
 
 The certificate is poly length with respect to $x$ and $y$, as the orbit of $y$ has length at most $2^n$ (so the length of an index is at most $n$).
@@ -75,20 +82,6 @@ The certificate is poly length with respect to $x$ and $y$, as the orbit of $y$ 
 
 % \subsection*{A Rephrasing of the Problem}
 % In orbit iff there is a $t$ such that $y = f^t(x)$. Suffices to find this $t$.
-
-\subsection*{Derivatives}
-We introduce the notion of so-called derivatives. They're named as such because they resemble normal calculus derivatives in many ways, though that's currently beyond my knowledge.
-
-If $f_u$ is the transduction corresponding to some state state $u$ of a transducer, then $\partial_b(f_u) = f_v$ if state $u$ transitions to state $v$ on input $b$. Each transducer has a corresponding derivative table, which is effectively an adjacency list representation of the transducer.
-
-For example, $A^3_2$ has the following representation:
-
-\begin{itemize}
-\item $\partial_0(\0) = \2$
-\item $\partial_1(\0) = \1$
-\item $\partial_b(\2) = \1$ for any $b$
-\item $\partial_b(\1) = \0$ for any $b$
-\end{itemize}
 
 \subsection*{Semigroups Revisited}
 Recall that the states of $A^3_2$ form a semigroup $\S(A^3_2)$. This semigroup is commutative - it doesn't matter what order we apply the transductions in. This follows by commutativity of addition modulo 2 (suffices to consider each bit one at a time). This means that every element in $\S(A^3_2)$ looks like $\0^i \1^j\2^k$ for $i, j, k \in \N$.
@@ -105,7 +98,47 @@ Then $c_{i-2} = c_{i-3} = 2$ by induction, so
 c_i &= \lfloor (c_{i-3} / 2) \rfloor + \lfloor (c_{i-2} / 2) \rfloor = 1 + 1 = 2
 \end{align*}
 \end{proof}
-This means that $\S(A^3_2)$ is already a group ($\0^{-1} = \0\1^2\2$ and so on).
+This means that $\S(A^3_2)$ is already a group ($\0^{-1} = \0\1^2\2$ and so on). Further, since $\2$ is expressible in terms of $\0$ and $\1$, we have that $\S(A^3_2) = \{ \0^i \1^j \mid i, j \in \Z \}$, giving us a concise data structure to represent elements of $\S(A^3_2)$.
+
+% TODO get a nice distinction between the two representations
+
+\subsection*{Derivatives}
+We introduce the notion of so-called derivatives. They're named as such because they resemble normal calculus derivatives in many ways, though that's currently beyond my knowledge.
+
+If $f_u$ is the transduction corresponding to some state state $u$ of a transducer, then $\partial_b(f_u) = f_v$ if state $u$ transitions to state $v$ on input $b$. Each transducer has a corresponding derivative table, which is effectively an adjacency list representation of the transducer.
+
+For example, $A^3_2$ has the following representation:
+
+\begin{multicols}{2}
+\begin{itemize}
+\item $\partial_0(\0) = \2$
+\item $\partial_1(\0) = \1$
+\item $\partial_b(\2) = \1$ for any $b$
+\item $\partial_b(\1) = \0$ for any $b$
+\end{itemize}
+
+\begin{itemize}
+\item $\partial_0(\0^i) = \1^{\lfloor i / 2 \rfloor}\2^{\lceil i / 2 \rceil}$
+\item $\partial_1(\0^i) = \1^{\lceil i / 2 \rceil}\2^{\lfloor i / 2 \rfloor}$
+\item $\partial_b(\1^i) = \0^i$ for any $b$
+\item $\partial_b(\2^i) = \1^i$ for any $b$
+\item $\partial_0(\0^i\1^j\2^k) = \0^j\1^{\lfloor i / 2 \rfloor+k}\2^{\lceil i / 2 \rceil}$
+\item $\partial_1(\0^i\1^j\2^k) = \0^j\1^{\lceil i / 2 \rceil+k}\2^{\lfloor i / 2 \rfloor}$
+\end{itemize}
+\end{multicols}
+% TODO why does this work this way?
+We can extend this notion of differentiation to differentiating with respect to arbitrary strings, rather than single bits (simply iterate the differentiation). Then, for $x, y \in \textbf{1}^*$, $f \in \S$
+$$f(xy) = f(x) \partial_xf(y)$$
+
+\subsection*{$A^3_2$ Orbit Checking is in NP}
+
+Call $f \in \S(A^3_2)$ \textit{even} if $f$ leaves the first bit of its input unchanged and \textit{odd} otherwise.
+
+It then suffices, given $i$ as the index into the orbit as a certificate, $f \in \S(A^3_2)$ and strings $x, y$, to simply iterate through $x$, differentiating $f$ as we go and asserting that $y_i = \partial_zf(x_i)$, where $z$ is the prefix of $x$ so far.
+
+Parity checking $f$ can be done in polynomial time - simply check the parity of $\0$ in $f$. Additionally, differentiation can be performed in polynomial time, as it's a couple of additions and a couple bit shifts. Since the value of $i$ is at most $2^n$ where $n$ is the input length, the length of $i$ is polynomial with respect to $x$ and $y$.
+
+\subsection*{$A^3_2$ Orbit Checking is in P}
 
 \subsection*{The $A^3_2$ Orbit Relation is Rational}
 This is hard - need to write that vector reduction thing.
