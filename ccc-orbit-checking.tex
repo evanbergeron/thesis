@@ -8,6 +8,7 @@
 \usepackage{xltxtra}
 % \usepackage{charter}
 % \usepackage[T1]{fontenc}
+\newtheorem{proposition}{Proposition}
 
 \setmainfont{Equity Text B}
 \renewcommand{\baselinestretch}{1.2}
@@ -21,7 +22,7 @@
 \renewcommand{\S}{\mathcal{S}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Notes osdfn Transducer Orbit Checking}
+\title{Notes on Transducer Orbit Checking}
 \author{Evan Bergeron}
 \begin{document}
 \maketitle
@@ -141,11 +142,62 @@ Parity checking $f$ can be done in polynomial time - simply check the parity of 
 \subsection*{$A^3_2$ Orbit Checking is in P}
 
 \subsection*{The $A^3_2$ Orbit Relation is Rational}
-This is hard - need to write that vector reduction thing.
+% This is hard - need to write that vector reduction thing.
+
+\subsubsection*{Residuation as Moving Pebbles}
+We can think of being given a set of pebbles that sit on states in our automaton. Then the residuation operation simply moves these pebbles from state to state. This gives us an easy proof that for fixed $f$ and $t$, computing $f^t$ is rational. (Now, of course, this follows by closure of rational languages, but it's nice to have a natural, constructive proof).
+
+\subsubsection*{Generating Pebbles}
+If we're not given $t$ ahead of time, it's our responsibility to deduce it. This is the difficulty in general. We introduce a function $\pi$. If $f = (f_0, f_1)$, where $f_0$ and $f_1$ are the residuals of $f$ with respect to 0 and 1, respectively and we're sitting on some bit $a$, then
+$$\pi(f) = \begin{cases}
+f_af_{\neg a} & \text{if $f$ is even} \\
+f_a & \text{if $f$ is odd} \\
+\end{cases}
+$$
+The orbit of $\pi$ over some string corresponds closely with the set of quotients hit in an automaton. (Really, the quotients are a tuple of $\pi$'s, along with some shift factor). But then we have that the orbit of $\pi$ is finite iff the quotients are finite. So we have a necassary and sufficient condition for orbit rationality.
+
+% Note here that we need the union of the orbit of $\pi$ to finite
+If $\pi^*(f, s)$ is the orbit of $\pi$ over $s$ with initial condition $f$, then some automaton $A$'s orbit relation is rationality iff $\bigcup_{s\in \Sigma^*} \pi(f, s)$ if finite for all $f \in \S(A)$.
+
+So the question becomes: for which automata is this true?
+
+Note that in the odd case, this corresponds with adding a pebble on the automaton. In the even case, no extra pebbles are added. So it's sort of asking, if given some initial configuration, unioning over all input string pairs in the language, we will only look at finitely many pebble configurations (up to rewrite rules).
 
 \subsection*{A New Class of Transducers - 1-Toggle-1-Split}
 
-\subsection*{1-Tog-1-Split Orbit Checking in P?}
+Let $S$ be the set of DAGs with a single vertex of out-degree 2 and the rest of out-degree one. We define the 1-toggle-1-split machines to the corresponding set of transducers. The vertex of out-degree 2 is the toggle state. Every other vertex is a copy state.
+
+\begin{proposition}
+The class of transductions induced by this class of these transducers is the union of three other classes:
+\begin{itemize}
+\item Transductions that flip a single bit
+\item CCC transductions
+\item Periodic transductions (flip mod $n$ for some $n$)
+\item CCC transductions that terminate early
+\end{itemize}
+\end{proposition}
+\begin{proof}
+% Consider the two paths extending from the toggle state. If both
+Consider the two outgoing edges from our toggle state $t$.
+
+If neither edge is a member of such a cycle, then the transduction simply flips a single bit. If exactly one edge is a member of such a cycle, then the semigroup behaves like a CCC for some prefix of the string before performing some final toggle.
+
+If both of these edges are members of a directed cycle containing $t$ (and the cycles are of differing lengths), then we claim the semigroup from this transducer is isomorphic to a CCC semigroup.
+
+Suppose both edges are membership of cycles of length $m$ and $n$, respectively. WLOG, we may assume $n > m$. Let $k \geq 0$ be the size of the intersection of these cycles. Then this machine is isomorphic to $A^n_m$.
+% $A^{n+k-1}_{m+k-1}$.
+
+If both edges are members of such a cycle and the cycles are of the same length $n$, then the each state $\underline{i}$ simply flips all the bits with index $j \equiv i \mod{n}$.
+
+% We may still have incoming ``spokes'' - paths that feed into either of the cycles. In this case, we can simply consider the
+To see this, for each vertex $v$, let $i$ be the distance from $v$ to the toggle state $t$. Then $\underline{i}$ in $G$ is equivalent to $\underline \in \S(A^n_m)$. Incoming paths of arbitrary lengths are taken care of via the KNF rewrite rules.
+\end{proof}
+
+\subsection*{1-Tog-1-Split Orbit Checking is in P}
+
+\begin{proposition}
+We can simply extend our orbit-checking algorithm for CCC machines to 1T1S machines. Fix some 1T1S transduction semigroup $\S$. We have the rewrite rules, so we know what subclass we're in. If you flip a single bit, this is easily checkable. If you're periodic, the cycle is of length 2 and also easily checkable. If you're a CCC, perform the CCC orbit-checking algorithm. If you're an end-early CCC, check until the first copy-till-end-toggle, and then verify that the endings match.
+\end{proposition}
 
 \subsection*{1-Tog-1-Split Orbit Relation Rational?}
 
