@@ -4,7 +4,8 @@ import fractions
 
 # polyadic gcd
 def gcd(*args):
-    assert len(args) > 1
+    assert len(args) > 0
+    if len(args) == 1: return args[0]
     g = fractions.gcd(args[0], args[1])
     for elt in args[2:]:
         g = fractions.gcd(g, elt)
@@ -66,10 +67,14 @@ def orbitEquiv(cur_f, orig_f):
     return True
 
 def orbitRepresentative(f):
+
     nonzero_f = [(i, pebbles) for i, pebbles in enumerate(f) if pebbles > 0]
     pebble_counts = [pebs for _, pebs in nonzero_f]
     nonzero_f = [(i, pebbles) for i, pebbles in enumerate(f) if pebbles > 0]
-    if len(pebble_counts) < 2: return f
+
+    if len(pebble_counts) < 1:
+        return f
+
     g = gocd(*pebble_counts)
     return tuple(n / g for n in f)
 
@@ -78,8 +83,6 @@ def residual((z, o, t), b):
     else: return (o, t + z, 0)
 
 def componentWiseAdd(a, b):
-    # print "asdf"
-    # print zip(a, b)
     return tuple(sum(elt) for elt in zip(a, b))
 
 # on input all 0's
@@ -97,8 +100,10 @@ def a32_pi(s):
             f = componentWiseAdd(residual(f, 0), residual(f, 1))
         f = shrink(f)
         f = orbitRepresentative(f)
-        if orbitEquiv(f, orig_f):
-            f = orig_f
+        if f == orig_f:
+            print "quit on iteration %d" % i
+            return
 
 
-a32_pi([random.randint(0, 1) for _ in xrange(10)])
+a32_pi([random.randint(0, 1) for _ in xrange(100)])
+# a32_pi(str2intlist("000000000"))
