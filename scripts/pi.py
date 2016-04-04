@@ -1,4 +1,21 @@
 # lol funny file name
+import random
+import fractions
+
+# polyadic gcd
+def gcd(*args):
+    assert len(args) > 1
+    g = fractions.gcd(args[0], args[1])
+    for elt in args[2:]:
+        g = fractions.gcd(g, elt)
+    return g
+
+def gocd(*args):
+    # greatest odd common divisor
+    g = gcd(*args)
+    while g % 2 == 0:
+        g /= 2
+    return g
 
 def str2intlist(s):
     result = []
@@ -48,26 +65,13 @@ def orbitEquiv(cur_f, orig_f):
 
     return True
 
-print orbitEquiv((3, 0, 0), (1, 0, 0))
-
-
-    # (zero_c, one_c, two_c) = cur_f
-    # (zero_o, one_o, two_o) = orig_f
-    # if (zero_o > 0 and zero_c % zero_o == 0):
-    #     factor_zero = zero_c / zero_o
-    # if (one_o > 0 and one_c % one_o == 0):
-    #     factor_one = one_c / one_o
-    # if (two_o > 0 and two_c % two_o == 0):
-    #     factor_two = two_c / two_o
-    # if (factor_zero == factor_one == factor_two):
-    #     return True
-    # return False
-
 def orbitRepresentative(f):
-    (z, o, t) = f
-    if (z % 2 == 1 and o % 2 == 1 and t % 2 == 1):
-        pass
-    # TODO
+    nonzero_f = [(i, pebbles) for i, pebbles in enumerate(f) if pebbles > 0]
+    pebble_counts = [pebs for _, pebs in nonzero_f]
+    nonzero_f = [(i, pebbles) for i, pebbles in enumerate(f) if pebbles > 0]
+    if len(pebble_counts) < 2: return f
+    g = gocd(*pebble_counts)
+    return tuple(n / g for n in f)
 
 def residual((z, o, t), b):
     if b == 0: return (o, t, z)
@@ -80,14 +84,11 @@ def componentWiseAdd(a, b):
 
 # on input all 0's
 def a32_pi(s):
-    # (zero, one, two) = (1, 0, 0)
     f = (1, 0, 0)
     orig_f = f
-    # runs = 20
     for i in range(len(s)):
         bit = s[i]
         print f
-        # print pebbleSetup(f)
         # step
         if (f[0] % 2 == 0):
             # even
@@ -95,11 +96,9 @@ def a32_pi(s):
         else:
             f = componentWiseAdd(residual(f, 0), residual(f, 1))
         f = shrink(f)
+        f = orbitRepresentative(f)
         if orbitEquiv(f, orig_f):
             f = orig_f
 
 
-# TODO need to look into equivalence classes for orbit equivalence
-# coprime to length of orbit
-
-# a32_pi(str2intlist("00000000000000000000000000000000000000000000"))
+a32_pi([random.randint(0, 1) for _ in xrange(10)])
