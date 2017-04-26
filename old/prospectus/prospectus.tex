@@ -1,0 +1,112 @@
+\documentclass[11pt]{article}
+% \usepackage[left=1in, right=2.5in, bottom=1.25in, top=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{tikz}
+\usepackage{multicol}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{xltxtra}
+
+% Font stuff
+\newcommand*{\concourse}{\fontspec[]{Concourse T4}\selectfont}
+\newcommand*{\caps}{\fontspec[]{Equity Caps B}\selectfont}
+\renewcommand*{\textsc}{\caps}
+\newcommand{\fstar}{f^*}
+\newcommand{\kstar}{^*}
+
+% \pagestyle{fancy}
+% \fancyhead{}
+% \renewcommand{\headrulewidth}{0pt} % no line
+% \fancyhead[LO]{\leftmark}
+% \fancyhead[RE]{\rightmark}
+% \fancyhead[LE, RO]{\thepage}
+% \fancyfoot{}
+% % \lfoot{\thepage}
+
+% Theorem stuff
+\newtheoremstyle{pleasant} % Name
+  {\topsep}                % Space above
+  {\topsep}                % Space below
+  {\itshape}               % Body font
+  {}                       % Indent amount
+  {\small\caps}               % Theorem head font
+  {.}                      % Punctuation after theorem head
+  {.5em}                   % Space after theorem head
+  {}                       % Theorem head spec (empty means normal)
+
+\theoremstyle{pleasant}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{question}{Question}
+\newtheorem{conjecture}{Conjecture}
+
+% Make titles prettier
+\titleformat*{\section}{\Large\caps}
+\titleformat*{\subsection}{\large\caps}
+\titleformat*{\subsubsection}{\normalsize\caps}
+% left, before, after
+\titlespacing*{\subsection}{0pt}{1.75em plus 0.5em minus 0.2em}{1em}
+
+% More font stuff
+\setmainfont{Equity Text B}
+\renewcommand{\baselinestretch}{1.2}
+
+%%%%%%%%% Useful shorthand %%%%%%%%%%%%
+\newcommand{\0}{\underline{0}}
+\newcommand{\1}{\underline{1}}
+\newcommand{\2}{\textbf{2}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\S}{\mathcal{S}}
+\renewcommand{\G}{\mathcal{G}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{\concourse{SCS Senior Thesis Prospectus}}
+\author{\concourse{Evan Bergeron}\\
+\concourse{Advisor: Klaus Sutner}}
+\date{\concourse{\today}}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We intend to study iterated transductions defined by a class of invertible transducers over the binary alphabet. Previous work has investigated orbit checking algorithms and the orbit rationality problem for a subclass of automata associated with Abelian free groups and monoids of finite rank.
+
+We intend to answer these same questions for increasingly large subclasses of invertible transducers.
+\end{abstract}
+\section{Problem Description / Significance}
+
+An invertible transducer is a Mealy automaton where all transitions are of the form $p^{a/\pi_p(a)}\rightarrow q$, where $\pi_p$ is a permutation of the alphabet depending on the source state $p$. We only consider $\textbf{2} = \{ 0, 1 \}$ as input and output alphabet. Choosing an arbitrary start state $p$, we obtain a transduction from $\2^*$ to $\2^*$. These transductions form a semigroup $\S(A)$. Including inverses, we obtain groups $\G(A)$. These groups are called automata groups or self-similar groups, studied in great detail in group theory and symbolic dynamics. For instance, Grigorchuk's group of intermediate growth demonstrates the descriptive power of invertible transducers.
+\section{Proposed Research Plan}
+
+A good deal of background reading has already been completed. I've read 2 papers by Klaus, as well as Okano's thesis from last year. Further reader still needs to be done, in particular \cite{NekrashevychSidki04:automorphisms}.
+
+I'll be working alongside Klaus to produce original results. We expect to answer the orbit rationality question for subclasses of inverse transducers with associated Abelian semigroups and multiple toggle states; a class of automata not previously examined in this way.
+
+%We will also be investigating transducers with single toggle states, but non-Abelian semigroups.
+
+We also hope to characterize the behaviour of several of the non-Abelian cases as well; though we expect these orbit relations will fail to be rational.
+
+\subsection{Timeline}
+\begin{itemize}
+\item September: reading, absorbing known techniques.
+
+\item October: study special cases with a view towards handling simple non-commutative automata.
+
+\item November: extend orbit characterization in commutative cases.
+
+\item December-January: develop and implement decision algorithm for orbit rationality for as large a class of automata as feasible.
+
+\item February - March: further develop connections between group theoretic and model theoretic properties of invertible automata.
+
+\item April: Writeup.
+\end{itemize}
+
+\nocite{*}
+\bibliographystyle{unsrt}
+\bibliography{refs}
+
+\end{document}

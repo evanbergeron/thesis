@@ -1,0 +1,298 @@
+\documentclass[a0,landscape, 16pt]{a0poster}
+
+\usepackage{multicol}
+\columnsep=100pt
+\usepackage{xltxtra} % xelatex goodies, plus font selection
+\usepackage{tabularx}
+% \usepackage{parskip}
+\usepackage{titlesec}
+
+% Specify colors by their 'svgnames',
+% for a full list of all colors available see here:
+% http://www.latextemplates.com/svgnames-colors
+\usepackage[svgnames]{xcolor}
+
+\renewcommand{\baselinestretch}{1.2}
+%\usepackage{palatino} % Uncomment to use the Palatino font
+\setmainfont{Equity Text B}
+
+\newcommand*{\concourse}{\fontspec[]{Concourse T4}\selectfont}
+\newcommand*{\concoursecaps}{\fontspec[]{Concourse C4}\selectfont}
+\newcommand*{\caps}{\fontspec[]{Equity Caps B}\selectfont}
+
+\usepackage{graphicx} % Required for including images
+\usepackage{tikz} % Required for including images
+\graphicspath{{figures/}} % Location of the graphics files
+\usepackage{booktabs} % Top and bottom rules for table
+
+% Required for specifying captions to tables and figures
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{amsfonts, amsmath, amsthm, amssymb} % For math fonts, symbols and environments
+\usepackage{wrapfig} % Allows wrapping text around tables and figures
+
+% Theorem stuff
+\newtheoremstyle{pleasant} % Name
+  {\topsep}                % Space above
+  {\topsep}                % Space below
+  {\itshape}               % Body font
+  {}                       % Indent amount
+  {\concourse}               % Theorem head font
+  {.}                      % Punctuation after theorem head
+  {.5em}                   % Space after theorem head
+  {}                       % Theorem head spec (empty means normal)
+\theoremstyle{pleasant}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{question}{Question}
+\newtheorem{conjecture}{Conjecture}
+
+% Make titles prettier
+\titleformat*{\section}{\huge\concourse}
+\titleformat*{\subsection}{\Large\concourse}
+\titleformat*{\subsubsection}{\concourse}
+
+% \fontsize{80}{50}\selectfont
+
+% left, before, after
+\titlespacing*{\section}{0pt}{1.2em plus 0.5em minus 0.2em}{1em}
+\titlespacing*{\subsection}{0pt}{1.75em plus 0.5em minus 0.2em}{1em}
+
+%%%%%%%%% Useful shorthand %%%%%%%%%%%%
+\newcommand{\0}{\underline{0}}
+\newcommand{\1}{\underline{1}}
+\newcommand{\2}{\underline{2}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\S}{\mathcal{S}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	POSTER HEADER
+%----------------------------------------------------------------------------------------
+
+% The header is divided into three boxes:
+% The first is 55% wide and houses the title, subtitle, names and university/organization
+% The second is 25% wide and houses contact information
+% The third is 19% wide and houses a logo for your university/organization or a photo of you
+% The widths of these boxes can be easily edited to accommodate your content as you see fit
+
+\begin{minipage}[b]{0.55\linewidth}
+\veryHuge \color{NavyBlue} \concourse{Orbit Checking for Invertible Transducers} \color{Black}\\ % Title
+% \Huge\textit{An Exploration of Complexity}\\[1cm] % Subtitle
+\huge \concourse{Evan Bergeron \& Klaus Sutner}\\ % Author(s)
+\huge Carnegie Mellon Computer Science Department\\ % University/organization
+\end{minipage}
+
+% \begin{minipage}[b]{0.25\linewidth}
+% % \color{DarkSlateGray}\Large \textbf{Contact Information:}\\
+% Department Name\\ % Address
+% University Name\\
+% 123 Broadway, State, Country\\\\
+% Phone: +1 (000) 111 1111\\ % Phone number
+% Email: \texttt{john@LaTeXTemplates.com}\\ % Email address
+% \end{minipage}
+
+% \begin{minipage}[b]{0.19\linewidth}
+% \includegraphics[width=20cm]{logo.png} % Logo or a photo of you, adjust its dimensions here
+% \end{minipage}
+
+% \vspace{1cm} % A bit of extra whitespace between the header and poster content
+
+%----------------------------------------------------------------------------------------
+
+\begin{multicols}{3} % This is how many columns your poster will be broken into, a poster with many figures may benefit from less columns whereas a text-heavy poster benefits from more
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT
+%----------------------------------------------------------------------------------------
+
+% \color{Navy} % Navy color for the abstract
+
+\begin{abstract}
+\large
+We study iterated transductions defined by a class of invertible transducers over the binary alphabet. We present polynomial time orbit checking algorithms for a subclass of automata associated with Abelien free groups of finite rank.
+\end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
+
+%	RESULTS
+%----------------------------------------------------------------------------------------
+
+% \section*{Results}
+% \subsection*{A Simple Invertible Transducer}
+\section*{Flipping Pebbles}
+
+\Large
+Suppose we're given a sequence of pebbles, black on one side, white on the other. Starting at the left, flip the current pebble. If the resulting color is black, skip ahead two pebbles. Else, skip ahead one. Repeat until the end of the string.
+
+For example, given the string 0000, we have
+$$0000 \rightarrow 1001 \rightarrow 0011 \rightarrow 1010\rightarrow 0000$$
+
+This can be modeled with the following finite state machine $A$:\\
+
+\begin{center}
+\begin{tikzpicture}[scale=0.3]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (39.5,-18.5) circle (3);
+\draw (39.5,-18.5) node {$0$};
+\draw [black] (50.8,-38.4) circle (3);
+\draw (50.8,-38.4) node {$2$};
+\draw [black] (27.5,-38.4) circle (3);
+\draw (27.5,-38.4) node {$1$};
+\draw [black] (40.322,-21.38) arc (10.02185:-72.20308:14.565);
+\fill [black] (30.43,-37.78) -- (31.34,-38.01) -- (31.04,-37.06);
+\draw (39.09,-32.7) node [right] {$1/0$};
+\draw [black] (42.467,-18.9) arc (75.86616:-16.68694:13.324);
+\fill [black] (51.98,-35.65) -- (52.68,-35.02) -- (51.73,-34.74);
+\draw (51.46,-24.02) node [right] {$0/1$};
+\draw [black] (48.761,-40.593) arc (-48.81225:-131.18775:14.594);
+\fill [black] (29.54,-40.59) -- (29.81,-41.5) -- (30.47,-40.74);
+\draw (39.15,-44.7) node [below] {$a/a$};
+\draw [black] (26.496,-35.579) arc (-166.604:-255.57722:13.874);
+\fill [black] (36.54,-18.93) -- (35.64,-18.64) -- (35.89,-19.61);
+\draw (27.47,-23.93) node [left] {$a/a$};
+\end{tikzpicture}
+\end{center}
+
+When we have two states $p$ and $q$ with the transition $p ^{a/b}\rightarrow q$, this means ``read character $a$ and output character $b$''. % TODO fix this arrow
+The algorithm previously described starts on state 0.
+
+Starting at the 1st state ignores the first character, then proceeds as normal. We can view these pebble flipping algorithm as a function from string to string. These functions form a semigroup $\S(A)$ under composition (associative and closed).
+
+\begin{definition}
+Given some function $f \in \S(A)$ and some string $x$, the set of all strings reachable from $x$ by repeated application of $f$ is called the {\normalfont\concourse{orbit of $x$ under $f$}}.
+\end{definition}
+
+The central question: given $f$ and two strings $x$ and $y$, is $x$ in the orbit of $y$ under $f$? Can we answer this question efficiently?
+
+\vfill
+\columnbreak
+\section*{1-Tree Transducers}
+
+\begin{definition}
+Take a directed acyclic graph with exactly one directed cycle (excluding a copy state self-loop) and exactly one vertex $v$ of outdegree two. Let $v$ be the sole toggle state and every other state be a copy state. The resulting automaton is a 1-tree transducer.
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.4]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (41.9,-27.1) circle (3);
+\draw (41.9,-27.1) node {$0$};
+\draw [black] (55.1,-27.1) circle (3);
+\draw [black] (32.4,-35.3) circle (3);
+\draw (32.4,-35.3) node {$2$};
+\draw [black] (32.4,-17.6) circle (3);
+\draw (32.4,-17.6) node {$1$};
+\draw [black] (44.9,-27.1) -- (52.1,-27.1);
+\fill [black] (52.1,-27.1) -- (51.3,-26.6) -- (51.3,-27.6);
+\draw (48.5,-26.6) node [above] {$1/0$};
+\draw [black] (57.78,-25.777) arc (144:-144:2.25);
+\draw (62.35,-27.1) node [right] {$a/a$};
+\fill [black] (57.78,-28.42) -- (58.13,-29.3) -- (58.72,-28.49);
+\draw [black] (41.06,-29.967) arc (-25.51166:-72.88958:9.372);
+\fill [black] (35.36,-34.89) -- (36.27,-35.13) -- (35.98,-34.17);
+\draw (40.89,-33.52) node [below] {$0/1$};
+\draw [black] (35.363,-17.978) arc (73.34933:16.65067:9.172);
+\fill [black] (41.52,-24.14) -- (41.77,-23.23) -- (40.81,-23.51);
+\draw (39.74,-18.8) node [right] {$a/a$};
+\draw [black] (29.422,-35.081) arc (-103.86774:-256.13226:8.89);
+\fill [black] (29.42,-17.82) -- (28.53,-17.53) -- (28.77,-18.5);
+\draw (22.16,-26.45) node [left] {$a/a$};
+\end{tikzpicture}
+\end{center}
+\begin{proposition}
+For a 1TT with a cycle of length $n$, on input $x$, state $i$ adds (or subtracts) one to the number $x(i) = \{x_j\}_{j \equiv i \mod n}$ interpreted in reverse binary.
+\end{proposition}
+
+\begin{theorem}
+Orbit checking for 1-tree transducers can be done in polynomial time.
+\end{theorem}
+\begin{proof}
+The above proposition reduces orbit checking to a system of equations. Given two strings $x$, $y$ and a word $f \in \S(A)$, compute which ``step size'' with which we add to $x(i)$ for all $i \in [n-1]$.
+
+Then simply verify that each $x(i)$ is the same multiple away from $y(i)$ for all $i$. All of this arithmetic is performed on numbers polynomial in the length of the input.
+% The above proposition gives us that, given two strings $x$, $y$ and a word $f$ in the semigroup $\S(A)$, in order for $x \in f^*(y)$, we need some $k$ such that
+% Each 1TT is a variant of an addition machine, operating on some substring on the input. This reduces to a system of equations, with arithmetic performed on numbers polynomial in the length of the input.
+
+% For example, consider $\0$ in the above transducer. For some string $s$, call $s(i)$ the substring consisting of all characters at index $j \equiv i \mod n$, where $n$ is the length of the cycle. Then $\0$ adds one to this string, interpreted in reverse binary.
+\end{proof}
+
+\begin{theorem}
+The semigroup of a 1TT with cycle length $n$ is the free semigroup of rank $n$.
+\end{theorem}
+
+\begin{definition}
+A relation is {\normalfont\concourse{rational}} if there is some Mealy automaton recognizing the relation.
+\end{definition}
+
+\begin{theorem}
+The orbit relation of a 1TT is rational.
+\end{theorem}
+
+\section*{A Small CCC}
+\begin{definition}
+A Cycle-Cum-Chord automaton (CCC) has state set $\{0, 1, \ldots n-1\}$ and transitions $p ^{a/a}\rightarrow p - 1$, $0 ^{1/0}\rightarrow m - 1$, $0 ^{0/1}\rightarrow n - 1$, where $1 \leq m \leq n$. We write $A^n_m$ for this transducer.
+\end{definition}
+
+The leftmost diagram on this poster is $A^3_2$.
+
+\begin{theorem}
+Orbit checking for $A^3_2$ can be done in polynomial time.
+\end{theorem}
+
+\begin{theorem}
+The orbit relation for $A^3_2$ is rational.
+\end{theorem}
+
+\begin{theorem}
+$\S(A^3_2)$ is already a group, ismorphic to $\Z^2$.
+\end{theorem}
+\begin{proof}
+Here's a first step:
+We claim that
+$\0^2\1^1\2 = I$. Fix some input string $s$. We claim each bit is flipped exactly twice.
+
+If $c_i$ is the number of times bit $i$ is flipped, we have the recurrence
+\begin{align*}
+c_i &= \lfloor (c_{i-3} / 2) \rfloor + (c_{i-3} \mod{2}) \cdot (1 - s_{i-3})\\
+    &+\lfloor (c_{i-2} / 2) \rfloor + (c_{i-2} \mod{2}) \cdot s_{i-2}
+\end{align*}
+The claim holds for the first two bits trivially, the third is flipped once by $\0$ and once by $\2$. Then induct across $s$.
+
+So we have $\S(A^3_2)$ is already a group (as $\0^{-1} = \0\1^2\2$ and so on).
+
+Further, since $\2$ is expressible in terms of $\0$ and $\1$, we have that $\S(A^3_2) = \{ \0^i \1^j \mid i, j \in \Z \}$, giving us a concise data structure to represent elements of $\S(A^3_2)$.
+
+It takes a bit of work to show no other such identities exist.
+\end{proof}
+
+% \vfill
+% \columnbreak
+\section*{Cycle-Cum-Chord Transducers}
+\begin{theorem}
+Orbit checking for $A^n_m$ can be done in polynomial time.
+\end{theorem}
+
+\begin{question}
+For which $n$, $m$ is the orbit relation of $A^n_m$ rational?
+\end{question}
+
+\begin{theorem}
+$\S(A^n_m)$ is already a group, ismorphic to $\Z^{n-gcd(n,m)}$.
+\end{theorem}
+
+\section*{Acknowledgements}
+
+Thanks to Klaus Sutner for his guidance and to Tim Becker for his continued interest in the project.
+
+%----------------------------------------------------------------------------------------
+
+\end{multicols}
+\end{document}

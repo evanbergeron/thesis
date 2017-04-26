@@ -1,0 +1,107 @@
+\documentclass[11pt]{article}
+% \usepackage[left=1in, right=2.5in, bottom=1.25in, top=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{tikz}
+\usepackage{multicol}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{xltxtra}
+
+% Font stuff
+\newcommand*{\concourse}{\fontspec[]{Concourse T4}\selectfont}
+\newcommand*{\caps}{\fontspec[]{Equity Caps B}\selectfont}
+\renewcommand*{\textsc}{\caps}
+
+\pagestyle{fancy}
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt} % no line
+\fancyhead[LO]{\leftmark}
+\fancyhead[RE]{\rightmark}
+\fancyhead[LE, RO]{\thepage}
+\fancyfoot{}
+% \lfoot{\thepage}
+
+% Theorem stuff
+\newtheoremstyle{pleasant} % Name
+  {\topsep}                % Space above
+  {\topsep}                % Space below
+  {\itshape}               % Body font
+  {}                       % Indent amount
+  {\small\caps}               % Theorem head font
+  {.}                      % Punctuation after theorem head
+  {.5em}                   % Space after theorem head
+  {}                       % Theorem head spec (empty means normal)
+
+\theoremstyle{pleasant}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{question}{Question}
+\newtheorem{conjecture}{Conjecture}
+
+% Make titles prettier
+\titleformat*{\subsection}{\large\caps}
+\titleformat*{\subsubsection}{\normalsize\caps}
+% left, before, after
+\titlespacing*{\subsection}{0pt}{1.75em plus 0.5em minus 0.2em}{1em}
+
+% More font stuff
+\setmainfont{Equity Text B}
+\renewcommand{\baselinestretch}{1.2}
+
+%%%%%%%%% Useful shorthand %%%%%%%%%%%%
+\newcommand{\0}{\underline{0}}
+\newcommand{\1}{\underline{1}}
+\newcommand{\2}{\underline{2}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\S}{\mathcal{S}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{\concourse{A polynomial time algorithm for determining if a transducer's associated semigroup is Abelian}}
+\author{\concourse{Tsutomu Okano \& Evan Bergeron}}
+\date{\concourse{\today}}
+\begin{document}
+\maketitle
+
+% \chapter*{\normalfont\concourse{A polynomial time algorithm for determining if a transducer's associated semigroup is Abelian}}
+% \chapter*{\normalfont\concourse{Determining commutativity of invertible transducers}}
+
+% \vspace{-1em}
+% {\Large\concourse{Tsutomu Okano \& Evan Bergeron}}
+
+% \subsection*{Definitions}
+% A semigroup $S$ is called an \textit{automaton semigroup} iff there is some transducer $\mathcal{A}$ such that $S \cong S(\mathcal{A})$.
+
+% An transducer is said to be \textit{invertible} iff the output function of each state is a permutation of the input alphabet. Over the binary alphabet, a state whose output function is the identity is called a \textit{copy state}. Otherwise, it is called a \textit{toggle state}.
+
+% Fix some state $s$. The state to which it transitions when reading a 0 is denoted $\partial_0 t$. Similarly, we have $\partial_1 t$.
+
+% The states of a transducer $A$ induce functions of type $\Sigma^* \rightarrow \Sigma^*$. These functions form a semigroup $S(A)$ when closed under composition.
+
+% The main result of this draft is a polynomial time algorithm for determining whether $S(A)$ is commutative for some invertible transducer $A$.
+
+We have the following characterization from Okano: $S(A)$ is Abelian iff there exists a unique $\Theta_A \in S(A)$ such that $\partial_0 \underline{t} = \partial_1 \underline{t} \Theta_A$ for all toggle states $t$. So it suffices to verify that each toggle state obeys this.
+
+Since these transducers are synchronous (output exactly one character per transition), we can build a DFA that recognizes the input-output relation of some fixed starting state. Take some $s$ this start state. Then build a DFA over the alphabet $\Sigma \times \Sigma$ with transitions simulating the behavior of the transducer starting at $s$. This DFA is called the \textit{acceptor of $A$ at $s$}.
+
+An automaton semigroup $S(A)$ has a presentation with generators corresponding to the states of $A$. Thinking of elements of $S(A)$ as words over this generator alphabet, we see that the state set of $A$ is precisely the words of length 1. We can build an automaton whose state set is the set of all length 2 words as follows:
+
+If $A = (Q, \Sigma, \delta)$, the product automaton $A \times A$ has state set $Q\times Q$ with transition function $\partial_a (s_1, s_2) = (\partial_a s_1, \partial_{a s_1} s_2)$. We can see by induction that each state $(s_1, s_2)$ corresponds to the word $s_1 s_2 \in S(A)$.
+
+Remember that $(\partial_1 \underline{t}) = (\partial_0 \underline{t})\Theta_A$. So then we have $(\partial_1 \underline{t})(\partial_0 \underline{t})^{-1} = \Theta_A$. (This is straight from Okano's thesis, I think this expression is better written as $(\partial_0 \underline{t})^{-1}(\partial_1 \underline{t})= \Theta_A$ - it seems more consistent with function-application-from-the-right). 
+
+Anyway, $\Theta_A = (\partial_1 \underline{t})(\partial_0 \underline{t})^{-1} = (\partial_1 \underline{t})(\partial_1 \underline{t^{-1}})$, where $t^{-1}$ lies in the inverse automaton for $A$. So then build for each toggle state the following: $(A\times A^{-1})(\partial_1 \underline{t}, \partial_1 \underline{t^{-1}})$. Note that the language of this automaton is $\{ x : y \mid y = x(\partial_1 \underline{t})(\partial_0 \underline{t})^{-1}\}$. It suffices to then verify that all of these constructed DFAs are equivalent, which can be done via Hopcroft's minimization algorithm.
+
+So to summarize algorithmically: take the input automaton $A$. Build it's inverse automaton $A^{-1}$. Construct the product automaton $A\times A^{-1}$. Then for each toggle state $t_i$ of $A$, take the state $s_i = (\partial_1 t_i, \partial_1 t_i^{-1})$ in $A\times A^{-1}$ and construct the DFA $(A\times A^{-1})(s_i)$. Verify all the constructed DFAs are equivalent.
+
+% Interestingly, note that this approach leads to (new?) proof of the following claim:
+
+This product automaton construction also gives us that the word problem for automaton semigroups is decidable.
+
+% \textit{Claim:} All automaton semigroups have a decidable word problem. \textit{Proof:} Take the two words $u$ and $v$ over the state set alphabet. Construct product automata $A^{|u|}$, $A^{|v|}$. Construct the acceptors $A^{|u|}(u)$ and $A^{|v|}(v)$. Then use Hopcroft minimization to verify that the two DFAs are equivalent.
+
+\end{document}

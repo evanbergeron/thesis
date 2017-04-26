@@ -1,0 +1,35 @@
+\begin{thebibliography}{1}
+
+\bibitem{NekrashevychSidki04:automorphisms}
+V.~Nekrashevych and S.~Sidki.
+\newblock {\em Automorphisms of the binary tree: state-closed subgroups and
+  dynamics of 1/2-endomorphisms}.
+\newblock Cambridge University Press, 2004.
+
+\bibitem{Nekrashevych05:self_similar_groups}
+V.~Nekrashevych.
+\newblock {\em Self-Similar Groups}, volume 117 of {\em Math. Surveys and
+  Monographs}.
+\newblock AMS, 2005.
+
+\bibitem{Muntyan09:automata_groups}
+Y.~Muntyan.
+\newblock {\em Automata Groups}.
+\newblock PhD thesis, Texas A\&M University, May 2009.
+
+\bibitem{Cain09:auto_sg}
+A.~J. Cain.
+\newblock Automaton semigroups.
+\newblock {\em TCS}, 410(47--49):5022--5038, 2009.
+
+\bibitem{Kharlampovich11:automatic_structures_groups}
+O.~Kharlampovich, B.~Khoussainov, and A.~Miasnikov.
+\newblock {From automatic structures to automatic groups}.
+\newblock {\em ArXiv e-prints}, July 2011.
+
+\bibitem{BartholdiSilva10a:groups_automata}
+L.~Bartholdi and P.~V. Silva.
+\newblock Groups defined by automata.
+\newblock {\em CoRR}, abs/1012.1531, 2010.
+
+\end{thebibliography}

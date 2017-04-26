@@ -1,0 +1,80 @@
+\begin{thebibliography}{10}
+
+\bibitem{BartholdiSilva10a:groups_automata}
+L.~Bartholdi and P.~V. Silva.
+\newblock Groups defined by automata.
+\newblock {\em CoRR}, abs/1012.1531, 2010.
+
+\bibitem{Cain09:auto_sg}
+A.~J. Cain.
+\newblock Automaton semigroups.
+\newblock {\em TCS}, 410(47--49):5022--5038, 2009.
+
+\bibitem{Cain09:dec_prob}
+A.~J. Cain and V.~Maltcev.
+\newblock Decision problems for finitely presented and one-relation semigroups
+  and monoids.
+\newblock {\em International Journal of Algebra and Computation},
+  19(6):747--770, 2009.
+
+\bibitem{gillibert:finite}
+Pierre Gillibert.
+\newblock The finiteness problem for automaton semigroups is undecidable.
+\newblock {\em CoRR}, abs/1304.2295, 2013.
+
+\bibitem{Godin:knapsack}
+T.~Godin.
+\newblock Knapsack problem for automaton groups.
+\newblock {\em HAL}, 2016.
+
+\bibitem{Kharlampovich11:automatic_structures_groups}
+O.~Kharlampovich, B.~Khoussainov, and A.~Miasnikov.
+\newblock {From automatic structures to automatic groups}.
+\newblock {\em ArXiv e-prints}, July 2011.
+
+\bibitem{Konig15:knapsack}
+D.~Konig, M.~Lohrey, and G.~Zetzsche.
+\newblock Knapsack and subset sum problems in nilpotent, polycyclic, and
+  co-context-free groups.
+\newblock {\em Contemporary Mathematics}, 2015.
+
+\bibitem{Muntyan09:automata_groups}
+Y.~Muntyan.
+\newblock {\em Automata Groups}.
+\newblock PhD thesis, Texas A\&M University, May 2009.
+
+\bibitem{Nekrashevych05:self_similar_groups}
+V.~Nekrashevych.
+\newblock {\em Self-Similar Groups}, volume 117 of {\em Math. Surveys and
+  Monographs}.
+\newblock AMS, 2005.
+
+\bibitem{NekrashevychSidki04:automorphisms}
+V.~Nekrashevych and S.~Sidki.
+\newblock {\em Automorphisms of the binary tree: state-closed subgroups and
+  dynamics of 1/2-endomorphisms}.
+\newblock Cambridge University Press, 2004.
+
+\bibitem{okano:thesis}
+T.~Okano.
+\newblock {\em Invertible Binary Transducers and Automorphisms of the Binary
+  Tree}.
+\newblock PhD thesis, Carnegie Mellon University, May 2015.
+
+\bibitem{sunic:conj}
+Z.~Sunic and E.~Ventura.
+\newblock The conjugacy problem in automaton groups is not solvable.
+\newblock {\em Journal of Algebra}, 364(148--154), 2012.
+
+\bibitem{sutner:coords}
+K.~Sutner.
+\newblock Invertible transducers, iterations and coordinates.
+\newblock 2013.
+
+\bibitem{sutner:iterating}
+K.~Sutner and K.~Lewi.
+\newblock Iterating inverse binary transducers.
+\newblock {\em Journal of Automata, Languages, and Combinators},
+  17(2--4):293--313, 2012.
+
+\end{thebibliography}

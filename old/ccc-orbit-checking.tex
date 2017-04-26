@@ -1,0 +1,368 @@
+\documentclass[11pt]{book}
+% \usepackage[left=1in, right=2.5in, bottom=1.25in, top=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{tikz}
+\usepackage{multicol}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{xltxtra}
+
+% Font stuff
+\newcommand*{\concourse}{\fontspec[]{Concourse T4}\selectfont}
+\newcommand*{\caps}{\fontspec[]{Equity Caps B}\selectfont}
+\renewcommand*{\textsc}{\caps}
+
+\pagestyle{fancy}
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt} % no line
+\fancyhead[LO]{\leftmark}
+\fancyhead[RE]{\rightmark}
+\fancyhead[LE, RO]{\thepage}
+\fancyfoot{}
+% \lfoot{\thepage}
+
+% Theorem stuff
+\newtheoremstyle{pleasant} % Name
+  {\topsep}                % Space above
+  {\topsep}                % Space below
+  {\itshape}               % Body font
+  {}                       % Indent amount
+  {\small\caps}               % Theorem head font
+  {.}                      % Punctuation after theorem head
+  {.5em}                   % Space after theorem head
+  {}                       % Theorem head spec (empty means normal)
+
+\theoremstyle{pleasant}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{question}{Question}
+\newtheorem{conjecture}{Conjecture}
+
+% Make titles prettier
+\titleformat*{\subsection}{\large\caps}
+\titleformat*{\subsubsection}{\normalsize\caps}
+% left, before, after
+\titlespacing*{\subsection}{0pt}{1.75em plus 0.5em minus 0.2em}{1em}
+
+% More font stuff
+\setmainfont{Equity Text B}
+\renewcommand{\baselinestretch}{1.2}
+
+%%%%%%%%% Useful shorthand %%%%%%%%%%%%
+\newcommand{\0}{\underline{0}}
+\newcommand{\1}{\underline{1}}
+\newcommand{\2}{\underline{2}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\S}{\mathcal{S}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{\concourse{Orbit Checking for Invertible Binary Transducers}}
+\author{\concourse{Evan Bergeron}}
+\date{\concourse{\today}}
+\begin{document}
+% \maketitle
+
+\chapter*{\normalfont\concourse{Orbit Checking for Invertible Binary Transducers}}
+\vspace{-1em}
+{\Large\concourse{Evan Bergeron}}
+\subsection*{A Simple Invertible Transducer}
+This is $A^3_2$.
+\begin{center}
+\begin{tikzpicture}[scale=0.1]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (39.5,-18.5) circle (3);
+\draw (39.5,-18.5) node {$0$};
+\draw [black] (50.8,-38.4) circle (3);
+\draw (50.8,-38.4) node {$2$};
+\draw [black] (27.5,-38.4) circle (3);
+\draw (27.5,-38.4) node {$1$};
+\draw [black] (40.322,-21.38) arc (10.02185:-72.20308:14.565);
+\fill [black] (30.43,-37.78) -- (31.34,-38.01) -- (31.04,-37.06);
+\draw (39.09,-32.7) node [right] {$1/0$};
+\draw [black] (42.467,-18.9) arc (75.86616:-16.68694:13.324);
+\fill [black] (51.98,-35.65) -- (52.68,-35.02) -- (51.73,-34.74);
+\draw (51.46,-24.02) node [right] {$0/1$};
+\draw [black] (48.761,-40.593) arc (-48.81225:-131.18775:14.594);
+\fill [black] (29.54,-40.59) -- (29.81,-41.5) -- (30.47,-40.74);
+\draw (39.15,-44.7) node [below] {$a/a$};
+\draw [black] (26.496,-35.579) arc (-166.604:-255.57722:13.874);
+\fill [black] (36.54,-18.93) -- (35.64,-18.64) -- (35.89,-19.61);
+\draw (27.47,-23.93) node [left] {$a/a$};
+\end{tikzpicture}
+\end{center}
+Let $\underline{i}$ be the function induced by applying $A^3_2$ to some string with state $i$ as the start state. $\0, \1, \2$ generate a semigroup under composition. For example, $\0^2$ is the result of applying $\0$ twice. We call such functions \textit{transductions}.
+
+If $x$ is some string, call $\0^* = \{ \0^t(x) \mid t \in \N \}$ the \textit{orbit} of $x$ under $\0$.
+
+We prove that checking if $y \in \0^*(x)$ is in P. We then investigate orbit checking for arbitrary $f$ in the semigroup.
+
+\begin{lemma}
+% \subsubsection*{A Necassary Condition}
+Let $f = \0$. Let $y \in f^*(x)$. Let $c$ be a sequence where $c_i$ is the number of times $x_i$ is flipped on the way to $y$. Then
+\begin{align*}
+c_i &= \lfloor (c_{i-3} / 2) \rfloor + (c_{i-3} \mod{2}) \cdot (1 - x_{i-3})\\
+    &+\lfloor (c_{i-2} / 2) \rfloor + (c_{i-2} \mod{2}) \cdot x_{i-2}
+\end{align*}
+where $c_0$ is the index of $y$ in $f^*(x)$, $c_1$ is 0, and $c_2$ is $\lfloor c_0 / 2 \rfloor$.
+\end{lemma}
+\begin{proof}
+
+$x_0$ is flipped upon every invocation of $f$. $x_1$ is never flipped. $x_2$ is flipped roughly every other time $x_0$ is flipped. That is, it's flipped every time $x_0$ changes from a 1 to a 0. Without loss, we may assume $x_0 = 0$. Thus, $c_2 = \lfloor c_0 / 2 \rfloor$ (it's not flipped the first time, but then is flipped every other time afterward).
+
+Consider some application of $f$. $c_i$ is flipped iff $c_{i-2}$ is flipped from a 1 to a 0 or $c_{i-3}$ is flipped from a 0 to a 1. If $c_{i-2}$ and $c_{i-3}$ are even, then this is precisely every other flip. If either $c_{i-2}$ or $c_{i-3}$ is odd, then $c_i$ is dependent on both $c_{i-2}$ and $c_{i-3}$ as well as the initial conditions in $x$. We add one depending on whether or not the first flip of $c_{i-2}$, $c_{i-3}$ causes $c_i$ to flip as well.
+\end{proof}
+
+% \subsubsection*{A Sufficient Condition}
+\begin{lemma}
+The above necassary condition is also sufficient.
+\end{lemma}
+\begin{proof}
+Let $p$ be a sequence where $p_i = c_i \mod{2}$ for all $i$. Then if $x \oplus y$ looks like some $p$, then $y \in f^*(x)$. That is, if you fix your initial conditions and the above recurrence holds through $x \oplus y$, then $y \in f^*(x)$.
+\end{proof}
+
+That being said, in general, we don't know $c_0$ ahead of time.
+
+\begin{theorem}
+$\0$ Orbit Checking is in NP.
+\end{theorem}
+\begin{proof}
+Our verifier takes in two strings $x$, $y$, and an index $i$. This index is the position of $y$ in $x$'s orbit. WLOG, suppose $x_0 = 1$. We first set $c_0 = i$, $c_1 = 0$, and $c_2 = \lfloor c_0 / 2 \rfloor$. We then calculate $c_i$ and check that $c_i \mod 2 = x_i \oplus y_i$ for all $i$.
+
+The certificate is poly length with respect to $x$ and $y$, as the orbit of $y$ has length at most $2^n$ (so the length of an index is at most $n$).
+\end{proof}
+
+
+% \subsection*{A Rephrasing of the Problem}
+% In orbit iff there is a $t$ such that $y = f^t(x)$. Suffices to find this $t$.
+
+\subsection*{Semigroups Revisited}
+Recall that the states of $A^3_2$ form a semigroup $\S(A^3_2)$. This semigroup is commutative - it doesn't matter what order we apply the transductions in. This follows by commutativity of addition modulo 2 (suffices to consider each bit one at a time). This means that every element in $\S(A^3_2)$ looks like $\0^i \1^j\2^k$ for $i, j, k \in \N$.
+
+\begin{proposition}
+We have an identity element in $\S(A^3_2)$: $$\0^2\1^2\2 = I$$
+\end{proposition}
+\begin{proof}
+% TODO - not sure how this one works. It suffices to show that $c_i$ is even for all $i$.
+Proof by induction - it suffices to show that $c_i$ is even for all $i$. In fact, $c_i$ will be 2.
+
+$c_0$ is 2, each of the applications of $\0$ flip $x_0$ once. The applications of $\1$ and $\2$ skip it. $c_1$ is also 2 as each application of $\1$ flips $x_1$ once and $\0$ and $\2$ skip it. $c_2 = 2$ - $\2$ flips it once, $\1^2$ skips it, and exactly one of the two applications of $\0$ flip it.
+
+Then $c_{i-2} = c_{i-3} = 2$ by induction, so
+\begin{align*}
+c_i &= \lfloor (c_{i-3} / 2) \rfloor + \lfloor (c_{i-2} / 2) \rfloor = 1 + 1 = 2
+\end{align*}
+\end{proof}
+\begin{corollary}
+$\S(A^3_2)$ is already a group (as $\0^{-1} = \0\1^2\2$ and so on).
+\end{corollary}
+Further, since $\2$ is expressible in terms of $\0$ and $\1$, we have that $\S(A^3_2) = \{ \0^i \1^j \mid i, j \in \Z \}$, giving us a concise data structure to represent elements of $\S(A^3_2)$.
+
+% TODO get a nice distinction between the two representations
+
+\subsection*{Residuals}
+If $f_u$ is the transduction corresponding to some state state $u$ of a transducer, then $\partial_b(f_u) = f_v$ if state $u$ transitions to state $v$ on input $b$. Each transducer has a corresponding derivative table, which is effectively an adjacency list representation of the transducer.
+
+For example, $A^3_2$ has the following representation:
+
+\begin{multicols}{2}
+\begin{itemize}
+\item $\partial_0(\0) = \2$
+\item $\partial_1(\0) = \1$
+\item $\partial_b(\2) = \1$ for any $b$
+\item $\partial_b(\1) = \0$ for any $b$
+\end{itemize}
+
+\begin{itemize}
+\item $\partial_0(\0^i) = \1^{\lfloor i / 2 \rfloor}\2^{\lceil i / 2 \rceil}$
+\item $\partial_1(\0^i) = \1^{\lceil i / 2 \rceil}\2^{\lfloor i / 2 \rfloor}$
+\item $\partial_b(\1^i) = \0^i$ for any $b$
+\item $\partial_b(\2^i) = \1^i$ for any $b$
+\item $\partial_0(\0^i\1^j\2^k) = \0^j\1^{\lfloor i / 2 \rfloor+k}\2^{\lceil i / 2 \rceil}$
+\item $\partial_1(\0^i\1^j\2^k) = \0^j\1^{\lceil i / 2 \rceil+k}\2^{\lfloor i / 2 \rfloor}$
+\end{itemize}
+\end{multicols}
+% TODO why does this work this way?
+We can extend this notion of differentiation to differentiating with respect to arbitrary strings, rather than single bits (simply iterate the differentiation). Then, for $x, y \in \textbf{1}^*$, $f \in \S$
+$$f(xy) = f(x) \partial_xf(y)$$
+
+\begin{lemma}
+$A^3_2$ Orbit Checking is in NP
+\end{lemma}
+
+\begin{proof}
+Call $f \in \S(A^3_2)$ \textit{even} if $f$ leaves the first bit of its input unchanged and \textit{odd} otherwise.
+
+It then suffices, given $i$ as the index into the orbit as a certificate, $f \in \S(A^3_2)$ and strings $x, y$, to simply iterate through $x$, differentiating $f$ as we go and asserting that $y_i = \partial_zf(x_i)$, where $z$ is the prefix of $x$ so far.
+
+Parity checking $f$ can be done in polynomial time - simply check the parity of $\0$ in $f$. Additionally, differentiation can be performed in polynomial time, as it's a couple of additions and a couple bit shifts. Since the value of $i$ is at most $2^n$ where $n$ is the input length, the length of $i$ is polynomial with respect to $x$ and $y$.
+\end{proof}
+
+% \subsection*{$A^3_2$ Orbit Checking is in P}
+
+% This is hard - need to write that vector reduction thing.
+
+\subsubsection*{Residuation as Moving Pebbles}
+We can think of being given a set of pebbles that sit on states in our automaton. Then the residuation operation simply moves these pebbles from state to state. This gives us an easy proof that for fixed $f$ and $t$, computing $f^t$ is rational. (Now, of course, this follows by closure of rational languages, but it's nice to have a natural, constructive proof).
+
+\subsubsection*{Generating Pebbles}
+If we're not given $t$ ahead of time, it's our responsibility to deduce it. We introduce a function $\pi$. If $f = (f_0, f_1)$, where $f_0$ and $f_1$ are the residuals of $f$ with respect to 0 and 1, respectively and we're sitting on some bit $a$, then
+$$\pi(f) = \begin{cases}
+f_af_{\neg a} & \text{if $f$ is odd} \\
+f_a & \text{if $f$ is even} \\
+\end{cases}$$
+This is part of the quotient operation. Consider moving across two strings simultaenously. After eating the first character, we only need to consider if the suffix of one is in the orbit of the suffix of the other (up to some shift). But our orbit-generating function has changed. The $\pi$ function tracks how this function changes over time.
+
+The orbit of $\pi$ over some string corresponds closely with the set of quotients hit in an automaton. (Really, the quotients are a tuple of $\pi$'s, along with some shift factor). But then we have that the orbit of $\pi$ is finite iff the quotients are finite. This leads the following lemma.
+
+% Note here that we need the union of the orbit of $\pi$ to finite
+\begin{lemma}
+If $\pi^*(f, s)$ is the orbit of $\pi$ over $s$ with initial condition $f$, then some automaton $A$'s orbit relation is rational iff $\bigcup_{s\in \Sigma^*} \pi(f, s)$ if finite for all $f \in \S(A)$.
+\end{lemma}
+
+So the question becomes: for which automata is this true?
+
+Note that in the odd case, this corresponds with doubling the number of pebbles on the automaton. In the even case, no extra pebbles are added. So it's sort of asking, if given some initial configuration, unioning over all input string pairs in the language, we will only look at finitely many pebble configurations (up to rewrite rules).
+
+Note that in the even case, $f_a = f_{\bar{a}}$. So we have an orbit under $\pi$, not a branching tree.
+
+In the case where the group is Abelian, function composition is just adding the pebble counts together.
+
+% \subsubsection*{Partial Quotient Trees}
+
+% Fix some CCC automaton $A$ and some $f \in \S(A)$. We have that orbit checking $f$ is rational iff the number of partial quotients is finite for all $s \in \textbf{2}^*$. We define a rooted tree that represents all partial quotients reachable from $f$ under from some $s$.
+
+% For each node $f' = (f_0, f_1)$ in the tree, if $f'$ is even, $f'$ has two children, $f_0$ and $f_1$. If $f'$ is odd, $f'$ has a single child $f_0 f_1$.
+
+\subsubsection*{Orbit Equivalence}
+
+In addition to the normal group identity equivalence classes, we have cases where two functions $f$ and $g$ are orbit-equivalent. This happens precisely when $g$ is some odd multiple of $f$ (as then $g$ is $f^t$ for odd $t$, which is coprime to the length of the orbit, and so generates the entire orbit).
+
+For each of these equivalence classes, we have the natural representative being the $f$ of least weight (least number of pebbles).
+
+\begin{lemma}
+The $A^3_2$ orbit relation is rational. (proof omitted)
+\end{lemma}
+
+% \begin{definition}
+% A tree is called \textbf{regular} if it has finitely many subtrees, up to isomorphism.
+% \end{definition}
+
+% \begin{lemma}
+% Orbit checking for $f$ is rational iff $f$'s partial quotient tree is regular.
+% \end{lemma}
+
+\subsection*{1-Tree Transducers}
+
+We can consider a more general class of transducers than CCC's. Let $S$ be the set of DAGs with a single vertex of out-degree 2 and the rest of out-degree one. We define the 1-toggle-1-split machines to the corresponding set of transducers. The vertex of out-degree 2 is the toggle state. Every other vertex is a copy state. Let $v$ be the vertex of out-degree 2.
+
+If both of $v$'s out-going edges are in directed cycles containing $v$, of lengths $n$ and $m$, respectively, $\S(G) \cong \S(A^n_m)$. The transduction induced by some vertex $u \in G$ is equivalent to $\underline{dist(u, v)} \in \mathcal{K}^n_m = A^n_m$. So given a multiset of vertices in $G$, we easily have a word in $\S(A^n_m)$.
+
+If neither of $v$'s out-going edges are in directed cycles containing $v$, then $\underline{v}$ simply toggles the first bit and for $u \in G$, $\underline{u} \in \S(G)$ simply toggles the $dist(u, v)$-th bit. So given a multiset $M$ of vertices in $G$, simply take the vertices repeated an odd number of times. Then for $u \in M$, toggle the $dist(u, v)$-th bit. This orbit has length 2.
+
+If exactly one of $v$'s out-going edges are in directed cycles containing $v$, then let the directed cycle have length $n$. Call this class of machines the \textbf{1-tree transducers}.
+
+Then given $u \in G$, $\underline{u}$ performs either addition or subtraction on the natural number $\{x_{d+kn} \mid d = dist(u, v), k \in \N \}$ written in LSB-first form, mod the size of the set. In this case, given a multiset $M = \{ u_1^{k_1}\ldots u_i^{k_i} \}$ of vertices in $G$, we may obtain a action multiset $\{ d_1^{k_{i_1} + \ldots + k_{i_{j_1}}}, \ldots d_k^{k_{i_k} + \ldots + k_{i_{j_k}}} \}$. (This looks complicated, but simply take $dist(u, v)$ for each $u \in M$ and add the powers together).
+
+Consider all the substrings of $x$ mod $i$. Define $x(i) = \{x_{i+kn}\}_{k\in\N}$. Then
+$$x(i) = y(i) \pm \sum_{d_j \in [i]_n} 2^{\lfloor d_j / n\rfloor} \cdot k_j$$
+
+\begin{corollary}
+From the above, we easily get that 1TT semigroups are Abelian.
+\end{corollary}
+
+\begin{conjecture}
+In general, 1TT semigroups are not groups - there's no clear inverse. Sure, for a fixed length string, we work modulo some power of two. But the inputs can be arbitrarily long.
+\end{conjecture}
+
+\begin{conjecture}
+% Assuming 1TT semigroups are not groups, given the fact that they're Abelian, there's a  th
+If $A$ is a 1TT with a cycle of length $n$, then $\S(A) \cong \langle \N^n, + \rangle$, where addition is component-wise?
+\end{conjecture}
+
+\begin{theorem}
+1TT orbit checking can be done in polynomial time.
+\end{theorem}
+\begin{proof}
+Given a word in $\S(G)$ and two strings $x$, $y$, determine $x(i) - y(i)$ for $i \in [n-1]$. Then simply verify that each of these differences is the same multiple of $S_i := \sum_{d_j \in [i]_n} 2^{\lfloor d_j / n\rfloor} \cdot k_j$.
+
+We may assume the word we're given is given as a list of tuples $(d, k)$ where $d$ is the distance from the split vertex and $k$ is the number of pebbles on that vertex. The number of bits of any arithmetic expression is bounded by the lengths of $x$, $y$, as we're working mod $2^{|x|}$. So all of these arithmetic computations are polynomial.
+
+TODO - are there polynomially many $S_i$'s? Equivalently, is the cycle length polynomial wrt the input? Probably, but worth noting.
+\end{proof}
+
+\begin{lemma}
+Given a word $w$ in $\S(A)$, where $A$ is some 1-tree transducer, the orbit length of $w$ is the lcm of all the $S_i$'s.
+\end{lemma}
+
+% \begin{conjecture}
+% The 1TT orbit relation is rational.
+% \end{conjecture}
+
+\begin{theorem}
+For a fixed 1TT $A$ and a fixed $f \in \S(A)$, orbit checking is rational.
+\end{theorem}
+\begin{proof}
+The plus-one relation is rational, so any plus-k relation is also rational. So for a fixed $f \in \S(A)$, we can determine the $S_i$'s. Then we can make plus-$S_i$ transducers. Then we can ``interleave'' the transducers to switch between which $x(i)$ we want to consider.
+% So then define transducers for all the $S_i$'s.
+\end{proof}
+
+% Determining each of $x(i) - y(i)$'s is polynomial wrt to the input, as it's at most an $n$-bit subtraction. Further, we know that we can determine all of them, as their sum is an $n$-bit subtraction. Since we're given the distances, we can easily mod each one to group them into equivalence classes. Determining $d_j / n$ is polynomial. Determining $2$ to that power might not be\ldots Nope, we're
+% Given a word in $\S(G)$, look at once of it's components (ie the number of pebbles on a single vertex in $G$). Take the difference of the corresponding $x(i)$ and $y(i)$.
+% for some value $S$.
+% TODO - formalize (this all looks at $d \mod n$ - if two $d_k$'s are equivalent mod $n$, then they add to the same $x(i)$.).
+
+% If there is only a single $d$ st $d \equiv_n i$ for some $i$, then $S$ is a single power of two, times the power of $d$. IF there are two $d_k$'s such that $d_k \equiv_n i$, then each $d_k$ has some first bit it flips. You can consider that the power of two it adds to $x(i)$. Then multiply this power of two by $d_k$'s corresponding power.
+
+% So we get a series of equalities where $x(i) = y(i) \pm S$. I claim we can determine if these equalities hold in polynomial time.
+
+% Then this action multiset plus the words $x$, $y$ define a system of equations.
+
+% For each distance $d_i^k$, we have must have that the substring $\{x_i \mid i \equiv d = dist(u,v), k\in \N \} = \{y_i \mid d = dist(u,v), k\in \N \} \pm k$, depending on which outgoing edge of $v$ is in the directed cycle. So in this case, orbit membership reduces to a system of equations with at most $|G| - 1$ equations. That being said, you don't need to solve the system of equations. You can simply take one of the equations, solve for $k$ and then verify that this $k$ works for all the others. This involves a subtraction on two words at most the length of the input. Then for every other power of a vertex, multiply $k$ by the power. This also polynomial wrt the input length. Then we perform subtraction modulo some power of 2, also polynomial.
+
+% \begin{proposition}
+% The class of transductions induced by this class of these transducers is the union of three other classes:
+% \begin{itemize}
+% \item Transductions that flip a single bit
+% \item CCC transductions
+% \item Periodic transductions (flip mod $n$ for some $n$)
+% \item CCC transductions that terminate early
+% \end{itemize}
+% \end{proposition}
+% \begin{proof}
+% % Consider the two paths extending from the toggle state. If both
+% Consider the two outgoing edges from our toggle state $t$.
+
+% If neither edge is a member of such a cycle, then the transduction simply flips a single bit. If exactly one edge is a member of such a cycle, then the semigroup behaves like a CCC for some prefix of the string before performing some final toggle.
+
+% If both of these edges are members of a directed cycle containing $t$ (and the cycles are of differing lengths), then we claim the semigroup from this transducer is isomorphic to a CCC semigroup.
+
+% Suppose both edges are membership of cycles of length $m$ and $n$, respectively. WLOG, we may assume $n > m$. Let $k \geq 0$ be the size of the intersection of these cycles. Then this machine is isomorphic to $A^n_m$.
+% % $A^{n+k-1}_{m+k-1}$.
+
+% If both edges are members of such a cycle and the cycles are of the same length $n$, then the each state $\underline{i}$ simply flips all the bits with index $j \equiv i \mod{n}$.
+
+% % We may still have incoming ``spokes'' - paths that feed into either of the cycles. In this case, we can simply consider the
+% To see this, for each vertex $v$, let $i$ be the distance from $v$ to the toggle state $t$. Then $\underline{i}$ in $G$ is equivalent to $\underline \in \S(A^n_m)$. Incoming paths of arbitrary lengths are taken care of via the KNF rewrite rules.
+% \end{proof}
+
+\subsection*{Coordinate Systems}
+$\forall x \in 2^{2k} \exists 0 \leq a, b \leq 2^k (x = 0^a 1^b(0^{2k}))$.
+
+% \subsection*{1-Tog-1-Split Orbit Checking is in P}
+
+% \begin{proposition}
+% We can simply extend our orbit-checking algorithm for CCC machines to 1T1S machines. Fix some 1T1S transduction semigroup $\S$. We have the rewrite rules, so we know what subclass we're in. If you flip a single bit, this is easily checkable. If you're periodic, the cycle is of length 2 and also easily checkable. If you're a CCC, perform the CCC orbit-checking algorithm. If you're an end-early CCC, check until the first copy-till-end-toggle, and then verify that the endings match.
+% \end{proposition}
+
+% \subsection*{1-Tog-1-Split Orbit Relation Rational?}
+
+% \subsection*{1-Tog Orbit Relation Rational?}
+
+% TODO: Automate making the orbit automaton?
+
+\end{document}

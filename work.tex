@@ -1,0 +1,162 @@
+\documentclass{amsart}
+% \usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{parskip}
+\usepackage{tikz}
+\usepackage{bussproofs}
+\usepackage{enumerate}
+\usepackage{inconsolata}
+\usepackage[final]{microtype}
+\usepackage{xcolor}
+\newcommand\myworries[1]{\textcolor{red}{#1}}
+
+\makeatletter
+\renewcommand\subsection{\@startsection{subsection}{2}%
+  \z@{-.5\linespacing\@plus-.7\linespacing}{.5\linespacing}%
+  {\normalfont\scshape}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}%
+  \z@{.5\linespacing\@plus.7\linespacing}{-.5em}%
+  {\normalfont\scshape}}
+\makeatother
+
+%%%%%%%%% Useful shorthand %%%%%%%%%%%%
+\newcommand{\concourse}{}
+\newcommand{\0}{\underline{0}}
+\newcommand{\1}{\underline{1}}
+\newcommand{\2}{\underline{2}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\S}{\mathcal{S}}
+\renewcommand{\min}{\text{\concourse{min}}}
+\renewcommand{\max}{\text{\concourse{max}}}
+\renewcommand{\slash}{\text{ }/\text{ }}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\pr}[1]{\text{\concourse{Pr}}\left(#1\right)}
+\newcommand{\Bernoulli}[1]{\text{\concourse{Bernoulli}}\left(#1\right)}
+\newcommand{\geo}[1]{\text{\concourse{Geometric}}\left(#1\right)}
+\newcommand{\expon}[1]{\text{\concourse{Exp}}\left(#1\right)}
+\newcommand{\normal}[1]{\text{\concourse{Normal}}\left(#1\right)}
+\newcommand{\uni}[1]{\text{\concourse{Uniform}}\left(#1\right)}
+\newcommand{\var}[1]{\text{\concourse{Var}}\left(#1\right)}
+\renewcommand{\exp}[1]{\mathbb{E}\left[#1\right]}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Attempt at Membership}
+\author{Evan Bergeron}
+\begin{document}
+\maketitle
+% \textbf{Claim:} In a minimal, Abelian transducer $A$, every $s \in Q$ has in-degree at most 2.
+
+% Take some state $s$ in $Q$. Fix some length $n > |Q|$ and consider $f \in \S(A)$ restricted to $2^n$. The set of functions equivalent to $\underline{s^{-1}}$ on $2^n$ form a regular language over $Q$. Call this language $L(s^{-1})$.
+
+% Residuation on words is defined as
+% \[ 
+%   \partial_w(s\cdot s') = \partial_w(s) \cdot \partial_{ws}(s')
+% \]
+% We extend residuation to regular languages as follows: CHECK
+% \begin{align*}
+% \partial(\emptyset)&= \emptyset\\
+% \partial(\{ a \})&= \{ \partial a \}\\
+% \partial(L_1 \cup L_2) &= \partial(L_1) \cup \partial(L_2)\\
+% \partial_w(L_1 \cdot L_2) &= \partial_w(L_1)\cdot \partial_{w L_1}(L_2) \\
+% \partial_w(L^*) &= 
+% \begin{cases}
+% (\partial_w L)^* & \text{$L$ even}\\
+% % ((\partial_w L) \cdot (\partial_{w L} L))^* & \text{$L$ odd TODO end on either}\\
+% ((\partial_w L)\cup\{\epsilon\}) \cdot
+% ((\partial_{w L} L) \cdot (\partial_{w} L))^* \cdot
+% ((\partial_{w L} L)\cup\{\epsilon\})
+% & \text{$L$ odd TODO}\\
+% \end{cases}
+% % \partial_w(L) \cdot \partial_{w L}(L^*)
+% \end{align*}
+% for all $w \in 2^{\leq n}$. Since $|w| \leq n$, $w L_1$ is well-defined, as all $f \in L_1$ are equivalent when restricted to $2^{\leq n}$. The Kleene star case should just alternate between the two child languages.
+
+% Consider a nontrivial $s-s$ path $c$ in $A$ (with $s \in Q$). Let $w_c$ denote an arbitrary word that sends us through this path, starting at $s$.
+
+% % Fix some $L$ equivalent to $\underline{s^{-1}}$ 
+% Consider $L_c = \partial_{w_c}(L(s^{-1})) \cap L(s^{-1})$. For all $w \in w_c^*$, $L_c$ is fixed under $\partial_{w}$. The proof follows by induction. All strings are fixed under $\partial_\epsilon$. CHECK 
+% \begin{align*}
+% \partial_{w_c}(L_c) 
+% &= \partial_{w_c}(\partial_{w_c}(L(s^{-1})) \cap L(s^{-1}))\\
+% &= \partial_{w_c}(\partial_{w_c}(L(s^{-1}))) \cap \partial_{w_c}(L(s^{-1}))\\
+% &= \partial_{w_c}(L(s^{-1})) \cap \partial_{w_c}(L(s^{-1}))\\
+% &= \partial_{w_c}(L(s^{-1}))
+% \end{align*}
+% Consider $w \in L_c$. Then $w \in \partial_{w_c}(L(s^{-1}))$ and so $w \in \partial_{w_c}(L_c)$.
+
+% TODO combine paths - need a splicing lemma.
+
+% We residuate around simple cycles in the inverse automaton.
+
+% % For each state in the automata, define a regular language
+% \begin{verbatim}
+% def isIn(f, S):
+%   n = len(S.states)
+%   L : regLang = closureEquivTo(f, S, n)
+%   for cycle in simpleCyclesContaining(f):
+%     L = L.intersect(residual(cycle, L))
+%   # L is now fixed under all simple cycles containing it
+
+% def isIn2(f, S)
+%   n = len(S.states)
+%   for state in f:
+%     L_state : regLang = closureEquivTo(state, S, n)
+%   DFS back and forth from f, intersect as we go.
+%   return L != emptyset
+% \end{verbatim}
+% note that we can residuate both forwards and backwards. So we can residuate to a loop, intersect with those words fixed under the loop, and then move back to the root. We do this for every ``state'' in the given automorphism.
+
+% \textbf{Splicing Lemma}. Given an arbitrarily long string $s$, any $g \in L$ mimicks $f$. Proof is by structual induction. $s$ denotes a walk through the automaton (TODO which?). If $|s| > |A|$, then we have by pigeonhole a walk around a cycle. By construction, this cycle's behavior is correctly imitated. Then $s$ is correctly done iff $s-c$ is correctly done (which happens by induction). If $s$ is short, then we work by construction.
+
+% \section*{Membership}
+Given an automaton $A$ and an automorphism $f$, we decide if $f \in \mathcal{S}(A)$.
+
+We're concerned only with self-similar automorphisms, as it makes little computational sense otherwise. (Regardless, all members of $\mathcal{S}(A)$ are self-similar). We assume we are given $f$ in its wreath product form % TODO argue more, present explicitly as f is another machine
+\begin{align*}
+% f_\epsilon &= \texttt{id}\\
+f &= (f_0, f_1)\sigma
+\end{align*}
+where the set of transductions reachable by residuation is finite. Call the set of such transductions $F$ and let $n = |F|$.
+
+If $h$ and $h'$ are transductions, we write $h \equiv h'$ if $h$ and $h'$ are equivalent when restricted to $\textbf{2}^n$. 
+
+\emph{Claim: Equivalent transductions on $\textbf{2}^*$ form a regular language}
+
+Obviously, $G = \{ g \mid g : \textbf{2}^n \rightarrow \textbf{2}^n \}$ is finite. Define a DFA with state set $G$, start state \texttt{id} and transitions
+\[
+g_i \stackrel{a}{\longrightarrow} g_i a
+\]
+for $a \in F$. As usual, we have function application on the right (that is, $x g_i a = a(g_i(x))$).
+
+Then for $f \in F$, we have that the following language is regular:
+\[
+L_{f} := \{l \mid l \equiv f \}.
+\]
+we can represent this as a DFA. Further, residuation is rational, so compose those two DFAs. That's how we residuate.
+\subsection*{Simple Cycles}
+
+% Then for each simple cycle $c$ passing through $f_w$ in F$, define $w_c$ to be a word passing
+Define $\texttt{fix}_{f}$ to be the set of strings $s\in \textbf{2}^*$ for which $f = \partial_s (f)$. To ensure $\texttt{fix}_{f}$ is finite, we impose the additional restriction that for all $s \in \texttt{fix}_{f}$, no nontrivial proper prefix of $s$ is also in $\texttt{fix}_{f}$. So $\texttt{fix}_{f}$ denotes the ``shortest'' such strings. \myworries{TODO How to compute $\texttt{fix}_f$? Should just be simple cycles?}
+
+(We can just make $f$ the start and end state, and chop off all transitions out of the end. (Really just copy the start state)).
+
+Then define
+\[
+  M_{f} = L_{f}\cap \bigcap_{s \in \texttt{fix}_{f}} (\partial_s (L_{f}))
+\]
+Note that every member of $M_{f}$ is fixed. \myworries{True? Certainly the \textbf{set} is fixed under residuation. But this doesn't implies point-wise fixed.
+} 
+when residuating around simple cycles. Further, for all $m$ in $M_{f}$, $m \equiv f$ (as $M_{f} \subseteq L_{f}$).
+
+\subsection*{General Paths}
+
+In the case where $f$ is a single strongly connected component, we may simply DFS through the machine, accumulating the intersection of all $M_{\partial_w f}$'s and residuating as we go along. Once we have the intersection of all the states, we residuate back to the root. Then return \texttt{True} iff the accumulated language is nonempty.
+
+Any member of the accumulated language works. Take an arbitarily long path in the machine. Since $f$ is 1SCC, this path may be represented as a sequence of paths around cycles. \myworries{Invoke splitting lemma}.
+
+\myworries{If $f$ is not 1SCC}, can we just ``induct'' over the connected components? We have a rooted tree of SCCs. Start at the ``leaf'' SCCs and work up?
+
+% Or can we just take any element of the set? Certainly, any element of $M_f$ works around the simple cycles. But will it work around every simple cycle twice? Ah, yes it will - this was the concern earlier. Wait, but maybe none of the members of $M_f$ are fixed\dots
+
+\end{document}

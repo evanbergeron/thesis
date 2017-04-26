@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: thesis.aux
+The style file: plain.bst
+Database file #1: ../Bibliography.bib
+Warning--empty journal in sutner:coords
+You've used 14 entries,
+            2118 wiz_defined-function locations,
+            584 strings with 5886 characters,
+and the built_in function-call counts, 3531 in all, are:
+= -- 343
+> -- 150
+< -- 1
++ -- 62
+- -- 46
+* -- 216
+:= -- 645
+add.period$ -- 42
+call.type$ -- 14
+change.case$ -- 61
+chr.to.int$ -- 0
+cite$ -- 15
+duplicate$ -- 146
+empty$ -- 277
+format.name$ -- 46
+if$ -- 708
+int.to.chr$ -- 0
+int.to.str$ -- 14
+missing$ -- 14
+newline$ -- 73
+num.names$ -- 28
+pop$ -- 60
+preamble$ -- 1
+purify$ -- 51
+quote$ -- 0
+skip$ -- 101
+stack$ -- 0
+substring$ -- 149
+swap$ -- 15
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 52
+warning$ -- 1
+while$ -- 33
+width$ -- 16
+write$ -- 150
+(There was 1 warning)

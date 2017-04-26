@@ -1,0 +1,78 @@
+\documentclass[11pt]{article}
+% \usepackage[left=1in, right=2.5in, bottom=1.25in, top=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{tikz}
+\usepackage{multicol}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{xltxtra}
+
+% Font stuff
+\newcommand*{\concourse}{\fontspec[]{Concourse T4}\selectfont}
+\newcommand*{\caps}{\fontspec[]{Equity Caps B}\selectfont}
+\renewcommand*{\textsc}{\caps}
+
+\pagestyle{fancy}
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt} % no line
+\fancyhead[LO]{\leftmark}
+\fancyhead[RE]{\rightmark}
+\fancyhead[LE, RO]{\thepage}
+\fancyfoot{}
+% \lfoot{\thepage}
+
+% Theorem stuff
+\newtheoremstyle{pleasant} % Name
+  {\topsep}                % Space above
+  {\topsep}                % Space below
+  {\itshape}               % Body font
+  {}                       % Indent amount
+  {\small\caps}               % Theorem head font
+  {.}                      % Punctuation after theorem head
+  {.5em}                   % Space after theorem head
+  {}                       % Theorem head spec (empty means normal)
+
+\theoremstyle{pleasant}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{question}{Question}
+\newtheorem{conjecture}{Conjecture}
+
+% Make titles prettier
+\titleformat*{\subsection}{\large\caps}
+\titleformat*{\subsubsection}{\normalsize\caps}
+% left, before, after
+\titlespacing*{\subsection}{0pt}{1.75em plus 0.5em minus 0.2em}{1em}
+
+% More font stuff
+\setmainfont{Equity Text B}
+\renewcommand{\baselinestretch}{1.2}
+
+%%%%%%%%% Useful shorthand %%%%%%%%%%%%
+\newcommand{\0}{\underline{0}}
+\newcommand{\1}{\underline{1}}
+\newcommand{\2}{\underline{2}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\S}{\mathcal{S}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{\concourse{Notes on the complexity of the word problem for semigroups over invertible transducers}}
+\author{\concourse{Evan Bergeron}}
+\date{\concourse{\today}}
+\begin{document}
+\maketitle
+
+I suspect we can solve the word problem in poly time for the following subclass of invertible transducers over the binary alphabet: 1-toggle, 2 SCC, minimal automata whose transduction semigroups are Abelian. Then words over the generators can be expressed as a Parikh vector.
+
+At the very least, I'm convinced that residuation over any word produces polynomially many distinct residuals, with respect to the word length and size of the automata. By Okano, we know that the two connected components must be a direct path to the toggle state and a identity self-loop, respectively (since it's Abelian). So then residuation just rotates the elements of the vector, occasionally subtracting $\lfloor x/2 \rfloor$ or $\lceil x/2 \rceil$ from some element $x$.
+
+Some computation shows that the size of the transitive closure of these two operations on some integer $x$ is bounded by $2\log_2(x+1)$, which is polynomial in the length of the input.
+
+Question: does this mean that we only get polynomially many residuals? And does having polynomially many residuals lead to a poly time word checking algorithm? I suspect it will, since dynamic programming and DFS through the wreath recursions would do the rest.
+
+\end{document}

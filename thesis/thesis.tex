@@ -32,48 +32,88 @@
 \newcommand{\decprob}[1]{\textsc{#1}}
 
 \begin{document}
-    \pagestyle{plain}
-    \title{\rmfamily\normalfont\spacedallcaps{Decision Problems in Invertible Automata}}
-    \author{\spacedlowsmallcaps{Evan Bergeron \& Klaus Sutner}}
-    \date{May 5, 2017}
+\pagestyle{plain} \title{\rmfamily\normalfont\spacedallcaps{Decision
+    Problems in Invertible Automata}} \author{\spacedlowsmallcaps{Evan
+    Bergeron \& Klaus Sutner}} \date{May 5, 2017}
     
     \maketitle
     
     \begin{abstract}
-        We consider a variety of decision problems in groups and semigroups induced by invertible Mealy machines. Notably, we present proof that the automorphism membership problem in decidable in these semigroups. In addition, we prove undecidability of a Knapsack variant. A discussion of iteration and orbit rationality follows.
+      We consider a variety of decision problems in groups and
+      semigroups induced by invertible Mealy machines. Notably, we
+      present proof that the automorphism membership problem in
+      decidable in these semigroups. In addition, we prove
+      undecidability of a Knapsack variant. A discussion of iteration
+      and orbit rationality follows.
     \end{abstract}
        
     \tableofcontents
     
     % \section{Introduction}
-    % The word problem is a class group-theoretic decision problem. Given a finitely generated group $G$, and a word $w$ over the generators (and their inverses), the word problem asks ``is $w \in G$.'' The word problem is known to be undecidable in surprisely small classes of groups - see TODO for background.
+    % The word problem is a class group-theoretic decision
+    % problem. Given a finitely generated group $G$, and a word $w$
+    % over the generators (and their inverses), the word problem asks
+    % ``is $w \in G$.'' The word problem is known to be undecidable in
+    % surprisely small classes of groups - see TODO for background.
 
-    % The invertible Mealy machines we consider here give rise to a class of semigroups (and sometimes groups) for which the word problem is decidable. The computability picture here is rather nuaced, however. Other important decision problems, among them the conjugacy problem, and the isomorphism problem are known to be undecidable. (See TODO and TODO for details).
+    % The invertible Mealy machines we consider here give rise to a
+    % class of semigroups (and sometimes groups) for which the word
+    % problem is decidable. The computability picture here is rather
+    % nuaced, however. Other important decision problems, among them
+    % the conjugacy problem, and the isomorphism problem are known to
+    % be undecidable. (See TODO and TODO for details).
 
-    % We present proof that automorphism membership testing is decidable in this class of semigroups.
+    % We present proof that automorphism membership testing is
+    % decidable in this class of semigroups.
 
     % \section{Introduction}
 
     \section{Background}
-    An \defn{automaton} is a formally a triple $(Q, \Sigma, \delta)$, where $Q$ is some finite state set, $\Sigma$ is a finite alphabet of \defn{symbols}, and $\delta$ is a transformation on $Q \times \Sigma$.
-    Automata are typically viewed as directed graphs with vertex set $Q$ and an edge between $u, v$ if $(u, x)\delta = (v, y)$.
+    An \defn{automaton} is a formally a triple $(Q, \Sigma, \delta)$,
+    where $Q$ is some finite state set, $\Sigma$ is a finite alphabet
+    of \defn{symbols}, and $\delta$ is a transformation on
+    $Q \times \Sigma$.  Automata are typically viewed as directed
+    graphs with vertex set $Q$ and an edge between $u, v$ if
+    $(u, x)\delta = (v, y)$.
     % \[ \delta : Q \times \Sigma \rightarrow Q \times \Gamma \]
 
-    An automaton is said to be \defn{synchronous} when $\delta$ outputs exactly one character for every transition and is called \defn{invertible} when every state in $Q$ has some bijection $\pi$ on $\Sigma$ such that $(u, x)\delta = (v, \pi(x))$. A state is a \defn{copy state} if $\pi$ is the identity permutation and is a \defn{toggle state} otherwise.
+    An automaton is said to be \defn{synchronous} when $\delta$
+    outputs exactly one character for every transition and is called
+    \defn{invertible} when every state in $Q$ has some bijection $\pi$
+    on $\Sigma$ such that $(u, x)\delta = (v, \pi(x))$. A state is a
+    \defn{copy state} if $\pi$ is the identity permutation and is a
+    \defn{toggle state} otherwise.
 
     % TODO how to describe clearly?
-    Each state $q \in Q$ acts on $\Sigma^*$, the set of finite strings over $\Sigma$. We commonly view $\Sigma^*$ as the infinite $|\Sigma|$-nary tree, so we may view $q$ as a transformation sending vertex $w$ to $wq$.
+    Each state $q \in Q$ acts on $\Sigma^*$, the set of finite strings
+    over $\Sigma$. We commonly view $\Sigma^*$ as the infinite
+    $|\Sigma|$-nary tree, so we may view $q$ as a transformation
+    sending vertex $w$ to $wq$.
 
-    We extend the action of $Q$ on $\Sigma^*$ to words $q = q_1\cdots q_n$ over $Q^+$ by \[ wq = (\cdots((w q_1) q_2)\cdots q_n) \]
+    We extend the action of $Q$ on $\Sigma^*$ to words
+    $q = q_1\cdots q_n$ over $Q^+$ by
+    \[ wq = (\cdots((w q_1) q_2)\cdots q_n) \]
 
-    We adopt the convention of applying functions from the right here. In this way, function composition corresponds naturally with concatenation.
+    We adopt the convention of applying functions from the right
+    here. In this way, function composition corresponds naturally with
+    concatenation.
 
-    For an automaton $A$, we denote by $S(A)$ the semigroup generated by $Q$ under composition. $A$ is said to be \defn{commutative} or \defn{Abelian} when $S(A)$ is Abelian. We write $G(A)$ for the group generated by the elements of $Q$ and their inverses.
+    For an automaton $A$, we denote by $S(A)$ the semigroup generated
+    by $Q$ under composition. $A$ is said to be \defn{commutative} or
+    \defn{Abelian} when $S(A)$ is Abelian. We write $G(A)$ for the
+    group generated by the elements of $Q$ and their inverses.
 
-    One may also speak about $S(A)$ and $G(A)$ without explicit reference to an automaton $A$. As such, we call a semigroup $S$ an \defn{automaton semigroup} if there is some automaton $A$ with $S \simeq \Sigma(A)$. \defn{Automaton groups} $G$ are similarly defined.
+    One may also speak about $S(A)$ and $G(A)$ without explicit
+    reference to an automaton $A$. As such, we call a semigroup $S$ an
+    \defn{automaton semigroup} if there is some automaton $A$ with
+    $S \simeq \Sigma(A)$. \defn{Automaton groups} $G$ are similarly
+    defined.
 
     % Invertible automata have gained popularity in group theory
-    Invertible automata have recently been usefully applied the group theory. A classic result here is Grigorchuk's group of intermediate growth, generated by the 5 state invertible machine shown in figure 1.
+    Invertible automata have recently been usefully applied the group
+    theory. A classic result here is Grigorchuk's group of
+    intermediate growth, generated by the 5 state invertible machine
+    shown in figure 1.
     
     % TODO make this not ugly
     % TODO make this a figure
@@ -111,9 +151,17 @@
     \end{figure}
 
     \subsection*{Decision Problems}
-    Automaton semigroups exhibit many interesting and nuanced computability properties. While it is an easy result that the \decprob{word problem} is solvable in such semigroups, similar group-theoretic problems such as the \decprob{conjugacy problem} and \decprob{finiteness problem} have been shown to be undecidable (\cite{sunic:conj}, and \cite{gillibert:finite}, respectively).
+    Automaton semigroups exhibit many interesting and nuanced
+    computability properties. While it is an easy result that the
+    \decprob{word problem} is solvable in such semigroups, similar
+    group-theoretic problems such as the \decprob{conjugacy problem}
+    and \decprob{finiteness problem} have been shown to be undecidable
+    (\cite{sunic:conj}, and \cite{gillibert:finite}, respectively).
 
-    Various other semigroup theoretic decision problems have recently been considered for small classes of semigroups by Cain in \cite{Cain09:dec_prob}. We consider a subset of his distinguished properties in the automaton semigroup case here.
+    Various other semigroup theoretic decision problems have recently
+    been considered for small classes of semigroups by Cain in
+    \cite{Cain09:dec_prob}. We consider a subset of his distinguished
+    properties in the automaton semigroup case here.
 
     % TODO 
     % Example automaton semigroups (and explicit automaton example)
@@ -127,153 +175,238 @@
 
     % We define the \decprob{membership problem} as follows: TODO
 
-    Given an automaton $A$ and an automorphism $f$, we decide if $f \in \mathcal{S}(A)$.
+    Given an automaton $A$ and an automorphism $f$, we decide if
+    $f \in \mathcal{S}(A)$. We may assume $f$ is given as an
+    automaton.
 
-    We're concerned only with self-similar automorphisms, as it makes little computational sense otherwise. (Regardless, all members of $\mathcal{S}(A)$ are self-similar). We assume we are given $f$ in its wreath product form % TODO argue more, present explicitly as f is another machine
-    \begin{align*}
-    % f_\epsilon &= \texttt{id}\\
-    f &= (f_0, f_1)\sigma
-    \end{align*}
-    where the set of transductions reachable by residuation is finite. Call the set of such transductions $F$ and let $n = |F|$.
+    \section{Undecidablity results for submonoids
+      of groups with decidable word problem}
 
-    If $h$ and $h'$ are transductions, we write $h \equiv h'$ if $h$ and $h'$ are equivalent when restricted to $\textbf{2}^n$. 
-
-    \subsection*{Claim: Equivalent transductions on $\textbf{2}^*$ form a regular language}
-
-    Obviously, $G = \{ g \mid g : \textbf{2}^n \rightarrow \textbf{2}^n \}$ is finite. Define a DFA with state set $G$, start state \texttt{id} and transitions
-    \[
-    g_i \stackrel{a}{\longrightarrow} g_i a
-    \]
-    for $a \in F$. As usual, we have function application on the right (that is, $x g_i a = a(g_i(x))$).
-
-    Then for $f \in F$, we have that the following language is regular:
-    \[
-    L_{f} := \{l \mid l \equiv f \}.
-    \]
-    we can represent this as a DFA. Further, residuation is rational, so compose those two DFAs. That's how we residuate.
-
-    % This result is sign of hope: it's known that the \textsc{IsGroup} question is undecidable for finitely presented semigroups.
-
-    \begin{corollary}
-    \decprob{IsGroup} is decidable for invertible automaton groups: simply check membership of $q^{-1}$ for $q \in Q$.
-    \end{corollary}
-
-    \begin{corollary}
-    \decprob{IsMonoid} is decidable.
-    \end{corollary}
-
-    \section{Undecidablity results for submonoids of groups with decidable word problem}
-
-    We present a group with a decidable word problem with a submonoid for which \textsc{IsGroup} and \textsc{IsFinite} are undecidable. 
+    We present a group with a decidable word problem with a submonoid
+    for which \textsc{IsGroup} and \textsc{IsFinite} are undecidable.
 
     \begin{definition}
-    A \defn{Turing machine} is a 7-tuple $(Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject})$, where $Q$, $\Sigma$, and $\Gamma$ are all finite sets and 
+      A \defn{Turing machine} is a 7-tuple
+      $(Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject})$,
+      where $Q$, $\Sigma$, and $\Gamma$ are all finite sets and
     \begin{enumerate}
     \item $Q$ is the state set
     \item $\Sigma$ is the input alphabet
     \item $\Gamma$ is the tape alphabet, with $\Sigma \subseteq \Gamma$
-    \item $\delta : Q \times \Sigma \rightarrow Q \times \Gamma \times \{L, R \}$ is the transition function
+    \item
+      $\delta : Q \times \Sigma \rightarrow Q \times \Gamma \times
+      \{L, R \}$ is the transition function
     \item $q_0$ is the start state
-    \item $q_{accept}$ and $q_{reject}$ are the accept and reject states, respectively.
+    \item $q_{accept}$ and $q_{reject}$ are the accept and reject
+      states, respectively.
     \end{enumerate}
     \end{definition}
 
-    We can encapsulate the state of a Turing machine by its \defn{configuration}. We typically write $u q v$, where $q$ is the current state, $u$ is the contents of the tape prior to the tapehead, and $v$ is the contents afterward. The tape heads sits on the first character of $v$. 
+    We can encapsulate the state of a Turing machine by its
+    \defn{configuration}. We typically write $u q v$, where $q$ is the
+    current state, $u$ is the contents of the tape prior to the
+    tapehead, and $v$ is the contents afterward. The tape heads sits
+    on the first character of $v$.
 
-    We say configuration $C$ \defn{yields} configuration $C'$ if the Turing machine can transition from $C$ to $C'$ in a single step.
+    We say configuration $C$ \defn{yields} configuration $C'$ if the
+    Turing machine can transition from $C$ to $C'$ in a single step.
 
     % TODO kinda sloppy
-    For a Turing machine $T$, we define the group $G_T$ to be the Abelian group generated by all configurations of $T$ (and their imposed inverses), with the following identities
+    For a Turing machine $T$, we define the group $G_T$ to be the
+    Abelian group generated by all configurations of $T$ (and their
+    imposed inverses), with the following identities
     \begin{itemize}
     \item $C_i = C_j$ if $C_i$ yields $C_j$.
     \item $uq_{accept}v = u'q_{reject}v' = 1$ for all $u, u', v, v'$.
     \end{itemize}
 
-    It's clearly undecidable if a configuration $C$ is reachable from the start configuration. In order to ensure the solvability of $G_T$'s word problem, we modify the input TM to be \defn{self-verifying}. 
+    It's clearly undecidable if a configuration $C$ is reachable from
+    the start configuration. In order to ensure the solvability of
+    $G_T$'s word problem, we modify the input TM to be
+    \defn{self-verifying}.
 
-    A \defn{self-verifying Turing machine} $T$ maintains a program counter $p$ on the left end of the tape. At every step, it starts from the start configuration and runs for $p$ steps. If it arrives at its current state, it continues. Otherwise, it transitions to $q_{reject}$. 
+    A \defn{self-verifying Turing machine} $T$ maintains a program
+    counter $p$ on the left end of the tape. At every step, it starts
+    from the start configuration and runs for $p$ steps. If it arrives
+    at its current state, it continues. Otherwise, it transitions to
+    $q_{reject}$.
 
-    For every Turing machine $T$, we can construct an equivalent self-verifying TM $T'$. Full proof of this fact can be found in TODO.
-
-    \begin{proposition}
-    For a self-verifying TM $T$, $G_T$ has a decidable word problem.
-    \end{proposition}
-    \begin{proof}
-    Two strings $w_1$, $w_2$ are equal iff their lengths are the same and they have the same number of characters that lie on the canonical computation.
-    \end{proof}
-
-    We write $S = \langle q_0 \rangle$ for the submonoid of $G_T$ generated by $T$'s start state.
-
-    \begin{proposition}
-    It is undecidable whether $S$ is a group.
-    \end{proposition}
-    \begin{proof}
-    If $T$ halts, $S$ is the trivial group. Otherwise, $S$ is the commutative free monoid of rank 1.
-    \end{proof}
+    For every Turing machine $T$, we can construct an equivalent
+    self-verifying TM $T'$. Full proof of this fact can be found in
+    TODO.
 
     \begin{proposition}
-    It is undecidable whether $S$ is finite.
+      For a self-verifying TM $T$, $G_T$ has a decidable word problem.
     \end{proposition}
     \begin{proof}
-    $S$ is finite iff $T$ halts.
+      Two strings $w_1$, $w_2$ are equal iff their lengths are the
+      same and they have the same number of characters that lie on the
+      canonical computation.
     \end{proof}
 
-    \section{Knapsack is Undecidable for Automaton Semigroups} 
+    We write $S = \langle q_0 \rangle$ for the submonoid of $G_T$
+    generated by $T$'s start state.
+
+    \begin{proposition}
+      It is undecidable whether $S$ is a group.
+    \end{proposition}
+    \begin{proof}
+      If $T$ halts, $S$ is the trivial group. Otherwise, $S$ is the
+      commutative free monoid of rank 1.
+    \end{proof}
+
+    \begin{proposition}
+      It is undecidable whether $S$ is finite.
+    \end{proposition}
+    \begin{proof}
+      $S$ is finite iff $T$ halts.
+    \end{proof}
+
+    \section{Knapsack is Undecidable
+      for Automaton Semigroups}
     We follow a proof strategy similar to \cite{Konig15:knapsack}.
 
-    We define the \defn{Knapsack Problem} as follows: given as input generators $g_1 \ldots g_k$ and a target group element $g$, do there exist natural numbers $a_1\ldots a_k$ such that 
-    \[ g_1^{a_1} \cdots g_k^{a_K} = g \]
-    We prove that this problem is undecidable for automaton semigroups by reducing from % to?
+    We define the \defn{Knapsack Problem} as follows: given as input
+    generators $g_1 \ldots g_k$ and a target group element $g$, do
+    there exist natural numbers $a_1\ldots a_k$ such that
+    \[ g_1^{a_1} \cdots g_k^{a_K} = g \] We prove that this problem is
+    undecidable for automaton semigroups by reducing from % to?
     Hilbert's tenth problem.
 
-    % Hilbert's tenth problem asks: ``given a polynomial over the integers and an integer $a$, do there exist values of the arguments to the polynomial such that the polynomial evaluated at this point is equal to $a$?'' It is known that there exist polynomials for which this problem is undecidable.
+    % Hilbert's tenth problem asks: ``given a polynomial over the
+    % integers and an integer $a$, do there exist values of the
+    % arguments to the polynomial such that the polynomial evaluated
+    % at this point is equal to $a$?'' It is known that there exist
+    % polynomials for which this problem is undecidable.
 
-    % We can expand this polynomial into a system of equations - think of a codegen step in a compiler. Each step is either an addition or a multiplication. We can take the terms with negative coefficients and move them to the other side of the equation, so we now have the equality of two different polynomials, each with positive coefficients. We can also choose to only substitute in natural numbers as arguments, by some trick that I don't know. So then we have systems of equations over the natural numbers. 
+    % We can expand this polynomial into a system of equations - think
+    % of a codegen step in a compiler. Each step is either an addition
+    % or a multiplication. We can take the terms with negative
+    % coefficients and move them to the other side of the equation, so
+    % we now have the equality of two different polynomials, each with
+    % positive coefficients. We can also choose to only substitute in
+    % natural numbers as arguments, by some trick that I don't
+    % know. So then we have systems of equations over the natural
+    % numbers.
     
-    % We can turn each equation into a formulation of the Knapsack problem for automaton semigroups. It's known that the Heisenberg semigroup is an automaton group, and there's some equation over the elements of $H_3$ for multiplication. Same for addition in the natural numbers. Then we just take the direct product of these groups (the class of automaton semigroups is closed under direct product). So this polynomial is equal to $a$ if and only if there exist $a_1 \ldots a_n$ such that each of the individual elements of the direct product vectors are equal.
+    % We can turn each equation into a formulation of the Knapsack
+    % problem for automaton semigroups. It's known that the Heisenberg
+    % semigroup is an automaton group, and there's some equation over
+    % the elements of $H_3$ for multiplication. Same for addition in
+    % the natural numbers. Then we just take the direct product of
+    % these groups (the class of automaton semigroups is closed under
+    % direct product). So this polynomial is equal to $a$ if and only
+    % if there exist $a_1 \ldots a_n$ such that each of the individual
+    % elements of the direct product vectors are equal.
 
-    % \subsection{A group with decidable word problem with submonoid for which the IsGroup question is undecidable} 
+    % \subsection{A group with decidable word problem with submonoid
+    % for which the IsGroup question is undecidable}
 
-    % We define the following ambient group: elements of the group represent states of a turing machine. This turing machine operates on the empty tape. There is a single halting configuration. In the group, the element corresponding to the halting configuration is the identity. If two group elements represent two configurations of the Turing machine such that one of the configurations can proceed to the other in a single step, then these two group elements are considered equal. 
+    % We define the following ambient group: elements of the group
+    % represent states of a turing machine. This turing machine
+    % operates on the empty tape. There is a single halting
+    % configuration. In the group, the element corresponding to the
+    % halting configuration is the identity. If two group elements
+    % represent two configurations of the Turing machine such that one
+    % of the configurations can proceed to the other in a single step,
+    % then these two group elements are considered equal.
 
-    % We have the take care defining the Turing machine, however. We'll define it to be a \defn{self-verifying} Turing machine. How does this work? This Turing machine provides some canonical computation, that is, it proceeds from the start configuration onward, perhaps halting. However, there are all sorts of configurations that the Turing machine will never reach. A self-verifying Turing machine will, at every point, verify that it is along this canonical computation path. If it finds that it is not, it will transition to some death state, where it will stay. 
+    % We have the take care defining the Turing machine,
+    % however. We'll define it to be a \defn{self-verifying} Turing
+    % machine. How does this work? This Turing machine provides some
+    % canonical computation, that is, it proceeds from the start
+    % configuration onward, perhaps halting. However, there are all
+    % sorts of configurations that the Turing machine will never
+    % reach. A self-verifying Turing machine will, at every point,
+    % verify that it is along this canonical computation path. If it
+    % finds that it is not, it will transition to some death state,
+    % where it will stay.
 
-    % This means that, considering the set of all possible configurations of the Turing machine as a graph, there's a path from the start state onward (perhaps ending in a halt state) and everything else is just a star graph transitioning to this death state.
+    % This means that, considering the set of all possible
+    % configurations of the Turing machine as a graph, there's a path
+    % from the start state onward (perhaps ending in a halt state) and
+    % everything else is just a star graph transitioning to this death
+    % state.
 
-    % How are these self-verifying Turing machines realized? As the canonical computation proceeds, a program counter is kept (perhaps to the left of the tapehead). After every step, the Turing machine will examine what ``time step'' the computation is currently sitting in. It will perform the canonical computation for the first $n$ steps. If it does not wind up where it's configuration says it is, it transitions to the death state. Otherwise, it continues.
+    % How are these self-verifying Turing machines realized? As the
+    % canonical computation proceeds, a program counter is kept
+    % (perhaps to the left of the tapehead). After every step, the
+    % Turing machine will examine what ``time step'' the computation
+    % is currently sitting in. It will perform the canonical
+    % computation for the first $n$ steps. If it does not wind up
+    % where it's configuration says it is, it transitions to the death
+    % state. Otherwise, it continues.
 
     % \textit{Claim:} This group has a decidable word problem.
 
-    % We can verify if one configuration transitions to another in a single step. So given a word over the generators (that represents a sequence of TM configurations), we can first go through pairwise, rewriting these pairs. So I guess chains of consequentive configurations just become their first state. We can also go through and check to see if certain configurations lie upon the canonical computational path. So then everything becomes either the death state or the start state or the identity? Then we can just check for equality of exponents?
+    % We can verify if one configuration transitions to another in a
+    % single step. So given a word over the generators (that
+    % represents a sequence of TM configurations), we can first go
+    % through pairwise, rewriting these pairs. So I guess chains of
+    % consequentive configurations just become their first state. We
+    % can also go through and check to see if certain configurations
+    % lie upon the canonical computational path. So then everything
+    % becomes either the death state or the start state or the
+    % identity? Then we can just check for equality of exponents?
 
-    % \textit{Claim:} If $s$ is the start configuration of the Turing machine, it is undecidable whether $\langle s \rangle$ is a group. 
+    % \textit{Claim:} If $s$ is the start configuration of the Turing
+    % machine, it is undecidable whether $\langle s \rangle$ is a
+    % group.
 
-    % Suppose it was decidable. We can, given, a TM, transform it into a self-verifying version of itself, and then build this group around it. If the original TM halts, then the submonoid generated by $s$, (the start state) is just the trivial group. If the original TM hangs, then $\langle s \rangle$ is the free monoid of rank one. So then being able to answer the question ``is $\langle s \rangle $ a group'' would allow us to solve the halting problem. 
+    % Suppose it was decidable. We can, given, a TM, transform it into
+    % a self-verifying version of itself, and then build this group
+    % around it. If the original TM halts, then the submonoid
+    % generated by $s$, (the start state) is just the trivial
+    % group. If the original TM hangs, then $\langle s \rangle$ is the
+    % free monoid of rank one. So then being able to answer the
+    % question ``is $\langle s \rangle $ a group'' would allow us to
+    % solve the halting problem.
 
-    % \subsection{It is decidable if an Abelian automaton semigroup generates a group} 
+    % \subsection{It is decidable if an Abelian automaton semigroup
+    % generates a group}
 
-    % Reduces to a system of equations. Abelian automaton semigroups can be written as a system of matrix equations: residuation is a linear operation here. We can then also write down the set of matrix equations for the inverse automaton.\footnote{Interesting to note that there's some duality here: if the semigroup of $A$ is a group, then so is the semigroup of $A^{-1}$ (and they are equal).}
-    % Exactly what question do we then ask to verify there is a solution? Something about asking if the space spanned by the equations for $A$ has any intersection with $\mathbb{N}^n$.
+    % Reduces to a system of equations. Abelian automaton semigroups
+    % can be written as a system of matrix equations: residuation is a
+    % linear operation here. We can then also write down the set of
+    % matrix equations for the inverse automaton.\footnote{Interesting
+    % to note that there's some duality here: if the semigroup of $A$
+    % is a group, then so is the semigroup of $A^{-1}$ (and they are
+    % equal).}
+    % Exactly what question do we then ask to verify there is a
+    % solution? Something about asking if the space spanned by the
+    % equations for $A$ has any intersection with $\mathbb{N}^n$.
 
 
-    % \subsection{Residuation Fixed Point is Decidable for Abelian automaton semigroups} 
+    % \subsection{Residuation Fixed Point is Decidable for Abelian
+    % automaton semigroups}
 
-    % Take the matrix representing residuation for some word $w \in \Sigma^*$ and find if it has any eigenvectors in $\mathbb{N}^n$.
+    % Take the matrix representing residuation for some word
+    % $w \in \Sigma^*$ and find if it has any eigenvectors in
+    % $\mathbb{N}^n$.
 
     % \subsection{Misc}
 
     % \begin{proposition}
-    % In an Abelian, minimal transducer $A$, every state has in-degree at most 2.
+    %   In an Abelian, minimal transducer $A$, every state has
+    %   in-degree at most 2.
     % \end{proposition}
     % \begin{proof}
-    % Consider a state $s$. Every parent of $s$ is either a copy or a toggle state. If $s$ had two copy state parents, this contradicts minimality. 
+    %   Consider a state $s$. Every parent of $s$ is either a copy or
+    %   a toggle state. If $s$ had two copy state parents, this
+    %   contradicts minimality.
     
-    % If $s$ had two toggle state parents $s_1$, $s_2$, then either $s = \partial_a s_1 = \partial_a s_2$ or $s = \partial_a s_1 = \partial_{\bar{a}} s_2$. Certainly, the first case contradicts minimality, since then 
+    %   If $s$ had two toggle state parents $s_1$, $s_2$, then either
+    %   $s = \partial_a s_1 = \partial_a s_2$ or
+    %   $s = \partial_a s_1 = \partial_{\bar{a}} s_2$. Certainly, the
+    %   first case contradicts minimality, since then
     % $$ \partial_{\bar{a}} s_1 = \theta \partial_a s_1 = \theta \partial_a s_2 = \partial_{\bar{a}} s_2$$
     % and so $s_1 = s_2$.
     % For the second case, then TODO I have another argument for this.
-    % % $$ \theta \partial_{a} s_1 = \theta \partial_{\bar{a}} s_2 = \partial_a s_2 $$
-    % % Suppose some state $s$ has in-degree $d \geq 3$. Then either at least 2 parents are toggles, or at least two are copies. If at least 2 are copies, 
+    % % $$ \theta \partial_{a} s_1 = \theta \partial_{\bar{a}} s_2 =
+    % % \partial_a s_2 $$
+    % % Suppose some state $s$ has in-degree $d \geq 3$. Then either
+    % % at least 2 parents are toggles, or at least two are copies. If
+    % % at least 2 are copies,
     % \end{proof}
 
     \section{Abelian Automata}
@@ -281,7 +414,9 @@
     \section{Open Questions} 
 
     \begin{itemize}
-    \item All automaton semigroups are recursively presented. If these presentations are regular, or context-free, does that affect the soluability of these questions?
+    \item All automaton semigroups are recursively presented. If these
+      presentations are regular, or context-free, does that affect the
+      soluability of these questions?
     \item Having a zero
     \item Isomorphism problem
     \item Bounded automata, etc

@@ -1,0 +1,1 @@
+We consider a variety of decision problems in semigroups induced by Mealy machines. Notably, we present proof that the Membership problem is decidable in these semigroups. We prove undecidabliity of a Knapsack variant. A discussion of iteration and orbit rationality follows.

@@ -1,0 +1,57 @@
+\documentclass{article}
+% \usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{parskip}
+\usepackage{tikz}
+\usepackage{bussproofs}
+\usepackage{enumerate}
+\usepackage{inconsolata}
+\usepackage[final]{microtype}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+%%%%%%%%% Useful shorthand %%%%%%%%%%%%
+\newcommand{\concourse}{}
+\newcommand{\0}{\underline{0}}
+\newcommand{\1}{\underline{1}}
+\newcommand{\2}{\underline{2}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\S}{\mathcal{S}}
+\renewcommand{\min}{\text{\concourse{min}}}
+\renewcommand{\max}{\text{\concourse{max}}}
+\renewcommand{\slash}{\text{ }/\text{ }}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\pr}[1]{\text{\concourse{Pr}}\left(#1\right)}
+\newcommand{\Bernoulli}[1]{\text{\concourse{Bernoulli}}\left(#1\right)}
+\newcommand{\geo}[1]{\text{\concourse{Geometric}}\left(#1\right)}
+\newcommand{\expon}[1]{\text{\concourse{Exp}}\left(#1\right)}
+\newcommand{\normal}[1]{\text{\concourse{Normal}}\left(#1\right)}
+\newcommand{\uni}[1]{\text{\concourse{Uniform}}\left(#1\right)}
+\newcommand{\var}[1]{\text{\concourse{Var}}\left(#1\right)}
+\renewcommand{\exp}[1]{\mathbb{E}\left[#1\right]}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{The Knapsack Problem for Automatic Semigroups is Undecidable}
+\author{Klaus Sutner \& Evan Bergeron}
+\begin{document}
+\maketitle
+We reduce from Hilbert's tenth problem, over natural numbers. Fix a polynomial $P(x_1, \ldots x_n)$ such that the question ``is there a solution to $P(x_1, \ldots x_n) = a$'' is undecidable.
+
+% \begin{algorithm}
+% \begin{algorithmic}[1]
+% \Procedure{HilbertsTenth}{}
+% \EndProcedure
+% \end{algorithmic}
+% \end{algorithm}
+
+% \begin{verbatim}
+% def hilbertsTenth(a):
+%   # P fixed
+%   P_plus = all positive terms of P
+%   P_neg = all negative terms of P
+% \end{verbatim}
+
+Take $P$ and separate it into $P_+$ and $P_-$, the positive and negative parts of $P$. Consider the equation $P_+ = P_-$.
+
+\end{document}

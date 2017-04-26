@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{parskip}
+\usepackage{enumerate}
+
+\title{Proof}
+\author{Evan Bergeron}
+\begin{document}
+\maketitle
+Claim: Given two orbit-rational automata and their presentations, the equivalence of their groups is decidable.
+
+We BFS backward through the automata, starting at the identities. So, start at a identity. For each possible predecessor state, move the pebbles to that configuration, create the acceptor DFA, minimize it, and add it to a level set. Repeat for each possible identity configuration. (Ahh\dots are there finitely many?).
+
+Do the same for the other automata.
+
+If at this point, their level sets disagree - reject. Otherwise, continue. 
+If you reach a level where their level sets agree and every DFA was previously seen, accept.
+
+So this process terminates iff we can reach finitely many predecessor states. Why on earth would this be true?  
+
+If residuation is level-preservring, this holds. Also, maybe we don't need to process every identity configuration. But it seems like we might have to\dots
+
+Hmm. The identity to any power is still the identity. So we definitely have infinitely many pebble configurations possible.
+
+Maybe it doesn't matter , since we can just look at even or oddness. So it works by induction, then just check this next step. Step backward in some direction. Is the resulting configuration even? Then we don't need to check any powers of this configuration - it will always be even.
+
+Maybe we look at even-ness or odd-ness of this configuration. Identity is even. We really only need to check these things bit by bit, since we know the tail is equivalent (we've checked the path to the identity).
+
+Maybe it's fine to just check the single powers when it's abelian.   
+
+If this state we're looking at it even, we may not need to check it twice. If it's odd, we might need to check it twice.
+
+Maybe if we knew the rank (lol assuming it's free) we could do it.
+
+We just need it so that there's a bound on how many ``steps back'' we take at each step. Well, if we view this as sitting in the word graph, it's really asking, does each node have finite degree?
+
+So viewing the semigroup elements as a bunch of nodes and putting directed edges based on residuation, does each node have finite degree?
+
+Well, if that graph is finite, then yes, certainly. Orbit rational things are the things for which these things are finite.
+
+But there's really two open questions. Does there exist a path to the identity from every node in the word graph? (Equiv to, does identity eventually show up in the wreath recursion). And, does every node have finite degree? I don't think every node has finite degree. These are strings with rewrite rules, apply the rewrite rules backwards repeatedly.
+
+Still, though, as group elements, I'm pretty sure the predessors must just be equal, flat out. Because you know you are a wreath recursion and you know that you operate on the same alphabet. So you're the same permutation of stuff.
+
+``Up to isomorphism'', these nodes have finite degree. Sooooooo yes. This should just work. If you're odd (and right in front of the identity), checking you twice suffices. If you're even (and right in front of the identity), checking you once suffices (you'll do the same thing if run twice). Ah, but then it seems like it's literally just even-odd. Like, is this doing anything? No, it is, it's checking the paths we haven't gone done. It's taking all the other paths. Oh fuck, we could check all powers of all stuff before the identity as well. Damn.
+
+ that 
+\end{document}

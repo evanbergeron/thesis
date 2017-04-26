@@ -1,0 +1,51 @@
+\documentclass{article}
+% \usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{parskip}
+\usepackage{tikz}
+\usepackage{bussproofs}
+\usepackage{enumerate}
+\usepackage{inconsolata}
+\usepackage[final]{microtype}
+
+%%%%%%%%% Useful shorthand %%%%%%%%%%%%
+\newcommand{\concourse}{}
+\newcommand{\0}{\underline{0}}
+\newcommand{\1}{\underline{1}}
+\newcommand{\2}{\underline{2}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\S}{\mathcal{S}}
+\renewcommand{\min}{\text{\concourse{min}}}
+\renewcommand{\max}{\text{\concourse{max}}}
+\renewcommand{\slash}{\text{ }/\text{ }}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\pr}[1]{\text{\concourse{Pr}}\left(#1\right)}
+\newcommand{\Bernoulli}[1]{\text{\concourse{Bernoulli}}\left(#1\right)}
+\newcommand{\geo}[1]{\text{\concourse{Geometric}}\left(#1\right)}
+\newcommand{\expon}[1]{\text{\concourse{Exp}}\left(#1\right)}
+\newcommand{\normal}[1]{\text{\concourse{Normal}}\left(#1\right)}
+\newcommand{\uni}[1]{\text{\concourse{Uniform}}\left(#1\right)}
+\newcommand{\var}[1]{\text{\concourse{Var}}\left(#1\right)}
+\renewcommand{\exp}[1]{\mathbb{E}\left[#1\right]}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Toward a proof of the gap theorem}
+\author{Evan Bergeron \& Tim Becker}
+\begin{document}
+\maketitle
+We found a couple of issues in the current proof sketch.
+
+Does the parity of $p_w(c_1 + d)$ indicate whether $\mathfrak{A}(A, c_1 + d)$ copies the bit after $w$, starting at $2(c_1 + d)$? This seems critical to the proof's function, and does not seem to not be the case with the current definition. Changing our definition of $p_w$ to 
+\[
+p_{wa} = \begin{cases}
+A \cdot p_w(x)&\text{if $p_w(x)$ is even}\\
+A \cdot p_w(x)+(-1)^ax&\text{otherwise}\\
+\end{cases}
+\]
+seems to ensure this (change the casing from $p_w(c_1)$ to $p_w(x)$).
+
+$p_w$ is not a map from $\Z^m$ to $\Z^m$, as the input vectors could have one-halves in them (in particular $c_1$ is not integral). Instead, we define $p_\epsilon(x) = x$ and consider $p_w(2(c_1))$ and $p_w(2(c_1 + d))$.
+
+Some notational confusion: What is $\mathfrak{C}(A, r)$? Is $\mathfrak{A}(A) = \mathfrak{A}(A, c_1)$?
+\end{document}

@@ -1,0 +1,8 @@
+\contentsline {section}{\numberline {1}Background}{1}{section.1}
+\contentsline {section}{\numberline {2}Decidable Automorphism Membership}{2}{section.2}
+\contentsline {section}{\numberline {3}Undecidablity results for submonoids of groups with decidable word problem}{2}{section.3}
+\contentsline {section}{\numberline {4}Knapsack is Undecidable for Automaton Semigroups}{3}{section.4}
+\contentsline {section}{\numberline {5}Abelian Automata}{3}{section.5}
+\contentsline {section}{\numberline {6}Open Questions}{3}{section.6}
+\vspace {\beforebibskip }
+\contentsline {section}{References}{3}{section.6}
