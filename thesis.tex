@@ -38,12 +38,12 @@ Bergeron \& Klaus Sutner}} \date{May 5, 2017}
 The word problem is a classic group-theoretic decision problem. Given
 a finitely generated group $G$, and a word $w$ over the generators
 (and their inverses), the word problem asks ``is $w \in G$.'' The word
-problem is known to be undecidable in surprisely small classes of
+problem is known to be undecidable in surprisingly small classes of
 groups - see TODO for background.
 
 The invertible Mealy machines we consider here give rise to a class of
 semigroups (and sometimes groups) for which the word problem is
-decidable. The computability picture here is rather nuaced,
+decidable. The computability picture here is rather chanced,
 however. Other important decision problems, among them the conjugacy
 problem, and the isomorphism problem are known to be undecidable. (See
 TODO and TODO for details).
@@ -193,7 +193,7 @@ vectors are equal.
   which the IsGroup question is undecidable}
 
 We define the following ambient group: elements of the group represent
-states of a turing machine. This turing machine operates on the empty
+states of a Turing machine. This Turing machine operates on the empty
 tape. There is a single halting configuration. In the group, the
 element corresponding to the halting configuration is the identity. If
 two group elements represent two configurations of the Turing machine
@@ -228,7 +228,7 @@ to the death state. Otherwise, it continues.
 We can verify if one configuration transitions to another in a single
 step. So given a word over the generators (that represents a sequence
 of TM configurations), we can first go through pairwise, rewriting
-these pairs. So I guess chains of consequentive configurations just
+these pairs. So I guess chains of consequential configurations just
 become their first state. We can also go through and check to see if
 certain configurations lie upon the canonical computational path. So
 then everything becomes either the death state or the start state or
@@ -258,37 +258,12 @@ question do we then ask to verify there is a solution? Something about
 asking if the space spanned by the equations for $A$ has any
 intersection with $\mathbb{N}^n$.
 
-
 \subsection{Residuation Fixed Point is Decidable for Abelian automaton
   semigroups}
 
 Take the matrix representing residuation for some word
 $w \in \Sigma^*$ and find if it has any eigenvectors in
 $\mathbb{N}^n$.
-
-\subsection{Misc}
-
-\begin{proposition}
-  In an Abelian, minimal transducer $A$, every state has in-degree at
-  most 2.
-\end{proposition}
-\begin{proof}
-  Consider a state $s$. Every parent of $s$ is either a copy or a
-  toggle state. If $s$ had two copy state parents, this contradicts
-  minimality.
-
-  If $s$ had two toggle state parents $s_1$, $s_2$, then either
-  $s = \partial_a s_1 = \partial_a s_2$ or
-  $s = \partial_a s_1 = \partial_{\bar{a}} s_2$. Certainly, the first
-  case contradicts minimality, since then
-  $$ \partial_{\bar{a}} s_1 = \theta \partial_a s_1 = \theta
-  \partial_a s_2 = \partial_{\bar{a}} s_2$$ and so $s_1 = s_2$.  For
-  the second case, then TODO I have another argument for this.
-  $$ \theta \partial_{a} s_1 = \theta \partial_{\bar{a}} s_2 =
-  \partial_a s_2 $$ Suppose some state $s$ has in-degree $d \geq
-  3$. Then either at least 2 parents are toggles, or at least two are
-  copies. If at least 2 are copies,
-    \end{proof}
 
 \section{Abelian Automata}
 
