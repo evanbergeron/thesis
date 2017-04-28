@@ -1,0 +1,44 @@
+%---------------------------------------------------------------------------
+% Time-stamp: <2015-03-25 13:03:33 sutner> 
+%
+% :File:	.tex
+% :Purpose:	standalone   Grigorchuk automaton
+%
+%---------------------------------------------------------------------------
+\documentclass{standalone}
+\usepackage[beamer]{vaucanson-g}
+
+\FixStateLineDouble{.9}{.8}
+\renewcommand{\TinyScale}{0.40}
+\renewcommand{\SmallScale}{0.50}
+\renewcommand{\LoopOnLargeState}{11}
+\renewcommand{\LoopOnMediumState}{9}
+\renewcommand{\LoopOnSmallState}{15}
+
+\begin{document}
+
+\renewcommand{\SmallScale}{0.5}
+\renewcommand{\LoopOnSmallState}{13}
+\hspace{20mm}
+\SmallPicture\VCDraw{%
+\SmallState
+\begin{VCPicture}{(2,-3)(10,9)}
+\State[]{(4,8)}{A}
+\State[]{(0,4)}{B}
+\State[]{(4,4)}{C}
+\State[]{(8,4)}{D}
+\State[]{(4,0)}{E}
+
+\EdgeR{A}{B}{0/0}
+\EdgeL{A}{C}{1/1}
+\EdgeR{B}{E}{a/\overline{a}}
+\EdgeR{C}{B}{0/0}
+\EdgeL{C}{D}{1/1}
+\EdgeL{D}{E}{0/0}
+\EdgeR{D}{A}{1/1}
+\LoopS{E}{a/a}
+
+\end{VCPicture}}
+
+
+\end{document}

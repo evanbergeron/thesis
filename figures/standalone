@@ -1,0 +1,45 @@
+#!/bin/csh
+#
+# File:       standalone
+#
+# Purpose:    convert standalone files to pdf
+#             handle tikz, pstricks and vaucanson
+#
+
+set progname = `basename $0`
+
+set usage = "Usage: ${progname} <sta file>"
+
+if( $#argv == 0 ) then
+        echo $usage
+        exit 1
+endif
+
+
+if( $argv[1] == 'a' ) then
+        set argv = `ls *-sta.tex`
+endif
+
+
+foreach arg ($argv)
+
+    set texfile = $arg:r.tex
+
+    grep -e "pstricks\|vaucanson" $texfile > /dev/null
+
+    if( $status == 0 ) then 
+    echo "****  pstricks ****"
+	latex  $texfile
+	dvipdf $arg:r.dvi 
+    else
+    echo "****  pdf ****"
+	pdflatex $arg
+    endif
+
+end
+
+
+
+#
+# eof
+#
