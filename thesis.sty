@@ -1,0 +1,40 @@
+\ProvidesPackage{thesis}
+\RequirePackage{amsthm}
+\RequirePackage{amssymb}
+\RequirePackage{amsmath}
+\RequirePackage{etoolbox}
+\RequirePackage[final]{pdfpages}
+\RequirePackage{pgf, tikz}
+\usetikzlibrary{arrows, automata}
+\usetikzlibrary{positioning}
+
+\newtoggle{handin}
+\DeclareOption{ugly}{\toggletrue{handin}}
+\DeclareOption{pretty}{\togglefalse{handin}}
+
+\ExecuteOptions{pretty}
+\ProcessOptions\relax
+
+\iftoggle{handin}{%
+  \RequirePackage{setspace}
+  \RequirePackage[margin=1in]{geometry}
+  \doublespacing
+  \newlength{\beforebibskip}  
+  \setlength{\beforebibskip}{0em}
+  \newcommand{\spacedallcaps}[1]{\textsc{#1}}
+  \newcommand{\spacedlowsmallcaps}[1]{\textsc{#1}}
+}{%
+  \RequirePackage[nochapters]{classicthesis}
+}
+
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{question}{Question}
+\newtheorem{conjecture}{Conjecture}
+
+\newcommand{\defn}[1]{\textit{#1}}
+\newcommand{\decprob}[1]{\textsc{#1}}

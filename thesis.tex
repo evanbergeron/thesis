@@ -1,23 +1,5 @@
 \documentclass[10pt]{article}
-\usepackage{amsthm}
-\usepackage{amssymb}
-\usepackage{amsmath}
-\usepackage[final]{pdfpages}
-\usepackage[nochapters]{classicthesis}
-\usepackage{pgf, tikz}
-\usetikzlibrary{arrows, automata}
-\usetikzlibrary{positioning}
-
-\newtheorem{proposition}{Proposition}
-\newtheorem{theorem}{Theorem}
-\newtheorem{corollary}{Corollary}
-\newtheorem{lemma}{Lemma}
-\newtheorem{definition}{Definition}
-\newtheorem{question}{Question}
-\newtheorem{conjecture}{Conjecture}
-
-\newcommand{\defn}[1]{\textit{#1}}
-\newcommand{\decprob}[1]{\textsc{#1}}
+\usepackage[ugly]{thesis}
 
 \begin{document}
 \pagestyle{plain}
@@ -103,8 +85,8 @@ every transition, we call the automaton $A$ \defn{synchronous}. An
 automaton is called \defn{invertible} when every state in $Q$ has some
 bijection $\pi$ on $\Sigma$ such that $(u, x)\delta = (v, \pi(x))$. A
 state in $A$ is a \defn{copy state} if $\pi$ is the identity
-permutation and is a \defn{toggle state} otherwise. The present paper is concerned only with invertible, synchronous
-automata.
+permutation and is a \defn{toggle state} otherwise. The present paper
+is concerned only with invertible, synchronous automata.
 
 \subsection{Actions on the infinite tree}
 
@@ -256,7 +238,7 @@ automorphism defined by $D$. After minimization, $D$ produces a
 subautomaton of $C$ tat consists of a ``transient part'' and a copy of
 $B$ (there may be SCCs in the transient part, but they are not
 subautomata). Hence, there is some word $w$ such that $\partial_w g$
-is just a single state in the copy of $B$; also, $w$ cna be found
+is just a single state in the copy of $B$; also, $w$ can be found
 effectively\footnote{TODO}. In fact, for all $u$, there is a $w$ such
 that $\partial_{ww}g$ is atomic. Essentially this just means that $g$
 is strongly tame.
@@ -286,20 +268,23 @@ $B$ is just a random subautomaton of $C$.
 %        other.
 
 \section{Knapsack is Undecidable for Automaton Semigroups}
+% TODO make this formal
 We follow a proof strategy similar to \cite{Konig15:knapsack}.
 
-We define the \defn{Knapsack Problem} as follows: given as input
-generators $g_1 \ldots g_k$ and a target group element $g$, do there
+We define the \decprob{Knapsack Problem} as follows: given as input
+generators $g_1 \ldots g_k$ and a target semigroup element $g$, do there
 exist natural numbers $a_1\ldots a_k$ such that
 \[ g_1^{a_1} \cdots g_k^{a_K} = g \] We prove that this problem is
 undecidable for automaton semigroups by reducing from % to?
 Hilbert's tenth problem.
 
-Hilbert's tenth problem asks: ``given a polynomial over the integers
-and an integer $a$, do there exist values of the arguments to the
-polynomial such that the polynomial evaluated at this point is equal
-to $a$?'' It is known that there exist polynomials for which this
-problem is undecidable.
+We define the decision problem \decprob{Hilbert} as following: ``given
+a polynomial over the integers and an integer $a$, do there exist
+values of the arguments to the polynomial such that the polynomial
+evaluated at this point is equal to $a$?'' It is known that there
+exist polynomials for which this problem is undecidable.
+
+\textit{Claim: \decprob{Knapsack} is undecidable in the class of automaton semigroups.}
 
 We can expand this polynomial into a system of equations - think of a
 codegen step in a compiler. Each step is either an addition or a
