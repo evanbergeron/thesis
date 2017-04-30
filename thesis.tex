@@ -5,6 +5,7 @@
 \usepackage[nochapters]{classicthesis}
 \usepackage{pgf, tikz}
 \usetikzlibrary{arrows, automata}
+\usetikzlibrary{positioning}
 
 \newtheorem{proposition}{Proposition}
 \newtheorem{theorem}{Theorem}
@@ -112,7 +113,36 @@ $\epsilon$, and a vertex labelled $w$ has the child $wa$ for each
 $a \in \Sigma$. Out of convenience, we will frequently conflate a
 vertex with its label.
 
-% TODO put in diagram of tree here
+% TODO make this less ugly
+\begin{center}
+\begin{tikzpicture}[
+        > = stealth, % arrow head style
+        shorten > = 1pt, % don't touch arrow head to node
+        auto,
+        node distance = 1.5cm, % distance between nodes
+        semithick % line style
+    ]
+    \tikzstyle{every state}=[
+        draw = black,
+        thick,
+        fill = white,
+        minimum size = 3mm
+    ]
+    \node[state] (root) {$\epsilon$};
+    \node[state] (s0) [below left  of=root] {$0$};
+    \node[state] (s1) [below right of=root] {$1$};
+    \node[state] (s00) [below left  of=s0] {$00$};
+    \node[state] (s01) [below right=0.56cm and 0.1cm of s0] {$01$};
+    \node[state] (s10) [below left=0.56cm and 0.1cm of s1] {$10$};
+    \node[state] (s11) [below right of=s1] {$11$};
+    \path[->] (root) edge node {} (s0);
+    \path[->] (root) edge node {} (s1);
+    \path[->] (s0) edge node {} (s00);
+    \path[->] (s0) edge node {} (s01);
+    \path[->] (s1) edge node {} (s10);
+    \path[->] (s1) edge node {} (s11);
+\end{tikzpicture}
+\end{center}
 
 Each state $q \in Q$ acts on the corresponding tree, sending vertex
 $w$ to $wq$. Moreover, if $\alpha \alpha' q = \beta \beta'$, then
@@ -157,7 +187,6 @@ to an automaton $A$. As such, we call a semigroup $S$ an
 $S \simeq \Sigma(A)$.
 % TODO expand on this
 \defn{Automaton groups} $G$ are similarly defined.
-
 
 % TODO act on the binary tree
 % TODO pretty tikz of the tree
