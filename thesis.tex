@@ -1,5 +1,6 @@
 \documentclass[10pt]{article}
 \usepackage{amsthm}
+\usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage[final]{pdfpages}
 \usepackage[nochapters]{classicthesis}
@@ -150,7 +151,8 @@ $\alpha q = \beta$, for any
 $\alpha, \alpha', \beta, \beta' \in \Sigma^*$. Which is to say, $q$'s
 action on the tree is an adjacency-preserving map and is thus an
 endomorphism on the tree. Since $A$ is synchronous, $q$ is
-length-preserving, and thus preserves levels of the tree.
+length-preserving, and thus preserves levels of the tree (and thus is
+an automorphism of the tree).
 
 We extend the action of $Q$ on $\Sigma^*$ to words $q = q_1\ldots q_n$
 over $Q^+$ by \[ wq = (\ldots((w q_1) q_2)\ldots q_n). \]
@@ -166,7 +168,7 @@ $\phi : Q^+ \rightarrow \textsf{End}(B^*)$, where $\textsf{End}(B^*)$
 denotes the semigroup of endomorphisms of the tree $B^*$. We denote
 the image of $\phi$ by $\Sigma(A)$.
 
-\subsection*{Semigroup theory background}
+\subsection*{Semigroup theory}
 
 A \defn{semigroup} is a set $S$ paired with a binary operation
 $f : S \times S \rightarrow S$ such that $S$ is closed under $f$ and
@@ -188,8 +190,37 @@ $S \simeq \Sigma(A)$.
 % TODO expand on this
 \defn{Automaton groups} $G$ are similarly defined.
 
-% TODO act on the binary tree
-% TODO pretty tikz of the tree
+\subsection*{Wreath Recursions}
+Any automorphism $f$ of $\Sigma^*$ can be written in the recursive form:
+\[ f = (f_{\alpha_1}, f_{\alpha_2}, \ldots, f_{\alpha_n})\tau \] where
+$n = |\Sigma|$ and each $f_\alpha$ is an automorphism of a subtree of
+the root. Here, $\tau$ is some permutation on $\Sigma$. In the case
+where $\Sigma = \{0, 1\}$, we have $f = (f_0, f_1)\sigma$ where
+$\sigma$ denotes transposition. If $f = (f_0, f_1)\sigma$, $f$ is said
+to be \defn{odd}. If $f = (f_0, f_1)$, f is said to be
+\defn{even}. That is to say, automorphisms may be classified as even
+or odd depending on their action on the first level of the tree.
+
+The endomorphism semigroup of $\Sigma^*$ decomposes into a recursive
+wreath product
+\[
+  \operatorname{End}B^* = \operatorname{End}B^* \wr \tau_\Sigma
+\]
+where $\tau_\Sigma$ is the tranformation semigroup on $\Sigma$. Which
+is to say,
+% TODO put the curly underbrace for $n$ times underneath
+\[
+  \operatorname{End}B^* = (\operatorname{End}B^* \times \ldots \times
+  \operatorname{End}B^* ) \rtimes \tau_\Sigma
+\]
+
+% TODO running example
+% TODO an example here would be very very useful
+% TODO residuation maps
+% TODO parity maps
+
+% TODO
+% Cosets thing
 
 \subsection*{Decision Problems}
 Automaton semigroups exhibit many interesting and nuanced
@@ -204,12 +235,7 @@ considered for small classes of semigroups by Cain in
 \cite{Cain09:dec_prob}. We consider a subset of his distinguished
 properties in the automaton semigroup case here.
 
-% TODO
-% Example automaton semigroups (and explicit automaton example)
-% Recursively presented
-% Finitely generated
-% Wreath recursions
-% Cosets thing
+% TODO finitely generated and other background
 
 \section{Decidable Abelian Automorphism Membership}
 
