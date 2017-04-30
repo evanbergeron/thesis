@@ -207,7 +207,8 @@ is to say,
 % TODO
 % Cosets thing
 
-\subsection*{Decision Problems}
+\section{Decision Problems}
+
 Automaton semigroups exhibit many interesting and nuanced
 computability properties. While it is an easy result that the
 \decprob{word problem} is solvable in such semigroups, similar
@@ -222,7 +223,59 @@ properties in the automaton semigroup case here.
 
 % TODO finitely generated and other background
 
-\section{Decidable Abelian Automorphism Membership}
+\subsection{Polynomial Time IsAbelian}
+
+We have the following characterization from Okano: $S(A)$ is Abelian
+iff there exists a unique $\Theta_A \in S(A)$ such that
+$\partial_0 \underline{t} = \partial_1 \underline{t} \Theta_A$ for all
+toggle states $t$. So it suffices to verify that each toggle state
+obeys this.
+
+Since these transducers are synchronous (output exactly one character
+per transition), we can build a DFA that recognizes the input-output
+relation of some fixed starting state. Take some $s$ this start
+state. Then build a DFA over the alphabet $\Sigma \times \Sigma$ with
+transitions simulating the behavior of the transducer starting at
+$s$. This DFA is called the \textit{acceptor of $A$ at $s$}.
+
+An automaton semigroup $S(A)$ has a presentation with generators
+corresponding to the states of $A$. Thinking of elements of $S(A)$ as
+words over this generator alphabet, we see that the state set of $A$
+is precisely the words of length 1. We can build an automaton whose
+state set is the set of all length 2 words as follows:
+
+If $A = (Q, \Sigma, \delta)$, the product automaton $A \times A$ has
+state set $Q\times Q$ with transition function
+$\partial_a (s_1, s_2) = (\partial_a s_1, \partial_{a s_1} s_2)$. We
+can see by induction that each state $(s_1, s_2)$ corresponds to the
+word $s_1 s_2 \in S(A)$.
+
+Remember that
+$(\partial_1 \underline{t}) = (\partial_0 \underline{t})\Theta_A$. So
+then we have
+$(\partial_1 \underline{t})(\partial_0 \underline{t})^{-1} =
+\Theta_A$. (This is straight from Okano's thesis, I think this
+expression is better written as
+$(\partial_0 \underline{t})^{-1}(\partial_1 \underline{t})= \Theta_A$
+- it seems more consistent with function-application-from-the-right).
+
+Anyway, $\Theta_A = (\partial_1 \underline{t})(\partial_0 \underline{t})^{-1} = (\partial_1 \underline{t})(\partial_1 \underline{t^{-1}})$, where $t^{-1}$ lies in the inverse automaton for $A$. So then build for each toggle state the following: $(A\times A^{-1})(\partial_1 \underline{t}, \partial_1 \underline{t^{-1}})$. Note that the language of this automaton is $\{ x : y \mid y = x(\partial_1 \underline{t})(\partial_0 \underline{t})^{-1}\}$. It suffices to then verify that all of these constructed DFAs are equivalent, which can be done via Hopcroft's minimization algorithm.
+
+So to summarize algorithmically: take the input automaton $A$. Build
+it's inverse automaton $A^{-1}$. Construct the product automaton
+$A\times A^{-1}$. Then for each toggle state $t_i$ of $A$, take the
+state $s_i = (\partial_1 t_i, \partial_1 t_i^{-1})$ in
+$A\times A^{-1}$ and construct the DFA $(A\times A^{-1})(s_i)$. Verify
+all the constructed DFAs are equivalent.
+
+% Interestingly, note that this approach leads to (new?) proof of the
+% following claim:
+
+This product automaton construction also gives us that the word
+problem for automaton semigroups is decidable.
+
+
+\subsection{Automorphism Membership is Decidable for Abelian Automaton Semigroups}
 
 % TODO definitions of principal automaton, complete automaton, etc
 
@@ -270,7 +323,7 @@ $B$ is just a random subautomaton of $C$.
 %        but there's a function in one machine that can be simulated in the
 %        other.
 
-\section{Knapsack is Undecidable for Automaton Semigroups}
+\subsection{Knapsack is Undecidable for Automaton Semigroups}
 % TODO make this formal
 We follow a proof strategy similar to \cite{Konig15:knapsack}.
 
@@ -307,6 +360,24 @@ class of automaton semigroups is closed under direct product). So this
 polynomial is equal to $a$ if and only if there exist $a_1 \ldots a_n$
 such that each of the individual elements of the direct product
 vectors are equal.
+
+We reduce from Hilbert's tenth problem, over natural numbers. Fix a polynomial $P(x_1, \ldots x_n)$ such that the question ``is there a solution to $P(x_1, \ldots x_n) = a$'' is undecidable.
+
+% \begin{algorithm}
+% \begin{algorithmic}[1]
+% \Procedure{HilbertsTenth}{}
+% \EndProcedure
+% \end{algorithmic}
+% \end{algorithm}
+
+% \begin{verbatim}
+% def hilbertsTenth(a):
+%   # P fixed
+%   P_plus = all positive terms of P
+%   P_neg = all negative terms of P
+% \end{verbatim}
+
+Take $P$ and separate it into $P_+$ and $P_-$, the positive and negative parts of $P$. Consider the equation $P_+ = P_-$.
 
 \subsection{A group with decidable word problem with submonoid for
   which the IsGroup question is undecidable}
