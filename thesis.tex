@@ -211,17 +211,6 @@ is to say,
 
 % TODO restructure as abelian and then general case
 % ``chapters''
-\section{Abelian Automata}
-
-\subsection{Linear algebraic background}
-TODO complete automata etc.
-
-Tsutomu did a good job of summarizing a lot of the important stuff -
-use it.
-
-\subsection{Decision Problems}j
-
-\subsubsection{Polynomial time IsGroup}
 
 \section{Decision Problems}
 
@@ -239,7 +228,7 @@ properties in the automaton semigroup case here.
 
 % TODO finitely generated and other background
 
-\subsection{Polynomial Time IsAbelian}
+\subsection{\decprob{IsAbelian} is polynomial time}
 
 {\color{TODO}
 We have the following characterization from Okano: $S(A)$ is Abelian
@@ -292,7 +281,17 @@ This product automaton construction also gives us that the word
 problem for automaton semigroups is decidable.
 } % ENDTODO
 
-\subsection{Automorphism Membership is Decidable for Abelian Automaton Semigroups}
+\subsection{Automorphism \decprob{Membership}}
+
+\subsubsection{Linear algebraic background}
+
+TODO complete automata etc.
+
+Tsutomu did a good job of summarizing a lot of the important stuff -
+use it.
+
+\subsubsection{\decprob{Membership} is decidable in the Abelian case}
+
 
 % TODO definitions of principal automaton, complete automaton, etc
 
@@ -342,7 +341,13 @@ $B$ is just a random subautomaton of $C$.
 %        other.
 }
 
-\subsection{Knapsack is Undecidable for Automaton Semigroups}
+\subsubsection{\decprob{Membership} is open in the general case}
+
+\subsection{\decprob{IsGroup}}
+\subsubsection{\decprob{IsGroup} is decidable in the Abelian case}
+\subsubsection{\decprob{IsGroup} is open in the general case}
+
+\subsection{\decprob{Knapsack} is undecidable for automaton semigroups}
 {\color{TODO}
 We follow a proof strategy similar to \cite{Konig15:knapsack}.
 
@@ -400,8 +405,7 @@ Take $P$ and separate it into $P_+$ and $P_-$, the positive and
 negative parts of $P$. Consider the equation $P_+ = P_-$.
 } % ENDTODO
 
-\subsection{A group with decidable word problem with submonoid for
-  which the IsGroup question is undecidable}
+\subsection{A monoid with decidable \decprob{Word Problem} and undecidable \decprob{IsGroup}} 
 
 % TODO monoid definition
 We establish the existence of a monoid with decidable
