@@ -382,52 +382,115 @@ Take $P$ and separate it into $P_+$ and $P_-$, the positive and negative parts o
 \subsection{A group with decidable word problem with submonoid for
   which the IsGroup question is undecidable}
 
-% TODO Turing machine defintion
+% TODO monoid definition
+We establish the existence of a monoid with decidable
+$\decprob{Word Problem}$, but undecidable $\decprob{IsGroup}$. We may
+take this result as an intermediate step toward the decidability of
+the $\decprob{IsGroup}$ problem for automaton semigroups.
 
-We define the following ambient group: elements of the group represent
-states of a Turing machine. This Turing machine operates on the empty
-tape. There is a single halting configuration. In the group, the
-element corresponding to the halting configuration is the identity. If
-two group elements represent two configurations of the Turing machine
-such that one of the configurations can proceed to the other in a
-single step, then these two group elements are considered equal.
+\subsubsection*{Preliminaries}
+Here we take a \defn{Turing machine} to be a 6-tuple,
+$(Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject})$, where $Q$,
+$\Sigma$, $\Gamma$ are all finite sets.
+$\delta : Q \times \Sigma \rightarrow Q\times \Gamma \times \{L,S,R\}$
+is the transition function, $Q$ is the state set, $\Sigma$ is the
+input alphabet, $\Gamma \supseteq \Sigma$ is the tape alphabet, $b$ is
+some blank symbol, with $b \in \Gamma - \Sigma$, $q_{accept}$ is the
+unique accepting final state, and $q_{reject}$ the single rejecting
+final state.
 
-We have the take care defining the Turing machine, however. We'll
-define it to be a \defn{self-verifying} Turing machine. How does this
-work? This Turing machine provides some canonical computation, that
-is, it proceeds from the start configuration onward, perhaps
-halting. However, there are all sorts of configurations that the
-Turing machine will never reach. A self-verifying Turing machine will,
-at every point, verify that it is along this canonical computation
-path. If it finds that it is not, it will transition to some death
-state, where it will stay.
+We further define a Turing machine \defn{configuration} to be a triple
+$(u, q, v) \in \Gamma^* \times Q \times \Gamma^*$. Here, $u$ denotes
+the tape contents to the left of the tapehead, $q$ is the current
+state, and $v$ begins at the tapehead and extends to the right.
 
-This means that, considering the set of all possible configurations of
-the Turing machine as a graph, there's a path from the start state
-onward (perhaps ending in a halt state) and everything else is just a
-star graph transitioning to this death state.
+A configuation $C$ for a TM $M$ is said to \defn{yield} configuration
+$C'$ if $M$ can step directly from $C$ to $C'$.
 
-How are these self-verifying Turing machines realized? As the
-canonical computation proceeds, a program counter is kept (perhaps to
-the left of the tapehead). After every step, the Turing machine will
-examine what ``time step'' the computation is currently sitting in. It
-will perform the canonical computation for the first $n$ steps. If it
-does not wind up where it's configuration says it is, it transitions
-to the death state. Otherwise, it continues.
+For a Turing machine $M$, take $C_M$ to be the set of all valid
+configurations of $M$. Then define $CG_M$ to be the graph $(C_M, E)$,
+where $(u,v) \in E$ if and only if $u$ yields $v$ in $M$. Define
+% TODO define \mathcal{T} to be the set of all TMs
+\[
+  \textsf{canon}(M, w) : \mathcal{T} \times \Sigma^*
+      \rightarrow
+       C_M^*\cup C_M^\omega
+\]
+to be the function that maps input $w$ to the sequence of
+configurations $M$ takes on while computing over
+$w$. $\textsf{canon}(M, w)$ will be a finite sequence if and only if
+$M$ halts on $w$. We call $\textsf{canon}(M, w)$ the \defn{canonical
+ computation of $M$ on $w$}.
 
-\textit{Claim:} This group has a decidable word problem.
+Certainly, not every configuration in $C_M$ will be along the sequence
+$\textsf{canon}(M,w)$. Which is to say, there are unreachable
+configurations.
 
-We can verify if one configuration transitions to another in a single
-step. So given a word over the generators (that represents a sequence
-of TM configurations), we can first go through pairwise, rewriting
-these pairs. So I guess chains of consequential configurations just
-become their first state. We can also go through and check to see if
-certain configurations lie upon the canonical computational path. So
-then everything becomes either the death state or the start state or
-the identity? Then we can just check for equality of exponents?
+Informally, a \defn{self-verifying Turing machine} $S$ is one that, at
+every step, verifies that the current configuration lies upon the
+canonical computation. If $S$ finds that this is not the case, $S$
+immediately rejects. Otherwise, the computation steps forward a single
+step.
+
+TODO do I need a more formal definition here?
+
+In the configuration graph $CG_S$, there is a path extending from each
+valid starting configuration $(\epsilon, q_0, w)$ for $w \in \Sigma^*$. The remaining states form an infinite star graph with $q_{reject}$ as the center.
+
+\textit{Claim:} There is a computable function $\textsf{sv}$ that maps Turing
+machines to equivalent self-verifying Turing machines.
+
+TODO how much detail do I need to go into here?
+
+Speaking informally, as the canonical computation proceeds, a program
+counter is kept - perhaps to the left of the tapehead. After every
+step, the Turing machine will examine what ``time step'' the
+computation is currently sitting in. It will perform the canonical
+computation for the first $n$ steps. If it does not wind up where it's
+configuration says it is, it transitions to the death
+state. Otherwise, it continues.
+
+\subsubsection*{The Submonoid in question}
+Define the Turing machine $M = (Q, \Sigma, \Gamma, \delta, q_0, F)$ to
+operate only on the blank tape; for all $s \in \Sigma$,
+$\delta(q, s) = (q_{reject}, b, S)$
+
+% TODO need to make the Turing machine maintain a counter, right?
+
+Then take the ambient Abelian group $G_M = (C_M, \cdot)$ whose carrier
+set is all configurations of $M$. For $c$, $c'$ in $G_M$, we have
+$c = c'$ if and only if $c$ yields $c'$.
+
+\textit{Claim:} $G_{\textsf{sv}(M)}$ has a decidable word problem.
+
+For every word $w$ in $G_{\textsf{sv}(M)}$, there exist nonnegative
+integers $a$, $r$ such that $w = q_{accept}^a q_{reject}^r$. Further,
+we may compute $a$ and $b$. Recall that $\textsf{sv}(M)$ maintains a
+program counter $p$ to the left of the input. So we may simply run $M$
+for the first $p$ steps and then check for configuration equality.
+
+So then given two words $w_1$, $w_2$ in $G_{\textsf{sv}(M)}$, simply
+compute $a_1$, $r_1$, $a_2$, $r_2$. Return true if and only if $a_1 = a_2$ and $r_1 = r_2$.
+
+% \begin{verbatim}
+% def counts(w):
+%   (a, r) = (0, 0)
+%   for config in w:
+%     p = pc(config)
+%     if config == canon(M, w1)[p]:
+%       a += 1
+%     else:
+%       r += 1
+%   return (a, r)
+  
+% def same(w1, w2):
+%   return counts(w1) == counts(w2)
+% \end{verbatim}
 
 \textit{Claim:} If $s$ is the start configuration of the Turing
 machine, it is undecidable whether $\langle s \rangle$ is a group.
+
+% TODO formalize
 
 Suppose it was decidable. We can, given, a TM, transform it into a
 self-verifying version of itself, and then build this group around
