@@ -385,7 +385,9 @@ polynomial is equal to $a$ if and only if there exist $a_1 \ldots a_n$
 such that each of the individual elements of the direct product
 vectors are equal.
 
-We reduce from Hilbert's tenth problem, over natural numbers. Fix a polynomial $P(x_1, \ldots x_n)$ such that the question ``is there a solution to $P(x_1, \ldots x_n) = a$'' is undecidable.
+We reduce from Hilbert's tenth problem, over natural numbers. Fix a
+polynomial $P(x_1, \ldots x_n)$ such that the question ``is there a
+solution to $P(x_1, \ldots x_n) = a$'' is undecidable.
 
 % \begin{algorithm}
 % \begin{algorithmic}[1]
@@ -457,19 +459,12 @@ canonical computation. If $S$ finds that this is not the case, $S$
 immediately rejects. Otherwise, the computation steps forward a single
 step.
 
-TODO do I need a more formal definition here?
-
 In the configuration graph $CG_S$, there is a path extending from each
 valid starting configuration $(\epsilon, q_0, w)$ for $w \in \Sigma^*$. The remaining states form an infinite star graph with $q_{reject}$ as the center.
 
-TODO martin davis is a reference here. they're both old
-papers. Shephardson is another reference. Marmon
-
-\textit{Claim:} There is a computable\footnote{TODO is actually primitive recursive} function $\textsf{sv}$ that maps Turing
+\textit{Claim:} There is a computable\footnote{TODO is actually
+  primitive recursive} function $\textsf{sv}$ that maps Turing
 machines to equivalent self-verifying Turing machines.
-
-TODO how much detail do I need to go into here? Klaus answer: don't go
-into too much detail here. Suffices to cite.
 
 Speaking informally, as the canonical computation proceeds, a program
 counter is kept - perhaps to the left of the tapehead. After every
@@ -478,6 +473,13 @@ computation is currently sitting in. It will perform the canonical
 computation for the first $n$ steps. If it does not wind up where it's
 configuration says it is, it transitions to the death
 state. Otherwise, it continues.
+
+In the interest of reader intuition, we expound further upon a couple
+of implementation details here. For further reading, see
+\cite{davis:note_utm}, \cite{davis:defn_utm}, and
+\cite{shepherdson:machine_config} for details.
+
+TODO rough sketch of implementation details.
 
 \subsubsection*{The Submonoid in question}
 Define the Turing machine $M = (Q, \Sigma, \Gamma, \delta, q_0, F)$ to
