@@ -190,7 +190,9 @@ $\sigma$ denotes transposition. If $f = (f_0, f_1)\sigma$, $f$ is said
 to be \defn{odd}. If $f = (f_0, f_1)$, f is said to be
 \defn{even}. That is to say, automorphisms may be classified as even
 or odd depending on their action on the first level of the tree. The
-set of even automorphisms form a subgroup of index 2 in $G(\A)$.
+set of even automorphisms form a subgroup $H$ of index 2 in
+$G(\A)$. Further, the residuation maps are group homomorphisms when
+restricted to $H$.
 
 The endomorphism semigroup of $\Sigma^*$ decomposes into a recursive
 wreath product
@@ -242,12 +244,32 @@ properties in the automaton semigroup case here.
 
 \subsection{\decprob{IsAbelian} is polynomial time}
 
+For a binary invertible automaton $\A$, define the \emph{gap} of an
+automorphism $f \in G(\A)$ to be
+$\gamma_f = (\partial_0 f)(\partial_1 f)^{-1}$.
+
+The following result is adapted from \cite{okano:thesis}.
+
+% TODO omg this typesetting
+\textbf{Lemma}. $\A$ is Abelian if and only if all even automorphisms
+in $S(\A)$ have gap $I$ and odd automorphisms have constant gap.
+
+\textit{Proof.}
+
+Suppose $\A$ is Abelian; so $fg = gf$ for all $f$, $g$ in $S(\A)$.
+% TODO case 1 f and g are both odd
+% TODO case 2 f even, g odd
+
+Conversely, first suppose $f$ and $g$ are both odd.
+% TODO case 2 f even, g odd
+
+% TODO apparently every else can be handled directly by induction?
+% Haha yah, that's so sneaky
+
+If $f$ and $g$ are both even, the claim follows by induction.
+
 {\color{TODO}
-We have the following characterization from Okano: $S(\A)$ is Abelian
-iff there exists a unique $\Theta_\A \in S(\A)$ such that
-$\partial_0 \underline{t} = \partial_1 \underline{t} \Theta_\A$ for all
-toggle states $t$. So it suffices to verify that each toggle state
-obeys this.
+So it suffices to verify that each toggle state obeys this.
 
 Since these transducers are synchronous (output exactly one character
 per transition), we can build a DFA that recognizes the input-output
