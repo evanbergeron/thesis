@@ -522,10 +522,10 @@ We prove that this problem is undecidable for automaton semigroups by
 reducing from Hilbert's tenth problem.
 
 \begin{definition}
-We define the decision problem \decprob{Hilbert} as following: ``given
-a polynomial over the integers and an integer $a$, do there exist
-values of the arguments to the polynomial such that the polynomial
-evaluated at this point is equal to $a$?''
+  We define the decision problem \decprob{Hilbert} as following:
+  ``given a polynomial over the integers and an integer $a$, do there
+  exist values of the arguments to the polynomial such that the
+  polynomial evaluated at this point is equal to $a$?''
 \end{definition}
 
 It is well-known that there exist polynomials for which
@@ -551,6 +551,7 @@ is an automaton semigroup. Moreover, the class of automaton semigroups
 is closed under direct products, proven by Cain in
 \cite{Cain09:auto_sf}.
 
+% TODO does H_3(\N) \times \Z^e suffice?
 \begin{proposition}
   There exist fixed constants $d,e \in \N$ and a exponential
   expression $E$ of the form
@@ -559,32 +560,41 @@ is closed under direct products, proven by Cain in
   problem is undecidable.
 \end{proposition}
 
+% TODO consider inserting actual automata diagrams for the G_i's.
 \begin{proof}
+  By introducing extra variables, we can construct from the polynomial
+  $P(x_1, \ldots, x+n$ a system $S$ of equations of the form
+  $x\cdot y = z$, $x+y = z$, $x = c$ (for $c \in \Z$) such that the
+  equation $P(x_1,\ldots, x_n) = a$ has a solutio nin $\N$ if and only
+  if the system of equations $S_a = S \cup \{x_0 = a\}$ has a solution
+  in $\N$. Let $X$ be the set of variables that occur in $S_a$.
 
+  Take a natural number $a$ (the input of the reduction). Assume that
+  $S_a$ contains $d$ equations of the form $x\cdot y$, and $e$ many
+  equations of the form $x+y = z$ or $x = c$. We enumerate these
+  equations as $E_1, \ldots E_{d+e}$, where the first $d$ equations
+  are all the muliplicative equations. Then set $G_i = H_3(\N)$ for
+  each $i \leq d$ and set $G_i = \N$ for each $i > d$. For every $i$,
+  we define an element $g_i$ and an exponential expression $E_i$ over
+  $G_i$ as follows:
+
+  \textit{Case 1:} $E_i = (x \cdot y = z)$. Thus we have
+  $G_i = H_3(\N)$. Set $g_i$ to be the identity matrix in $H_3(\N)$
+  and consider the following equation:
+
+  TODO
+
+  This equation has a solution if and only if TODO.
+
+  \textit{Case 2:} $E_i = (x+y=z)$ and so $G_i= \N$. Set $g_i = 0$ TODO
+
+  \textit{Case 3:} $E_i = (x = c)$. (This includes our distinguished
+  equation $x_0 = a$). We have $G_i = \N$. Then set $g_i = c$ and
+  $E_i = x$. Then TODO
+
+  Finally, define $E$ to be the direct product of the $E_i$'s,
+  $\prod_{i=1}^d E_i$. Then TODO.
 \end{proof} % proposition
-{\color{TODO}
-We can expand this polynomial into a system of equations - think of a
-codegen step in a compiler. Each step is either an addition or a
-multiplication. We can take the terms with negative coefficients and
-move them to the other side of the equation, so we now have the
-equality of two different polynomials, each with positive
-coefficients. We can also choose to only substitute in natural numbers
-as arguments, by some trick that I don't know. So then we have systems
-of equations over the natural numbers.
-
-We can turn each equation into a formulation of the Knapsack problem
-for automaton semigroups. It's known that the Heisenberg semigroup is
-an automaton group, and there's some equation over the elements of
-$H_3$ for multiplication. Same for addition in the natural
-numbers. Then we just take the direct product of these groups (the
-class of automaton semigroups is closed under direct product). So this
-polynomial is equal to $a$ if and only if there exist $a_1 \ldots a_n$
-such that each of the individual elements of the direct product
-vectors are equal.
-
-We reduce from Hilbert's tenth problem, over natural numbers. Fix a
-polynomial $P(x_1, \ldots x_n)$ such that the question ``is there a
-solution to $P(x_1, \ldots x_n) = a$'' is undecidable.
 
 % \begin{algorithm}
 % \begin{algorithmic}[1]
@@ -600,9 +610,6 @@ solution to $P(x_1, \ldots x_n) = a$'' is undecidable.
 %   P_neg = all negative terms of P
 % \end{verbatim}
 
-Take $P$ and separate it into $P_+$ and $P_-$, the positive and
-negative parts of $P$. Consider the equation $P_+ = P_-$.
-} % ENDTODO
 \end{proof} % knapsack theorem 
 
 \subsection{A monoid with decidable \decprob{Word Problem} and undecidable \decprob{IsGroup}} 
