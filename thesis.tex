@@ -251,8 +251,7 @@ The following result is adapted from \cite{okano:thesis}.
 \textbf{Lemma}. $\A$ is Abelian if and only if all even automorphisms
 in $S(\A)$ have gap $I$ and odd automorphisms have constant gap.
 
-\textit{Proof.}
-
+\begin{proof}
 Suppose $\A$ is Abelian; so $fg = gf$ for all $f$, $g$ in $S(\A)$.
 If $f$ and $g$ are both odd, simply residuate both sides to get
 \[
@@ -277,6 +276,7 @@ $\gamma_f = \gamma_g$, these wreath recursions are the same. If $f$ is
 even and $g$ odd, TODO
 
 If $f$ and $g$ are both even, the claim follows by induction.
+\end{proof}
 
 {\color{TODO}
 So it suffices to verify that each toggle state obeys this.
@@ -340,7 +340,8 @@ general case. Some necessary background from
 \subsubsection{Linear algebraic background}
 
 % TODO this is disgusting typesetting.
-\textbf{Theorem} If $\A$ is a commutative automaton, then $G(\A)$ is
+\begin{theorem}
+If $\A$ is a commutative automaton, then $G(\A)$ is
 isomorphic to either a finite Boolean group or to $\Z^m$ for some
 $m \geq 1$. In the latter case, there is an isomorphism
 $\phi : G(\A) \rightarrow \Z^m$ satisfying the following recursion
@@ -352,6 +353,7 @@ $\phi : G(\A) \rightarrow \Z^m$ satisfying the following recursion
     \text{otherwise}
   \end{cases}
 \]
+\end{theorem}
 
 We call the matrix $A$ above the \defn{residual matrix} of $A$. The
 vector $r$ is referred to as the \defn{residual vector}.
@@ -359,7 +361,8 @@ vector $r$ is referred to as the \defn{residual vector}.
 We have the following properties of $A$:
 
 % TODO don't conflate the automaton A with the matrix A
-\textbf{Theorem} If $G(A) \cong \Z^m$ and $A$ is its associated
+\begin{theorem}
+If $G(A) \cong \Z^m$ and $A$ is its associated
 residual matrix, $A$ satisfies the following properties:
 \begin{enumerate}
 \item $A$ is contracting; its spectral radius is less than 1
@@ -376,14 +379,17 @@ residual matrix, $A$ satisfies the following properties:
   matrix that is similar to the companion matrix of $\chi_{A^{-1}}(x)$
   over $\Q$.
 \end{enumerate}
+\end{theorem}
 
 Latimer and MacDuffee proved the following theorem in TODO
 
-\textbf{Theorem} If $p(x) \in \Z[x]$ is monic and irreducible, the
-$GL(m, \Z)$ similarity classes of integral matrices whose
-characteristic polynomial coincides with $p(x)$ is in one-to-one
-correspondance with ideal classes of the ring $\Z[\theta]$, where
-$\theta$ is any root of $p(x)$.
+\begin{theorem}
+  If $p(x) \in \Z[x]$ is monic and irreducible, the $GL(m, \Z)$
+  similarity classes of integral matrices whose characteristic
+  polynomial coincides with $p(x)$ is in one-to-one correspondance
+  with ideal classes of the ring $\Z[\theta]$, where $\theta$ is any
+  root of $p(x)$.
+\end{theorem}
 
 Property 1 of the first theorem provides a bound on the coefficients
 of $\chi_A(x)$. When combined with property 4 and the above theorem,
@@ -489,9 +495,12 @@ We follow a proof strategy similar to \cite{Konig15:knapsack}.
 We define the \decprob{Knapsack Problem} as follows: given as input
 generators $g_1 \ldots g_k$ and a target semigroup element $g$, do there
 exist natural numbers $a_1\ldots a_k$ such that
-\[ g_1^{a_1} \cdots g_k^{a_K} = g \] We prove that this problem is
-undecidable for automaton semigroups by reducing from % to?
-Hilbert's tenth problem.
+\[ g_1^{a_1} \cdots g_k^{a_K} = g \]
+
+
+% TODO reducing "to"?
+We prove that this problem is undecidable for automaton semigroups by
+reducing from Hilbert's tenth problem.
 
 We define the decision problem \decprob{Hilbert} as following: ``given
 a polynomial over the integers and an integer $a$, do there exist
@@ -499,7 +508,9 @@ values of the arguments to the polynomial such that the polynomial
 evaluated at this point is equal to $a$?'' It is known that there
 exist polynomials for which this problem is undecidable.
 
-\textit{Claim: \decprob{Knapsack} is undecidable in the class of automaton semigroups.}
+\begin{theorem}
+  \decprob{Knapsack} is undecidable in the class of automaton semigroups.
+\end{theorem}
 
 {\color{TODO}
 We can expand this polynomial into a system of equations - think of a
