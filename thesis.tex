@@ -405,10 +405,15 @@ of $\chi_A(x)$. When combined with property 4 and the above theorem,
 it can be shown that, for fixed $m$, there exist only finitely many
 possibilities of $A$, up to $GL(m, \Z)$ similarity.
 
-Take $G$ to be some self-similar group. We may construct the
-\emph{complete group automaton} for $G$, written $\mathcal{C}_G$, as
-follows: the automaton has $G$'s carrier set as state set with
-transitions $f \longrightarrow^{a\mid af} f$. Of course in general,
+\begin{definition}
+  Take $G$ to be some self-similar group. We may construct the
+  \emph{complete group automaton} (occasionally abbreviated as the
+  \emph{complete automaton}) for $G$, written $\mathcal{C}_G$, as
+  follows: the automaton has $G$'s carrier set as state set with
+  transitions $f \longrightarrow^{a\mid af} f$.
+\end{definition}
+
+Of course in general,
 this invertible automaton will be infinite, but certainly
 $\mathcal{S}(\mathcal{C}_G)$ is a group and ismorphic to $G$. The more
 interesting case is when $G$ may be represented in terms of a finite
@@ -443,7 +448,11 @@ and residual vector $r = [-1, -\frac{3}{2}]^T$.
 
 \subsubsection{\decprob{Membership} is decidable in the Abelian case}
 
-% TODO definitions of principal automaton, etc
+\begin{definition}
+  For a residual matrix $A$ and residual vector $r = A \cdot e_1$, the
+  \emph{principal automaton} is the automaton generated from closure
+  of $e_1$ under residuation defined by the pair $(A, r)$.
+\end{definition}
 
 {\color{TODO}
 Given an invertible automaton $\A$ and a principal Abelian automaton
@@ -519,7 +528,31 @@ exist polynomials for which this problem is undecidable.
 \begin{theorem}
   \decprob{Knapsack} is undecidable in the class of automaton semigroups.
 \end{theorem}
+\begin{proof}
 
+Recall that the Heisenberg semigroup
+\[
+  H_3(\mathbb{N}) = \left\{
+      \begin{bmatrix}
+        1 & a & c \\
+        0 & 1 & b \\
+        0 & 0 & 1
+      \end{bmatrix}; a, b, c \in \mathbb{N}
+    \right\}
+\]
+is an automaton semigroup. Moreover, the class of automaton semigroups
+is closed under direct products, proven by Cain in
+\cite{Cain09:auto_sf}.
+
+\begin{proposition}
+  There exist fixed constants $d,e \in \N$ and a exponential
+  expression $E$ of the form
+  \[s_1^{x_1} s_2^{x_2}\cdots s_n^{x_n} \] with
+  $s_i \in G = H_3(\N) \times \N^e$ for which the \decprob{Knapsack}
+  problem is undecidable.
+\end{proposition}
+
+\begin{proof}
 {\color{TODO}
 We can expand this polynomial into a system of equations - think of a
 codegen step in a compiler. Each step is either an addition or a
@@ -561,6 +594,8 @@ solution to $P(x_1, \ldots x_n) = a$'' is undecidable.
 Take $P$ and separate it into $P_+$ and $P_-$, the positive and
 negative parts of $P$. Consider the equation $P_+ = P_-$.
 } % ENDTODO
+\end{proof} % proposition
+\end{proof} % knapsack theorem 
 
 \subsection{A monoid with decidable \decprob{Word Problem} and undecidable \decprob{IsGroup}} 
 
@@ -591,18 +626,19 @@ $C'$ if $M$ can step directly from $C$ to $C'$.
 
 For a Turing machine $M$, take $C_M$ to be the set of all valid
 configurations of $M$. Then define $CG_M$ to be the graph $(C_M, E)$,
-where $(u,v) \in E$ if and only if $u$ yields $v$ in $M$. Define
-% TODO define \mathcal{T} to be the set of all TMs
+where $(u,v) \in E$ if and only if $u$ yields $v$ in $M$.
+\begin{definition}
+Define the \emph{canonical computation of $M$ on $w$}.
 \[
   \textsf{canon}(M, w) : \mathcal{T} \times \Sigma^*
       \rightarrow
        C_M^*\cup C_M^\omega
 \]
 to be the function that maps input $w$ to the sequence of
-configurations $M$ takes on while computing over
-$w$. $\textsf{canon}(M, w)$ will be a finite sequence if and only if
-$M$ halts on $w$. We call $\textsf{canon}(M, w)$ the \defn{canonical
- computation of $M$ on $w$}.
+configurations $M$ takes on while computing over $w$. Note that
+$\textsf{canon}(M, w)$ will be a finite sequence if and only if $M$
+halts on $w$.
+\end{definition}
 
 Certainly, not every configuration in $C_M$ will be along the sequence
 $\textsf{canon}(M,w)$. Which is to say, there are unreachable
@@ -617,9 +653,12 @@ step.
 In the configuration graph $CG_S$, there is a path extending from each
 valid starting configuration $(\epsilon, q_0, w)$ for $w \in \Sigma^*$. The remaining states form an infinite star graph with $q_{reject}$ as the center.
 
-\textit{Claim:} There is a computable\footnote{TODO is actually
-  primitive recursive} function $\textsf{sv}$ that maps Turing
-machines to equivalent self-verifying Turing machines.
+\begin{proposition}
+  There is a computable\footnote{The reader may interested to find
+  that \textsf{sv} is in fact primitive recursive - see TODO for
+  details.} function $\textsf{sv}$ that maps Turing machines to
+  equivalent self-verifying Turing machines.
+\end{proposition}
 
 Speaking informally, as the canonical computation proceeds, a program
 counter is kept - perhaps to the left of the tapehead. After every
@@ -647,35 +686,45 @@ Then take the ambient Abelian group $G_M = (C_M, \cdot)$ whose carrier
 set is all configurations of $M$. For $c$, $c'$ in $G_M$, we have
 $c = c'$ if and only if $c$ yields $c'$.
 
-\textit{Claim:} $G_{\textsf{sv}(M)}$ has a decidable word problem.
+\begin{proposition}
+  $G_{\textsf{sv}(M)}$ has a decidable word problem.
+\end{proposition}
 
-For every word $w$ in $G_{\textsf{sv}(M)}$, there exist nonnegative
-integers $a$, $r$ such that $w = q_{accept}^a q_{reject}^r$. Further,
-we may compute $a$ and $b$. Recall that $\textsf{sv}(M)$ maintains a
-program counter $p$ to the left of the input. So we may simply run $M$
-for the first $p$ steps and then check for configuration equality.
+\begin{proof}
+  For every word $w$ in $G_{\textsf{sv}(M)}$, there exist nonnegative
+  integers $a$, $r$ such that $w = q_{accept}^a
+  q_{reject}^r$. Further, we may compute $a$ and $b$. Recall that
+  $\textsf{sv}(M)$ maintains a program counter $p$ to the left of the
+  input. So we may simply run $M$ for the first $p$ steps and then
+  check for configuration equality.
 
-So then given two words $w_1$, $w_2$ in $G_{\textsf{sv}(M)}$, simply
-compute $a_1$, $r_1$, $a_2$, $r_2$. Return true if and only if $a_1 = a_2$ and $r_1 = r_2$.
+  So then given two words $w_1$, $w_2$ in $G_{\textsf{sv}(M)}$, simply
+  compute $a_1$, $r_1$, $a_2$, $r_2$. Return true if and only if
+  $a_1 = a_2$ and $r_1 = r_2$.
+\end{proof}
 
-\textit{Claim:} If $s$ is the start configuration of the Turing
+\begin{proposition}
+If $s$ is the start configuration of the Turing
 machine, it is undecidable whether $\langle s \rangle$ is a group.
+\end{proposition}
 
 % TODO formalize
-It is well known that the following language is undecidable
-\[
-  \decprob{halts} = \{\langle M \rangle \mid \text{TM $M$ halts on
-    $\epsilon$} \}
-\]
-and so we reduce from \decprob{halts}. Given as input a TM $M$, we use
-an oracle for $\decprob{IsGroup}$ as follows: first, compute
-$\textsf{sv}(M)$, and then consider $G_{\textsf{sv}(M)}$. Let $s$ be
-the starting configuration for $M$ on $\epsilon$.
+\begin{proof}
+  It is well known that the following language is undecidable
+  \[
+    \decprob{halts} = \{\langle M \rangle \mid \text{TM $M$ halts on
+      $\epsilon$} \}
+  \]
+  and so we reduce from \decprob{halts}. Given as input a TM $M$, we
+  use an oracle for $\decprob{IsGroup}$ as follows: first, compute
+  $\textsf{sv}(M)$, and then consider $G_{\textsf{sv}(M)}$. Let $s$ be
+  the starting configuration for $M$ on $\epsilon$.
 
-If $M$ halts, then the submonoid generated by $s$ is the trivial
-group. If $M$ hangs, then $\langle s \rangle$ is the free monoid of
-rank one. So then $\langle s \rangle$ is a group if and only if $M$
-halts. Since $\textsf{sv}(M)$ and $M$ are equivalent, we are done.
+  If $M$ halts, then the submonoid generated by $s$ is the trivial
+  group. If $M$ hangs, then $\langle s \rangle$ is the free monoid of
+  rank one. So then $\langle s \rangle$ is a group if and only if $M$
+  halts. Since $\textsf{sv}(M)$ and $M$ are equivalent, we are done.
+\end{proof}
 
 \section{Open Questions}
 
