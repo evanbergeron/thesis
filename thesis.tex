@@ -509,21 +509,28 @@ $\B$ is just a random subautomaton of $C$.
 \subsection{\decprob{Knapsack} is undecidable for automaton semigroups}
 We follow a proof strategy similar to \cite{Konig15:knapsack}.
 
-We define the \decprob{Knapsack Problem} as follows: given as input
-generators $g_1 \ldots g_k$ and a target semigroup element $g$, do there
-exist natural numbers $a_1\ldots a_k$ such that
-\[ g_1^{a_1} \cdots g_k^{a_K} = g \]
+\begin{definition}
+  We define the \decprob{Knapsack Problem} as follows: given as input
+  generators $g_1 \ldots g_k$ and a target semigroup element $g$, do
+  there exist natural numbers $a_1\ldots a_k$ such that
+  \[ g_1^{a_1} \cdots g_k^{a_K} = g \]
+\end{definition}
 
 
 % TODO reducing "to"?
 We prove that this problem is undecidable for automaton semigroups by
 reducing from Hilbert's tenth problem.
 
+\begin{definition}
 We define the decision problem \decprob{Hilbert} as following: ``given
 a polynomial over the integers and an integer $a$, do there exist
 values of the arguments to the polynomial such that the polynomial
-evaluated at this point is equal to $a$?'' It is known that there
-exist polynomials for which this problem is undecidable.
+evaluated at this point is equal to $a$?''
+\end{definition}
+
+It is well-known that there exist polynomials for which
+\decprob{Hilbert} is undecidable, see TODO(Matiyasevich:hilbert) for
+details.
 
 \begin{theorem}
   \decprob{Knapsack} is undecidable in the class of automaton semigroups.
@@ -553,6 +560,8 @@ is closed under direct products, proven by Cain in
 \end{proposition}
 
 \begin{proof}
+
+\end{proof} % proposition
 {\color{TODO}
 We can expand this polynomial into a system of equations - think of a
 codegen step in a compiler. Each step is either an addition or a
@@ -594,7 +603,6 @@ solution to $P(x_1, \ldots x_n) = a$'' is undecidable.
 Take $P$ and separate it into $P_+$ and $P_-$, the positive and
 negative parts of $P$. Consider the equation $P_+ = P_-$.
 } % ENDTODO
-\end{proof} % proposition
 \end{proof} % knapsack theorem 
 
 \subsection{A monoid with decidable \decprob{Word Problem} and undecidable \decprob{IsGroup}} 
