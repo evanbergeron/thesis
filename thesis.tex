@@ -254,14 +254,27 @@ in $S(\A)$ have gap $I$ and odd automorphisms have constant gap.
 \textit{Proof.}
 
 Suppose $\A$ is Abelian; so $fg = gf$ for all $f$, $g$ in $S(\A)$.
-% TODO case 1 f and g are both odd
-% TODO case 2 f even, g odd
+If $f$ and $g$ are both odd, simply residuate both sides to get
+\[
+  (\partial_a f)(\partial_{\bar{a}}g) =
+  \partial_a (fg) =
+  (\partial_a gf) =
+  (\partial_a g)(\partial_{\bar{a}}f)
+\]
+which yields $\gamma_f = \gamma_g$. If $f$ is even and $g$ odd, without loss of generality, we have
+\[
+  (\partial_0f)(\partial_0 g) = 
+  \partial_0(fg) =
+  \partial_0(gf) =
+  (\partial_0g)(\partial_1 f)
+\]
+which, with algebraic manipulation, yields $\gamma_f = I$.
 
-Conversely, first suppose $f$ and $g$ are both odd.
-% TODO case 2 f even, g odd
-
-% TODO apparently every else can be handled directly by induction?
-% Haha yah, that's so sneaky
+Conversely, first suppose $f$ and $g$ are both odd. Then
+$fg = (\partial_0 f \partial_1 g, \partial_1 f \partial_0 g)$ and
+$gf = (\partial_0 g \partial_1 f, \partial_1 g \partial_0 f)$. Since
+$\gamma_f = \gamma_g$, these wreath recursions are the same. If $f$ is
+even and $g$ odd, TODO
 
 If $f$ and $g$ are both even, the claim follows by induction.
 
