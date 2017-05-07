@@ -1,0 +1,36 @@
+%---------------------------------------------------------------------------
+% Time-stamp: <2015-03-25 13:03:33 sutner> 
+%
+% :File:	.tex
+% :Purpose:	standalone   A32 automaton
+%
+%---------------------------------------------------------------------------
+\documentclass{standalone}
+\usepackage{vaucanson-g}
+
+\FixStateLineDouble{.9}{.8}
+\renewcommand{\TinyScale}{0.40}
+\renewcommand{\SmallScale}{0.50}
+\renewcommand{\LoopOnLargeState}{11}
+\renewcommand{\LoopOnMediumState}{9}
+\renewcommand{\LoopOnSmallState}{15}
+
+\begin{document}
+
+\renewcommand{\SmallScale}{0.5}
+\renewcommand{\LoopOnSmallState}{13}
+\hspace{20mm}
+\SmallPicture\VCDraw{%
+\SmallState
+\begin{VCPicture}{(2,-3)(10,9)}
+
+\State[]{(0,0)}{add}
+\State[]{(2,0)}{id}
+
+\EdgeL{add}{id}{1/0}
+\LoopN{add}{0/1}
+\LoopE{id}{a/a}
+
+\end{VCPicture}}
+
+\end{document}
