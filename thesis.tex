@@ -519,7 +519,7 @@ subautomaton of $C$ tat consists of a ``transient part'' and a copy of
 $\B$ (there may be SCCs in the transient part, but they are not
 subautomata). Hence, there is some word $w$ such that $\partial_w g$
 is just a single state in the copy of $\B$; also, $w$ can be found
-effectively\footnote{TODO}. In fact, for all $u$, there is a $w$ such
+effectively (TODO how?). In fact, for all $u$, there is a $w$ such
 that $\partial_{ww}g$ is atomic. Essentially this just means that $g$
 is strongly tame.
 
@@ -564,6 +564,50 @@ We follow a proof strategy similar to \cite{Konig15:knapsack}.
 
 % TODO need to use sets of variables for full formality
 
+\subsubsection{Exponential Expresions}
+
+Suppose $\mathcal{X}$ is a countably infinite set of variables.
+\begin{definition}
+  An \emph{exponential expression} $E$ over a semigroup $S$ is a
+  formal product of the form
+  \[
+    s_1^{x_1} s_2^{x_2}\cdots s_l^{x_l}
+  \]
+  where each $x_i$ is in $\mathcal{X}$ and each $s_i$ is in $S$. Note
+  that we do not require the $x_i$'s to be distinct.
+\end{definition}
+
+Denote by $\operatorname{Var}(E)$ the set of all variables appearing
+in $E$.
+\begin{definition}
+  For a finite set $X$ and semigroup element $s$, the set of
+  \emph{$X$-solutions} of the equation $E$ is the collection of maps
+  \[
+    S_X(E = s) = \{ v : X \rightarrow \N \mid
+    s_1^{v(x_1)} s_2^{v(x_2)}\cdots s_l^{v(x_l)} = s
+    \text{ \normalfont in } S
+    \}
+  \]
+\end{definition}
+
+The upcoming reduction involves taking direct products of semigroups,
+and so we will need the following strategy to transform exponential
+expressions over a semigroup $S$ to equivalent exponential expressions
+over a direct product containing $S$.
+
+% TODO define base element
+To this end, suppose we have exponential expressions $E_i$ for
+$i = 1\ldots n$, each with corresponding semigroups $S_i$. In each
+$E_i$, replace the base element $s_i$ with the element
+\[
+  (\underbrace{1, \ldots, 1}_\text{$i-1$}, s,
+   \underbrace{1, \ldots 1}_\text{$n-i$}) \in \prod_i S_i.
+\]
+Then take the formal product of each new $E_i$.
+
+\subsubsection{Undecidability of \decprob{Knapsack}}
+
+% TODO phrase in terms of variables
 \begin{definition}
   We define the \decprob{Knapsack Problem} as follows: given as input
   generators $g_1 \ldots g_k$ and a target semigroup element $g$, do
@@ -571,6 +615,7 @@ We follow a proof strategy similar to \cite{Konig15:knapsack}.
   \[ g_1^{a_1} \cdots g_k^{a_K} = g \]
 \end{definition}
 
+% TODO phrase in terms of variables
 \begin{definition}
   The \decprob{Generalized Knapsack Problem} has as input generators
   $g_1 \ldots g_k, h_1, \ldots h_l$, and has as output whether there
@@ -596,7 +641,8 @@ It is well-known that there exist polynomials for which
 details.
 
 \begin{theorem}
-  \decprob{Knapsack} is undecidable in the class of automaton semigroups.
+  \decprob{Generalized Knapsack} is undecidable in the class of
+  automaton semigroups.
 \end{theorem}
 \begin{proof}
 
@@ -626,27 +672,28 @@ by Cain in \cite{Cain09:auto_sg}. We denote elements of $H_3(\N)$ as
 \begin{proposition}
   There exist fixed constants $d,e \in \N$ and a exponential
   expression $E$ of the form
-  \[s_1^{x_1} s_2^{x_2}\cdots s_n^{x_n} \] with
-  $s_i \in G = H_3(\N) \times \N^e$ for which the \decprob{Knapsack}
-  problem is undecidable.
+  \[ s_1^{x_1} s_2^{x_2}\cdots s_n^{x_n} = t_1^{y_1} t_2^{y_2}\cdots
+    t_n^{y_n} \] with $s_i, t_i \in G = H_3(\N)^d \times \Z^e$ for which the
+  \decprob{Generalized Knapsack} problem is undecidable.
 \end{proposition}
 
 % TODO consider inserting actual automata diagrams for the G_i's.
 \begin{proof}
-  By introducing extra variables, we can construct from the polynomial
-  $P(x_1, \ldots, x+n)$ a system $S$ of equations of the form
-  $x\cdot y = z$, $x+y = z$, $x = c$ (for $c \in \Z$) such that the
-  equation $P(x_1,\ldots, x_n) = a$ has a solution in $\N$ if and only
-  if the system of equations $S_a = S \cup \{x_0 = a\}$ has a solution
-  in $\N$. Let $X$ be the set of variables that occur in $S_a$.
+  We construct from the polynomial $P(x_1, \ldots, x_n)$ a system $S$
+  of equations, where each equation is of one of the following forms:
+  $x\cdot y = z$, $x+y = z$, $x = c$ (for $c \in \Z$).  We will have
+  that the equation $P(x_1,\ldots, x_n) = a$ has a solution in $\N$ if
+  and only if the system of equations $S_a = S \cup \{x_0 = a\}$ has a
+  solution in $\N$. Let $X$ be the set of variables that occur in
+  $S_a$.
 
   Take a natural number $a$ (the input of the reduction). Assume that
   $S_a$ contains $d$ equations of the form $x\cdot y$, and $e$ many
   equations of the form $x+y = z$ or $x = c$. We enumerate these
   equations as $E_1, \ldots E_{d+e}$, where the first $d$ equations
-  are all the muliplicative equations. Then set $G_i = H_3(\N)$ for
-  each $i \leq d$ and set $G_i = \N$ for each $i > d$. For every $i$,
-  we define an element $g_i$ and an exponential expression $E_i$ over
+  are of the form $x\cdot y = z$. Then set $G_i = H_3(\N)$ for each
+  $i \leq d$ and set $G_i = \N$ for each $i > d$. For every $i$, we
+  define an element $g_i$ and an exponential expression $E_i$ over
   $G_i$ as follows:
 
   \textit{Case 1:} $E_i = (x \cdot y = z)$. Thus we have
@@ -679,19 +726,9 @@ by Cain in \cite{Cain09:auto_sg}. We denote elements of $H_3(\N)$ as
   $\prod_{i=1}^d E_i$. Then TODO.
 \end{proof} % proposition
 
-% \begin{algorithm}
-% \begin{algorithmic}[1]
-% \Procedure{HilbertsTenth}{}
-% \EndProcedure
-% \end{algorithmic}
-% \end{algorithm}
-
-% \begin{verbatim}
-% def hilbertsTenth(a):
-%   # P fixed
-%   P_plus = all positive terms of P
-%   P_neg = all negative terms of P
-% \end{verbatim}
+For all $d, e \in \N$, $H_3(\N)^d \times \Z^e$ is an automaton
+semigroup. It follows that \decprob{Generalized Knapsack} is
+undecidable for automaton semigroups.
 
 \end{proof} % knapsack theorem 
 
