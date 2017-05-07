@@ -14,10 +14,10 @@ Bergeron \& Klaus Sutner}} \date{May 5, 2017}
 \begin{abstract}
   We consider a variety of decision problems in groups and semigroups
   induced by invertible Mealy machines. Notably, we present proof
-  that, in the Abelian case, the emutomorphism membership problem in
-  decidable in these semigroups. In addition, we prove undecidability
-  of a Knapsack variant. A discussion of iteration and orbit
-  rationality follows.
+  that, in the Abelian case, the automorphism membership problem is
+  decidable in these semigroups. In addition, we prove the
+  undecidability of a Knapsack variant. A discussion of iteration and
+  orbit rationality follows.
 \end{abstract}
 % \newpage
 
@@ -57,11 +57,12 @@ machine shown in figure 1.
 \end{figure}
 
 \section{Background}
-An \defn{automaton} is a formally a triple $(Q, \Sigma, \delta)$,
-where $Q$ is some finite state set, $\Sigma$ is a finite alphabet of
+An \defn{automaton} is formally a triple $(Q, \Sigma, \delta)$, where
+$Q$ is some finite state set, $\Sigma$ is a finite alphabet of
 \defn{symbols}, and $\delta$ is a transformation on $Q \times \Sigma$.
 Automata are typically viewed as directed graphs with vertex set $Q$
-and an edge labeled $x \mid y$ between $u, v$ if $(u, x)\delta = (v, y)$.
+and an edge labeled $x \mid y$ between $u, v$ if
+$(u, x)\delta = (v, y)$.
 
 \begin{center}
 \begin{tikzpicture}[
@@ -96,7 +97,7 @@ automaton is called \defn{invertible} when every state in $Q$ has some
 bijection $\pi$ on $\Sigma$ such that $(u, x)\delta = (v, \pi(x))$. A
 state in $\A$ is a \defn{copy state} if $\pi$ is the identity
 permutation and is a \defn{toggle state} otherwise. The present paper
-is concerned only with invertible, alphabetic automata.
+is concerned only with invertible automata.
 
 \subsection{Actions on the infinite tree}
 
@@ -107,6 +108,7 @@ $a \in \Sigma$. Out of convenience, we will frequently conflate a
 vertex with its label.
 
 % TODO make this less ugly
+\begin{figure}
 \begin{center}
 \begin{tikzpicture}[
         > = stealth, % arrow head style
@@ -135,16 +137,18 @@ vertex with its label.
     \path[->] (s1) edge node {} (s10);
     \path[->] (s1) edge node {} (s11);
 \end{tikzpicture}
+\caption{$\textbf{2}^*$ interpreted as the infinite binary tree}
 \end{center}
+\end{figure}
 
 Each state $q \in Q$ acts on the corresponding tree, sending vertex
 $w$ to $wq$. Moreover, if $\alpha \alpha' q = \beta \beta'$, then
 $\alpha q = \beta$, for any
 $\alpha, \alpha', \beta, \beta' \in \Sigma^*$. Which is to say, $q$'s
 action on the tree is an adjacency-preserving map and is thus an
-endomorphism on the tree. Since $\A$ is alphabetic, $q$ is
-length-preserving, and thus preserves levels of the tree (and thus is
-an automorphism of the tree).
+endomorphism on the tree. Additionally, $q$ is length-preserving, and
+thus preserves levels of the tree (and thus is an automorphism of the
+tree).
 
 % TODO to talk about faithful actions, need some wreath recursion
 % background. Maybe move this generalization after the wreath
@@ -159,9 +163,9 @@ from the right here. In this way, function composition corresponds
 naturally with string concatenation.
 
 So there is a natural homomorphism
-$\phi : Q^+ \rightarrow \operatorname{Aut}B^*$, where
-$\operatorname{Aut}B^*$ denotes the semigroup of automorphisms of the
-tree $B^*$. We denote the image of $\phi$ by $\Sigma(\A)$.
+$\phi : Q^+ \rightarrow \operatorname{Aut}\textbf{2}^*$, where
+$\operatorname{Aut}\textbf{2}^*$ denotes the semigroup of automorphisms of the
+tree $\textbf{2}^*$. We denote the image of $\phi$ by $\Sigma(\A)$.
 
 \subsection*{Semigroup theory}
 
@@ -202,17 +206,19 @@ The set of even automorphisms form a subgroup $H$ of index 2 in
 $G(\A)$. Moreover, the residuation maps are group homomorphisms when
 restricted to $H$.
 
+% TODO these next two paragraphs are fishy
 The automorphism semigroup of $\Sigma^*$ decomposes into a recursive
 wreath product
 \[
-  \operatorname{Aut}B^* = \operatorname{Aut}B^* \wr \tau_\Sigma
+  \operatorname{Aut}\textbf{2}^* = \operatorname{Aut}\textbf{2}^* \wr
+  \tau_\Sigma
 \]
 where $\tau_\Sigma$ is the tranformation semigroup on $\Sigma$. Which
 is to say,
-% TODO put the curly underbrace for $n$ times underneath
 \[
-  \operatorname{Aut}B^* = \underbrace{(\operatorname{Aut}B^* \times
-    \ldots \times \operatorname{Aut}B^* )}_\text{$n$ times} \rtimes
+  \operatorname{Aut}\textbf{2}^* =
+  \underbrace{(\operatorname{Aut}\textbf{2}^* \times \ldots \times
+    \operatorname{Aut}\textbf{2}^* )}_\text{$n$ times} \rtimes
   \tau_\Sigma.
 \]
 
@@ -289,7 +295,9 @@ Conversely, first suppose $f$ and $g$ are both odd. Then
 $fg = (\partial_0 f \partial_1 g, \partial_1 f \partial_0 g)$ and
 $gf = (\partial_0 g \partial_1 f, \partial_1 g \partial_0 f)$. Since
 $\gamma_f = \gamma_g$, these wreath recursions are the same. If $f$ is
-even and $g$ odd, TODO
+even and $g$ odd,
+$fg = (\partial_0f \partial_0g, \partial_1 f \partial_1 g)\sigma$ and
+$gf = (\partial_0g \partial_1f, \partial_1 g \partial_r f)\sigma$.
 
 If $f$ and $g$ are both even, the claim follows by induction.
 \end{proof}
@@ -305,13 +313,30 @@ If $f$ and $g$ are both even, the claim follows by induction.
 It is easy to verify by induction that $t_i = s_i^{-1}$ for all $i$.
 
 \begin{definition}
-  TODO Acceptor of $\A$ at $t$.
+  For an automaton $\A = (Q,\Sigma, \delta)$, the \emph{acceptor of
+    $\A$ at $t$}, denoted $\A(t)$, is a partial DFA with state set
+  $Q$, input alphabet $Q \times Q$, and transitions
+  $s \stackrel{a \times b}{\longrightarrow} s'$ for each transition
+  $t \stackrel{a \mid b}{\longrightarrow} t'$ in $\A$. Every state is
+  accepting.
 \end{definition}
+
+\begin{lemma}
+  % $\A(t)$ accepts all convoluted pairs of 
+  The language of the acceptor $\A(t)$ is
+  \[
+    \{(x_1, y_1)(x_2, y_2),\ldots,(x_n, y_n) \mid y_1\ldots y_n =
+    (x_1,\ldots x_n)t \}
+  \]
+\end{lemma}
+\begin{proof}
+  By induction on the length of the input string.
+\end{proof}
 
 \begin{definition}
   For an automaton $\A = (Q, \Sigma, \delta)$, the \emph{product
     automaton} $\A \times \A$ is a machine with state set $Q\times Q$
-  and transition function defined as
+  and transition function defined by
   $\partial_a (s_1, s_2) = (\partial_a s_1, \partial_{a s_1} s_2)$.
 \end{definition}
 
@@ -340,8 +365,8 @@ semigroups is decidable.
 
 \subsection{Automorphism \decprob{Membership}}
 
-This section considers the subsemigroup $G(\A)$ of
-$\operatorname{Aut}2^*$ generated by the associated autormophisms of
+This section considers the subsemigroup $S(\A)$ of
+$\operatorname{Aut}\textbf{2}^*$ generated by the associated autormophisms of
 an invertible binary transducer. We assume minimality throughout this
 section.
 
@@ -352,12 +377,12 @@ general case. Some necessary background from
 
 \subsubsection{Linear algebraic background}
 
-% TODO this is disgusting typesetting.
+% TODO this is so poorly worded
 \begin{theorem}
-If $\A$ is a commutative automaton, then $G(\A)$ is
-isomorphic to either a finite Boolean group or to $\Z^m$ for some
-$m \geq 1$. In the latter case, there is an isomorphism
-$\phi : G(\A) \rightarrow \Z^m$ satisfying the following recursion
+  If $\A$ is Abelian, then $G(\A)$ is isomorphic to either a finite
+  Boolean group or to $\Z^m$ for some $m \geq 1$. In the latter case,
+  there is an isomorphism $\phi : G(\A) \rightarrow \Z^m$ satisfying
+  the following recursion
 \[
   \phi^{-1}(v) =
   \begin{cases}
@@ -366,10 +391,14 @@ $\phi : G(\A) \rightarrow \Z^m$ satisfying the following recursion
     \text{otherwise}
   \end{cases}
 \]
+where $A \in GL(m,\Q)$ and $v \in \Q^m$. Additionally, for all
+$v \in \Z^m$, $A\cdot v \in \Z^m$ or $A\cdot v \pm r \in \Z^m$.
 \end{theorem}
 
 We call the matrix $A$ above the \defn{residual matrix} of $A$. The
-vector $r$ is referred to as the \defn{residual vector}.
+vector $r$ is referred to as the \defn{residual vector}. Put
+differently, this theorem specifies that when $\A$ is Abelian,
+residuation is an affine map.
 
 We have the following properties of $A$:
 
@@ -380,7 +409,16 @@ residual matrix, $A$ satisfies the following properties:
 \begin{enumerate}
 \item $A$ is contracting; its spectral radius is less than 1
 \item $A$ is 1/2-integral, meaning that $A^{-1}$ is a subgroup of
-  index 2 in $\Z^m$. Therefore $A$ be represented as TODO where all
+  index 2 in $\Z^m$. Therefore $A$ be represented as
+  \[
+    \begin{bmatrix}
+      \frac{a_{1,1}}{2} & a_{1,2} & \cdots & a_{1,m} \\
+      \frac{a_{2,1}}{2} & a_{2,2} & \cdots & a_{2,m} \\
+      \vdots & \vdots & \ddots & \vdots \\
+      \frac{a_{m,1}}{2} & a_{m,2} & \cdots & a_{m,m}
+    \end{bmatrix}
+  \]
+  where all
   $a_{i,j}$ are integers.
 \item The characteristic polynomial $\chi_A(x)$ is irreducible over
   $\Q$ and has the form
@@ -394,7 +432,7 @@ residual matrix, $A$ satisfies the following properties:
 \end{enumerate}
 \end{theorem}
 
-Latimer and MacDuffee proved the following theorem in TODO
+The Latimer and MacDuffee theorem states that:
 
 \begin{theorem}
   If $p(x) \in \Z[x]$ is monic and irreducible, the $GL(m, \Z)$
@@ -404,9 +442,9 @@ Latimer and MacDuffee proved the following theorem in TODO
   root of $p(x)$.
 \end{theorem}
 
-Property 1 of the first theorem provides a bound on the coefficients
-of $\chi_A(x)$. When combined with property 4 and the above theorem,
-it can be shown that, for fixed $m$, there exist only finitely many
+Property 1 of theorem 3 provides a bound on the coefficients of
+$\chi_A(x)$. When combined with property 4 and the above theorem, it
+can be shown that, for fixed $m$, there exist only finitely many
 possibilities of $A$, up to $GL(m, \Z)$ similarity.
 
 \begin{definition}
@@ -414,7 +452,7 @@ possibilities of $A$, up to $GL(m, \Z)$ similarity.
   \emph{complete group automaton} (occasionally abbreviated as the
   \emph{complete automaton}) for $G$, written $\mathcal{C}_G$, as
   follows: the automaton has $G$'s carrier set as state set with
-  transitions $f \longrightarrow^{a\mid af} f$.
+  transitions $f \stackrel{a\mid af}{\longrightarrow} \partial_a f$.
 \end{definition}
 
 Of course in general,
@@ -524,6 +562,8 @@ inverse of each generator is contained in $\mathcal{S}(\A)$.
 \subsection{\decprob{Knapsack} is undecidable for automaton semigroups}
 We follow a proof strategy similar to \cite{Konig15:knapsack}.
 
+% TODO need to use sets of variables for full formality
+
 \begin{definition}
   We define the \decprob{Knapsack Problem} as follows: given as input
   generators $g_1 \ldots g_k$ and a target semigroup element $g$, do
@@ -531,10 +571,18 @@ We follow a proof strategy similar to \cite{Konig15:knapsack}.
   \[ g_1^{a_1} \cdots g_k^{a_K} = g \]
 \end{definition}
 
+\begin{definition}
+  The \decprob{Generalized Knapsack Problem} has as input generators
+  $g_1 \ldots g_k, h_1, \ldots h_l$, and has as output whether there
+  exist natural numbers $a_1\ldots a_k, b_1, \ldots, b_l$ such that
+  \[ g_1^{a_1} \cdots g_k^{a_k} = h_1^{b_1} \cdots h_l^{b_l} \]
+\end{definition}
 
 % TODO reducing "to"?
-We prove that this problem is undecidable for automaton semigroups by
-reducing from Hilbert's tenth problem.
+We demonstrate that the \decprob{Generalized Knapsack Problem} is
+undecidable in the class of automaton semigroups by reducing from
+Hilbert's tenth problem. The undecidablity of the \decprob{Knapsack
+ Problem} easily follows.
 
 \begin{definition}
   We define the decision problem \decprob{Hilbert} as following:
@@ -562,9 +610,17 @@ Recall that the Heisenberg semigroup
       \end{bmatrix}; a, b, c \in \mathbb{N}
     \right\}
 \]
-is an automaton semigroup. Moreover, the class of automaton semigroups
-is closed under direct products, proven by Cain in
-\cite{Cain09:auto_sg}.
+is an automaton semigroup \cite{Bondarenko:heisenberg}. Moreover, the
+class of automaton semigroups is closed under direct products, proven
+by Cain in \cite{Cain09:auto_sg}. We denote elements of $H_3(\N)$ as
+\[
+  H_{x,y,z} = 
+      \begin{bmatrix}
+        1 & x & z \\
+        0 & 1 & y \\
+        0 & 0 & 1
+      \end{bmatrix}
+\]
 
 % TODO does H_3(\N) \times \Z^e suffice?
 \begin{proposition}
@@ -578,9 +634,9 @@ is closed under direct products, proven by Cain in
 % TODO consider inserting actual automata diagrams for the G_i's.
 \begin{proof}
   By introducing extra variables, we can construct from the polynomial
-  $P(x_1, \ldots, x+n$ a system $S$ of equations of the form
+  $P(x_1, \ldots, x+n)$ a system $S$ of equations of the form
   $x\cdot y = z$, $x+y = z$, $x = c$ (for $c \in \Z$) such that the
-  equation $P(x_1,\ldots, x_n) = a$ has a solutio nin $\N$ if and only
+  equation $P(x_1,\ldots, x_n) = a$ has a solution in $\N$ if and only
   if the system of equations $S_a = S \cup \{x_0 = a\}$ has a solution
   in $\N$. Let $X$ be the set of variables that occur in $S_a$.
 
@@ -596,10 +652,22 @@ is closed under direct products, proven by Cain in
   \textit{Case 1:} $E_i = (x \cdot y = z)$. Thus we have
   $G_i = H_3(\N)$. Set $g_i$ to be the identity matrix in $H_3(\N)$
   and consider the following equation:
+  \[
+    H^x_{1,0,0} =
+    \begin{bmatrix}
+      1 & x & xy \\
+      0 & 1 & y \\
+      0 & 0 & 1
+    \end{bmatrix} = 
+    \begin{bmatrix}
+      1 & x & z \\
+      0 & 1 & y \\
+      0 & 0 & 1
+    \end{bmatrix} = 
+    H^z_{1,0,0} H^y_{0,0,1} H^x_{1,0,0}
+  \]
 
-  TODO
-
-  This equation has a solution if and only if TODO.
+  This equation has a solution if and only if $xy = z$.
 
   \textit{Case 2:} $E_i = (x+y=z)$ and so $G_i= \N$. Set $g_i = 0$ TODO
 
@@ -729,8 +797,8 @@ $c = c'$ if and only if $c$ yields $c'$.
   check for configuration equality.
 
   So then given two words $w_1$, $w_2$ in $G_{\textsf{sv}(M)}$, simply
-  compute $a_1$, $r_1$, $a_2$, $r_2$. Return true if and only if
-  $a_1 = a_2$ and $r_1 = r_2$.
+  compute $a_1$, $r_1$, $a_2$, $r_2$. Then $w$ is in
+  $G_{\textsf{sv}(M)}$ if and only if $a_1 = a_2$ and $r_1 = r_2$.
 \end{proof}
 
 \begin{proposition}
