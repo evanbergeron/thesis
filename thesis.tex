@@ -564,17 +564,18 @@ We follow a proof strategy similar to \cite{Konig15:knapsack}.
 
 % TODO need to use sets of variables for full formality
 
-\subsubsection{Exponential Expresions}
+\subsubsection{Exponential Equations}
 
 Suppose $\mathcal{X}$ is a countably infinite set of variables.
 \begin{definition}
-  An \emph{exponential expression} $E$ over a semigroup $S$ is a
-  formal product of the form
+  An \emph{exponential equation} $E$ over a semigroup $S$ is an equation of 
+  formal products of the form
   \[
     s_1^{x_1} s_2^{x_2}\cdots s_l^{x_l}
+    = t_1^{y_1} t_2^{y_2}\cdots t_l^{y_l}
   \]
-  where each $x_i$ is in $\mathcal{X}$ and each $s_i$ is in $S$. Note
-  that we do not require the $x_i$'s to be distinct.
+  where each $x_i, y_i$ is in $\mathcal{X}$ and each $s_i, t_i$ is in $S$. Note
+  that we do not require the $x_i$'s and $y_i$'s to be distinct.
 \end{definition}
 
 Denote by $\operatorname{Var}(E)$ the set of all variables appearing
@@ -600,7 +601,7 @@ To this end, suppose we have exponential expressions $E_i$ for
 $i = 1\ldots n$, each with corresponding semigroups $S_i$. In each
 $E_i$, replace the base element $s_i$ with the element
 \[
-  (\underbrace{1, \ldots, 1}_\text{$i-1$}, s,
+  (\underbrace{1, \ldots, 1}_\text{$i-1$}, s_i,
    \underbrace{1, \ldots 1}_\text{$n-i$}) \in \prod_i S_i.
 \]
 Then take the formal product of each new $E_i$.
@@ -640,12 +641,6 @@ It is well-known that there exist polynomials for which
 \decprob{Hilbert} is undecidable, see \cite{Matiyasevich:hilbert} for
 details.
 
-\begin{theorem}
-  \decprob{Generalized Knapsack} is undecidable in the class of
-  automaton semigroups.
-\end{theorem}
-\begin{proof}
-
 Recall that the Heisenberg semigroup
 \[
   H_3(\mathbb{N}) = \left\{
@@ -669,8 +664,8 @@ by Cain in \cite{Cain09:auto_sg}. We denote elements of $H_3(\N)$ as
 \]
 
 \begin{proposition}
-  There exist fixed constants $d,e \in \N$ and a exponential
-  expression $E$ of the form
+  There exist fixed constants $d,e \in \N$ and an exponential
+  equation $E$ of the form
   \[ s_1^{x_1} s_2^{x_2}\cdots s_n^{x_n} = t_1^{y_1} t_2^{y_2}\cdots
     t_n^{y_n} \] with $s_i, t_i \in G = H_3(\N)^d \times \Z^e$ for which the
   \decprob{Generalized Knapsack} problem is undecidable.
@@ -678,13 +673,19 @@ by Cain in \cite{Cain09:auto_sg}. We denote elements of $H_3(\N)$ as
 
 % TODO consider inserting actual automata diagrams for the G_i's.
 \begin{proof}
-  We construct from the polynomial $P(x_1, \ldots, x_n)$ a system $S$
-  of equations, where each equation is of one of the following forms:
-  $x\cdot y = z$, $x+y = z$, $x = c$ (for $c \in \Z$).  We will have
-  that the equation $P(x_1,\ldots, x_n) = a$ has a solution in $\N$ if
-  and only if the system of equations $S_a = S \cup \{x_0 = a\}$ has a
-  solution in $\N$. Let $X$ be the set of variables that occur in
-  $S_a$.
+  From the input polynomial, $P(x_1, \ldots, x_n)$ and target value
+  $a$, we separate the positive and negative terms of $P$ to obtain an
+  equation of the form
+  \[
+    P_+(x_1, \ldots, x_n) = P_-(x_1, \ldots, x_n, a)
+  \]
+  where every coefficient in $P_+$ and $P_-$ is positive. From this
+  equation, we construct a system $S$ of equations, where each
+  equation has one of the following forms: $x\cdot y = z$,
+  $x+y = z$, $x = c$ (for $c \in \Z$).  We will have that the equation
+  $P(x_1,\ldots, x_n) = a$ has a solution in $\N$ if and only if the
+  system of equations $S_a = S \cup \{x_0 = a\}$ has a solution in
+  $\N$. Let $X$ be the set of variables that occur in $S_a$.
 
   Take a natural number $a$ (the input of the reduction). Assume that
   $S_a$ contains $d$ equations of the form $x\cdot y$, and $e$ many
@@ -717,15 +718,30 @@ by Cain in \cite{Cain09:auto_sg}. We denote elements of $H_3(\N)$ as
   A mapping $v : X \rightarrow \N$ is a solution if and only if
   $v(x)v(y) = v(z)$.
 
-  \textit{Case 2:} $E_i = (x+y=z)$ and so $G_i= \N$. Set $g_i = 0$ TODO
+  \textit{Case 2:} $E_i = (x+y=z)$ and so $G_i= \Z$. Set $g_i = 0$ and
+  consider the equation (written additively in the group $\Z$)
+  \[
+    x+y-z = 0
+  \]
+  Then a mapping $v : X \rightarrow \Z$ is a solution if
+  and only $v(x) + v(y) = v(z)$.
 
   \textit{Case 3:} $E_i = (x = c)$. (This includes our distinguished
-  equation $x_0 = a$). We have $G_i = \N$. Then set $g_i = c$ and
-  $E_i = x$. Then TODO
+  equation $x_0 = a$). We have $G_i = \Z$. Then set $g_i = c$ and
+  $E_i = x$. Then as usual, a mapping $v$ is a solution if and only if
+  $v(x) = c$.
 
-  Finally, define $E$ to be the direct product of the $E_i$'s,
-  $\prod_{i=1}^d E_i$. Then TODO.
+  Finally, define $E$ to be the direct product of the $E_i$'s
+  $\prod_{i=1}^d E_i$ and define $g = (g_1, \ldots g_{d+e})$. Then a
+  mapping $v$ is a solution to the equation $E = g$ if and only if $v$
+  is a solution to the system of equations $S$.
 \end{proof} % proposition
+
+\begin{theorem}
+  \decprob{Generalized Knapsack} is undecidable in the class of
+  automaton semigroups.
+\end{theorem}
+\begin{proof}
 
 For all $d, e \in \N$, $H_3(\N)^d \times \Z^e$ is an automaton
 semigroup. It follows that \decprob{Generalized Knapsack} is
@@ -862,6 +878,8 @@ machine, it is undecidable whether $\langle s \rangle$ is a group.
   halts. Since $\textsf{sv}(M)$ and $M$ are equivalent, we are done.
 \end{proof}
 
+% TODO add gap theorem?
+
 \section{Open Questions}
 
 Much partial work has been attempted toward a proof of the solvability
@@ -887,6 +905,8 @@ Additionally, most of the semigroup-theoretic decision properties
 listed in \cite{Cain09:dec_prob} remain open in the class of automaton
 semigroups. Notably, determining the decidability of Markov properties
 would be of great help to future work.
+
+% TODO mention characterization of complete automata? 1SCC conjecture etc
 
 \nocite{*}\addtocontents{toc}{\protect\vspace{\beforebibskip}}
 \addcontentsline{toc}{section}{\refname} \bibliographystyle{plain}
