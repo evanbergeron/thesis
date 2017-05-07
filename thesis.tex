@@ -668,7 +668,6 @@ by Cain in \cite{Cain09:auto_sg}. We denote elements of $H_3(\N)$ as
       \end{bmatrix}
 \]
 
-% TODO does H_3(\N) \times \Z^e suffice?
 \begin{proposition}
   There exist fixed constants $d,e \in \N$ and a exponential
   expression $E$ of the form
@@ -696,6 +695,7 @@ by Cain in \cite{Cain09:auto_sg}. We denote elements of $H_3(\N)$ as
   define an element $g_i$ and an exponential expression $E_i$ over
   $G_i$ as follows:
 
+  % TODO need to reformat all of this into two-sided equations
   \textit{Case 1:} $E_i = (x \cdot y = z)$. Thus we have
   $G_i = H_3(\N)$. Set $g_i$ to be the identity matrix in $H_3(\N)$
   and consider the following equation:
@@ -714,7 +714,8 @@ by Cain in \cite{Cain09:auto_sg}. We denote elements of $H_3(\N)$ as
     H^z_{1,0,0} H^y_{0,0,1} H^x_{1,0,0}
   \]
 
-  This equation has a solution if and only if $xy = z$.
+  A mapping $v : X \rightarrow \N$ is a solution if and only if
+  $v(x)v(y) = v(z)$.
 
   \textit{Case 2:} $E_i = (x+y=z)$ and so $G_i= \N$. Set $g_i = 0$ TODO
 
@@ -863,14 +864,29 @@ machine, it is undecidable whether $\langle s \rangle$ is a group.
 
 \section{Open Questions}
 
-\begin{itemize}
-\item All automaton semigroups are recursively presented. If these
-  presentations are regular, or context-free, does that affect the
-  soluability of these questions?
-\item Having a zero
-\item Isomorphism problem
-\item Bounded automata, etc
-\end{itemize}
+Much partial work has been attempted toward a proof of the solvability
+or unsolvability of the \decprob{IsGroup} problem in the general
+case. The monoid presented here serves a sort of bound for this
+problem; optimistically suggesting that perhaps the class of automaton
+semigroups is not so big as to have an undecidable \decprob{IsGroup}.
+
+There is also a rich area of smaller subclasses of automata to
+consider. Godin proved the decidablity of \decprob{Knapsack} for the
+class of bounded automata in \cite{Godin:knapsack}. It is natural to
+then consider the the decidability of other decision problems, such as
+\decprob{IsGroup}, \decprob{Isomorphism}, and others.
+
+One may also consider decision problems from a group presentation
+angle; all automaton semigroups are recursively presented. If we
+restrict our considerations to automaton semigroups whose
+presentations are regular, or context-free, does this affect the
+decidability of various decision problems? One suspects these
+questions are probably quite hard.
+
+Additionally, most of the semigroup-theoretic decision properties
+listed in \cite{Cain09:dec_prob} remain open in the class of automaton
+semigroups. Notably, determining the decidability of Markov properties
+would be of great help to future work.
 
 \nocite{*}\addtocontents{toc}{\protect\vspace{\beforebibskip}}
 \addcontentsline{toc}{section}{\refname} \bibliographystyle{plain}
