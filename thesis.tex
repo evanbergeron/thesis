@@ -37,7 +37,7 @@ semigroups (and sometimes groups) for which the word problem is
 decidable. The computability picture here is rather nuanced,
 however. Similarly important decision problems, among them the
 conjugacy problem, and the isomorphism problem are known to be
-undecidable - see \cite{sunic:conj} and TODO for details.
+undecidable - see \cite{sunic:conj} for details.
 
 In this paper, we present proof that, for the Abelian case,
 automorphism membership testing is decidable in this class of
@@ -244,6 +244,24 @@ $G \cong (G \times G) \rtimes \tau_{\textbf{2}}$.
 % TODO
 % Cosets thing
 
+\begin{example}
+  The following automaton is called $A^3_2$, a notable member of the
+  class of \emph{cycle-cum-chord} automata discussed in
+  \cite{sutner:iterating}.
+  % \vspace{-5em}
+  \begin{center}
+  \includegraphics[scale=0.4]{figures/a32-extended}
+  % \vspace{-1em}
+  \end{center}
+  Write $\underline{i}$ for the automorphism corresponding to state
+  $i$. Then we have the following wreath recursions:
+  $\underline{0} = (\underline{1}, \underline{2})\sigma$,
+  $\underline{1} = (\underline{0}, \underline{0})$,
+  $\underline{2} = (\underline{1}, \underline{1})$. Correspondingly,
+  we can see $\partial_0 \underline{0} = \underline{1}$ and
+  $\partial_1 \underline{0} = \underline{2}$.
+\end{example}
+
 \section{Decision Problems}
 
 Automaton semigroups exhibit many interesting and nuanced
@@ -268,7 +286,6 @@ $\gamma_f = (\partial_0 f)(\partial_1 f)^{-1}$.
 
 The following result is adapted from \cite{okano:thesis}.
 
-% TODO omg this typesetting
 \begin{lemma}
 $\A$ is Abelian if and only if all even automorphisms
 in $S(\A)$ have gap $I$ and odd automorphisms have constant gap.
@@ -405,7 +422,7 @@ We have the following properties of $A$:
 
 % TODO don't conflate the automaton A with the matrix A
 \begin{theorem}
-If $G(A) \cong \Z^m$ and $A$ is its associated
+If $G(\A) \cong \Z^m$ and $A$ is its associated
 residual matrix, $A$ satisfies the following properties:
 \begin{enumerate}
 \item $A$ is contracting; its spectral radius is less than 1
@@ -448,10 +465,12 @@ $\chi_A(x)$. When combined with property 4 and the above theorem, it
 can be shown that, for fixed $m$, there exist only finitely many
 possibilities of $A$, up to $GL(m, \Z)$ similarity.
 
+% Interesting typesetting decision here: one parenthesis is
+% italicized, while its match is not
 \begin{definition}
   Take $G$ to be some self-similar group. We may construct the
   \emph{complete group automaton} (occasionally abbreviated as the
-  \emph{complete automaton}) for $G$, written $\mathcal{C}_G$, as
+  \emph{complete automaton)} for $G$, written $\mathcal{C}_G$, as
   follows: the automaton has $G$'s carrier set as state set with
   transitions $f \stackrel{a\mid af}{\longrightarrow} \partial_a f$.
 \end{definition}
@@ -473,7 +492,6 @@ different. Pleasantly, $\mathcal{A}_G$ is minimal by construction.
 The following lemma is adapted from \cite{okano:thesis}. 
 
 \begin{lemma}
-  Any complete automaton defined by $(A, r)$ has only finitely many
   For any admissible $(A, r)$, the complete automaton $\mathcal{C}$
   over $A$ and $r$ has only finitely many subautomata, each of which
   has finitely many states.
