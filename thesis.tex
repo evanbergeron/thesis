@@ -544,7 +544,7 @@ The following lemma is adapted from \cite{okano:thesis}.
 \end{proof}
 
 \begin{example}
-The following automata represent the subautomata of
+The following automata represent all subautomata of
 the complete automaton generated with residual matrix
 \[
   A = \begin{bmatrix}
@@ -560,6 +560,9 @@ and residual vector $r = [-1, -\frac{3}{2}]^T$.
 \includegraphics[scale=0.5]{figures/bowtie}
 \includegraphics[scale=0.5]{figures/pent}
 \end{center}
+The top state of $A^3_2$ (seen earlier in example 1) corresponds with
+$e_1 \in \Z^2$. One can check that $A(Ae_1 - r) = e_1$, corresponding
+with going around the shorter loop.
 \end{example}
 
 \begin{definition}
@@ -686,7 +689,7 @@ identity function and the inverse of each generator.
 
 Despite a fair amount of effort, \decprob{IsGroup} is still open in
 the general case. Our work on \decprob{Knapsack} and
-\decprob{Membership} represents much partial work toward a solution.
+\decprob{Membership} represent much partial work toward a solution.
 
 \subsection{\decprob{Knapsack} is undecidable for automaton semigroups}
 We follow a proof strategy inspired by \cite{Konig15:knapsack}.
@@ -960,21 +963,18 @@ graph with $q_{reject}$ as the center.
   Turing machines.
 \end{proposition}
 
-Speaking informally, as the canonical computation proceeds, a program
-counter is kept - perhaps to the left of the tapehead. After every
-step, the Turing machine will examine what ``time step'' the
-computation is currently sitting in. It will perform the canonical
-computation for the first $n$ steps. If it does not wind up where it's
-configuration says it is, it transitions to the death
-state. Otherwise, it continues.
+Speaking informally, the new Turing machine $S$ maintains on its tape
+a time step $t$, the original input $w$ to our original Turing machine
+$M$, and $M$'s current configuration $C$. After simulating each step
+of $M$, $S$ will re-run $M$ on $w$ for the first $t$ steps. If this
+computation results in $M$ sitting in configuration $C$, $S$
+increments $t$, replaces $C$ with the new configuration $C'$, and
+proceeds to the next step of $M$. Otherwise, $S$ immediately rejects.
 
-% In the interest of reader intuition, we expound upon a couple of
-% implementation details here.
-
-For further reading, see \cite{davis:note_utm}, \cite{davis:defn_utm},
-and \cite{shepherdson:machine_config}.
-
-% TODO rough sketch of implementation details.
+One can show that any invalid configuration will be caught after
+finitely many steps, as $S$ manually verifies each and every
+configuration. For further reading, see \cite{davis:note_utm},
+\cite{davis:defn_utm}, and \cite{shepherdson:machine_config}.
 
 \subsubsection*{The submonoid in question}
 Define the Turing machine $M = (Q, \Sigma, \Gamma, \delta, q_0, F)$ to
