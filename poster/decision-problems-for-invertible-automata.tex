@@ -16,7 +16,6 @@ top=3.5in]{geometry}
 \usepackage[svgnames]{xcolor}
 
 \renewcommand{\baselinestretch}{1.2}
-\newcommand{\defn}[1]{\textit{#1}}
 \newcommand{\decprob}[1]{\textsc{#1}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\N}{\mathbb{N}}
@@ -28,6 +27,9 @@ top=3.5in]{geometry}
 \newcommand*{\concourse}{}
 \newcommand*{\concoursecaps}{\textsc}
 \newcommand*{\caps}{\textsc}
+
+\newcommand{\defn}[1]{{\color{NavyBlue}\emph{#1}}}
+\newcommand{\defndecprob}[1]{{\color{NavyBlue}\textsc{#1}}}
 
 \usepackage{graphicx}
 \usepackage{tikz}
@@ -119,7 +121,7 @@ top=3.5in]{geometry}
 
 \section*{Automaton Semigroups}
 
-\large Below is an example \textit{invertible automaton}. It's quite
+\large Below is an example \defn{invertible automaton}. It's quite
 similar to a DFA, but instead of just reading in a string, it also
 outputs a string (and so induces a relation on strings).
 
@@ -153,12 +155,12 @@ For instance, if
 $\underline{0}$ is the function induced by starting at state 0, we
 have $\underline{0}(0000) = 1001$.
 
-These functions form a \emph{semigroup} $\S(A)$ under composition
+These functions form a \defn{semigroup} $\S(A)$ under composition
 (associative and closed).
 
 Interpreting the binary alphabet as an infinite binary tree, these
 automata can be see as level-preserving, adjacency-preserving maps on
-the tree (and so are \emph{automorphisms} on the tree).
+the tree (and so are \defn{automorphisms} on the tree).
 
 % More formally, let $\textbf{2}$ be the binary alphabet, $Q$ be the
 % state set of the automaton $A$, $Q^+$ be all nonempty strings over
@@ -182,7 +184,7 @@ semigroups.
 \section*{\decprob{Membership} decidable when Abelian.}
 
 \begin{definition}
-  The automorphism \decprob{Membership} problem takes as input two
+  The automorphism \defndecprob{Membership} problem takes as input two
   automata, $\A$ and $\B$, a distinguished automorphism $f \in S(\A)$
   corresponding to some state $p$, and $\B$'s residual matrix and
   vector $A$ and $r$, and ouputs whether $f \in S(\B)$.
@@ -205,7 +207,7 @@ semigroups.
 \section*{\textsc{IsGroup} is decidable when Abelian.}
 
 \begin{definition}
-  The \decprob{IsGroup} decision problem takes as input an automaton
+  The \defndecprob{IsGroup} decision problem takes as input an automaton
   $\A$ and answers the question ``is $S(\A) = G(\A)$?''
 \end{definition}
 
@@ -224,7 +226,7 @@ semigroups.
 \section*{\textsc{Knapsack} is undecidable.}
 
 \begin{definition}
-  The \textsc{Knapsack} problem for automaton semigroups is as
+  The \defndecprob{Knapsack} problem for automaton semigroups is as
   follows: given generators $s_1\ldots s_n \in S(A)$ and some element
   $s \in S(A)$, do there exist $a_1\ldots a_n \in \N$ such
   that \[s_1^{a_1}\ldots s_n^{a_n} = s \]
