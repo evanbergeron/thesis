@@ -1,5 +1,9 @@
 \documentclass[a0]{a0poster}
-\usepackage[paperheight=36in, paperwidth=48in, margin=3in, left=4in, top=4in]{geometry}
+\usepackage[paperheight=32in,
+paperwidth=42in,
+margin=2.5in,
+left=3.5in,
+top=3.5in]{geometry}
 \usepackage{titlesec}
 
 \usepackage{multicol}
@@ -51,11 +55,11 @@
 \newtheorem{question}{Question}
 \newtheorem{conjecture}{Conjecture}
 
-\newenvironment{proofsketch}{\paragraph{\Large \normalfont \textit{Proof Sketch:}}}{\hfill$\square$}
+\newenvironment{proofsketch}{\paragraph{\large \normalfont \textit{Proof Sketch:}}}{\hfill$\square$}
 
 % Make titles prettier
-\titleformat*{\section}{\huge\concourse}
-\titleformat*{\subsection}{\Large\concourse}
+\titleformat*{\section}{\Large\concourse}
+\titleformat*{\subsection}{\large\concourse}
 \titleformat*{\subsubsection}{\concourse}
 
 % left, before, after
@@ -82,7 +86,7 @@
 % The widths of these boxes can be easily edited to accommodate your content as you see fit
 
 \begin{minipage}[b]{0.55\linewidth}
-  \veryHuge \color{NavyBlue} \concourse{Decision Problems for
+  \veryHuge \color{NavyBlue} \concourse{Decision Problems in
     Invertible Automata} \color{Black}\\ % Title
 % \Huge\textit{An Exploration of Complexity}\\[1cm] % Subtitle
 \huge \concourse{Evan Bergeron \& Klaus Sutner}\\ % Author(s)
@@ -114,7 +118,7 @@
 
 \section*{Automaton Semigroups}
 
-\Large Below is an example \textit{invertible automaton}. It's quite
+\large Below is an example \textit{invertible automaton}. It's quite
 similar to a DFA, but instead of just reading in a string, it also
 outputs a string (and so induces a relation on strings).
 
