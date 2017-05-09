@@ -1,8 +1,9 @@
 \documentclass[a0]{a0poster}
-\usepackage[paperheight=32in,
+\usepackage[paperheight=30in,
 paperwidth=42in,
 margin=2.5in,
 left=3.5in,
+right=2.5in,
 top=3.5in]{geometry}
 \usepackage{titlesec}
 
@@ -145,8 +146,10 @@ outputs a string (and so induces a relation on strings).
 \draw (27.47,-23.93) node [left] {$a/a$};
 \end{tikzpicture}
 \end{center}
-There's a natural correspondence between states in the machine and
-length-preserving functions from string to string. For instance, if
+% There's a natural correspondence between states in the machine and
+% length-preserving functions from string to string.
+Each state induces a length-preserving functions on strings.
+For instance, if
 $\underline{0}$ is the function induced by starting at state 0, we
 have $\underline{0}(0000) = 1001$.
 
@@ -176,7 +179,7 @@ Many natural classes of semigroups arise as automaton semigroups. For
 instance, all free semigroups of rank $\geq 2$ arise as automaton
 semigroups.
 
-\section*{\decprob{Membership} decidable when Abelian}
+\section*{\decprob{Membership} decidable when Abelian.}
 
 \begin{definition}
   The automorphism \decprob{Membership} problem takes as input two
@@ -185,25 +188,21 @@ semigroups.
   vector $A$ and $r$, and ouputs whether $f \in S(\B)$.
 \end{definition}
 
-\vspace{1em}
-\begin{center}
-\includegraphics[scale=1.5]{../figures/bowtie}
-\end{center}
-
 \begin{theorem}
   Automorphism \decprob{Membership} in $S(\B)$ for an Abelian
   automaton $\B$ is decidable.
 \end{theorem}
 
-\begin{proofsketch}
-  In the complete group automaton generated from $(A,r)$, there are
-  finitely many subautomata, each with finitely many states.
-  $\A \in S(\B)$ iff $\A$ is equivalent to one of these subautomata.
-  Since $A$ is a contracting map, we may effectively compute all such
-  subautomata.
-\end{proofsketch}
+% \begin{proofsketch}
+  % All descendents of our candidate automorphisms are bounded by a finite ball around 0 in $\Z^m$. Reduces to brute force search.
+  % In the complete group automaton generated from $(A,r)$, there are
+  % finitely many subautomata, each with finitely many states.
+  % $\A \in S(\B)$ iff $\A$ is equivalent to one of these subautomata.
+  % Since $A$ is a contracting map, we may effectively compute all such
+  % subautomata.
+% \end{proofsketch}
 
-\section*{\textsc{IsGroup} is decidable when Abelian}
+\section*{\textsc{IsGroup} is decidable when Abelian.}
 
 \begin{definition}
   The \decprob{IsGroup} decision problem takes as input an automaton
@@ -216,7 +215,13 @@ semigroups.
   the problem to matrix algebra.
 \end{proofsketch} 
 
-\section*{\textsc{Knapsack} is undecidable}
+\vspace{1em}
+\begin{center}
+\includegraphics[scale=1.5]{../figures/bowtie}
+\end{center}
+\vspace{-1em}
+
+\section*{\textsc{Knapsack} is undecidable.}
 
 \begin{definition}
   The \textsc{Knapsack} problem for automaton semigroups is as
@@ -232,6 +237,7 @@ semigroups.
 \begin{proofsketch}
   Reduce from Hilbert's 10 problem.
 \end{proofsketch}
+
 
 \section*{A monoid with undecidable \textsc{IsGroup}}
 
@@ -263,7 +269,7 @@ big as to have an undecidable \decprob{IsGroup}.
 
 \section*{Acknowledgements}
 
-Thanks to Klaus Sutner for guidance.
+Thanks to Klaus Sutner for guidance and Tim Becker for his continued interest.
 
 \end{multicols}
 \end{document}
