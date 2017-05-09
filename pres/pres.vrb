@@ -1,0 +1,4 @@
+\frametitle{The reduction}
+\begin{lstlisting}[language=Python]
+    def foo(): pass
+  \end{lstlisting}
